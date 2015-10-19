@@ -1,0 +1,21 @@
+ENGINE DOCUMENTATION
+
+Creator: Margaret Dorsey
+Start Date: 10/18/2015
+Latest Update: 10/18/2015
+Institution: Rochester Institute of Technology
+
+Written in C/C++ using OpenGL, GLEW, GLFW, and g++ through Cygwin.
+Relevant specs of the machine(s) used for testing and implementation:
+
+Machine 1:
+	Microsoft Windows Pro 10 64 bit
+	Version 10.0.10240 Build 10240
+	Intel(R) Core(TM) i5-3350P CPU @ 3.10 GHz, 3101 Mhz, 4 Core 4 Log Proc
+	GPU NVIDIA GeForce GTX 550 Ti
+	Driver Version 10.18.13.5582
+	OpenGL Version 4.4
+
+
+Thank you very much to Dr. David Schwartz, Professor Alberto Bobadilla, and the rest of the wonderful faculty and student body of RIT. All code is mine, but I could not have written it without their guidance or instruction.
+
