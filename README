@@ -2,7 +2,7 @@ ENGINE DOCUMENTATION
 
 Creator: Margaret Dorsey
 Start Date: 10/18/2015
-Latest Update: 10/18/2015
+Latest Update: 10/20/2015
 Institution: Rochester Institute of Technology
 
 Written in C/C++ using OpenGL, GLEW, GLFW, and g++ through Cygwin.
@@ -17,5 +17,5 @@ Machine 1:
 	OpenGL Version 4.4
 
 
-Thank you very much to Dr. David Schwartz, Professor Alberto Bobadilla, and the rest of the wonderful faculty and student body of RIT. All code is mine, but I could not have written it without their guidance or instruction.
+Thank you very much to Dr. David Schwartz, Professor Alberto Bobadilla, Dr. Jay Alan Jackson, and the rest of the wonderful faculty and student body of RIT. All code is mine, but I could not have written it without their guidance or instruction.
 
