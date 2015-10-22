@@ -2,10 +2,11 @@ ENGINE DOCUMENTATION
 
 Creator: Margaret Dorsey
 Start Date: 10/18/2015
-Latest Update: 10/20/2015
+Latest Update: 10/21/2015
 Institution: Rochester Institute of Technology
 
-Written in C/C++ using OpenGL, GLEW, GLFW, and g++ through Cygwin.
+Written in C/C++ using OpenGL, GLEW, GLFW, and Visual Studio 2013.
+Original Version with g++, switching platforms currently.
 Relevant specs of the machine(s) used for testing and implementation:
 
 Machine 1:
