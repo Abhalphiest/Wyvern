@@ -4,11 +4,10 @@
 #ifndef _MESH_H_
 #define _MESH_H_
 
-#include"include/glew.h"
-#include<gl/GL.h>
-#include<vector>
+#include"definitions.h"
+#include"ShaderMaster.h"
 #include"masters.h"
-#include<stdlib.h>
+
 
 class Mesh
 {
@@ -28,6 +27,11 @@ protected:
 	GLuint shaderIndex = 0;
 	GLuint ogShaderIndex = 0; //for the original shader
 
+	mat4 m_toWorld;
+	mat4 m_modelMatrix;
+	vec4 m_position;
+	vec4 m_orientation;
+
 	CameraMaster* camera = nullptr;
 	MaterialMaster* material = nullptr;
 	LightMaster* light = nullptr;
@@ -37,7 +41,7 @@ protected:
 	
 
 public:
-
+	Mesh(void); //constructor
 
 private:
 

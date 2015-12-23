@@ -18,6 +18,8 @@
 #include"glfw3.h"
 #include"WindowMaster.h"
 #include"ShaderMaster.h"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
 //---------------------
 //variable declarations
 //---------------------
@@ -26,6 +28,8 @@
 WindowMaster* windowMaster;
 ShaderMaster* shaderMaster;
 
+mat4 mvp;
+GLuint mvp_handle;
 GLuint VertexArrayID;
 GLuint vertexbuffer;
 //function prototypes
@@ -68,6 +72,14 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
+	mat4 View = glm::lookAt(vec3(4, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
+	mat4 Projection = glm::perspective(glm::radians(45.0f), windowMaster->GetWindowRatio(), 0.1f, 100.0f);
+	mat4 Model = mat4(1.0f); //identity
+	mvp = Projection*View*Model;
+
+	 mvp_handle = glGetUniformLocation(shaderMaster->GetProgramID(), "MVP");
+
+
 }
 
 //run once a frame
@@ -78,6 +90,7 @@ void update()
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glUniformMatrix4fv(mvp_handle, 1, GL_FALSE, &mvp[0][0]);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDisableVertexAttribArray(0);
 	//swap buffers and catch keyboard input
