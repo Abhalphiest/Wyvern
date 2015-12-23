@@ -21,9 +21,7 @@ class MaterialMaster{
 class LightMaster{
 
 };
-class ShaderMaster{
 
-};
 
 
 

@@ -1,3 +1,6 @@
+#ifndef _WINDOWMASTER_H
+#define _WINDOWMASTER_H
+
 #define _CRTDBG_MAP_ALLOC //for tracking memory leaks
 #include<stdlib.h>
 #include<crtdbg.h> //for tracking memory leaks
@@ -59,3 +62,5 @@ private:
 	String m_windowName; //name for the window
 
 };
+
+#endif

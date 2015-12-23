@@ -100,6 +100,7 @@
     <ClCompile Include="InputMaster.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ShaderMaster.cpp" />
     <ClCompile Include="WindowMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +113,19 @@
     <ClInclude Include="InputMaster.h" />
     <ClInclude Include="masters.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ShaderMaster.h" />
     <ClInclude Include="WindowMaster.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragmentshader.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Text</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\vertexshader.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Text</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

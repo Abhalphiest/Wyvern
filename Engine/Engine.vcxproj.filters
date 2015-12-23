@@ -27,6 +27,9 @@
     <ClCompile Include="InputMaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderMaster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\glew.h">
@@ -56,8 +59,19 @@
     <ClInclude Include="WindowMaster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputMaster.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="ShaderMaster.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InputMaster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\vertexshader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\fragmentshader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

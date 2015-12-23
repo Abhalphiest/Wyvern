@@ -17,12 +17,14 @@
 #include<GL\GL.h>
 #include"glfw3.h"
 #include"WindowMaster.h"
+#include"ShaderMaster.h"
 //---------------------
 //variable declarations
 //---------------------
 
 //for window creation
 WindowMaster* windowMaster;
+ShaderMaster* shaderMaster;
 
 GLuint VertexArrayID;
 GLuint vertexbuffer;
@@ -33,6 +35,7 @@ void update();
 int main(int argc, char** argv)
 {
   windowMaster = WindowMaster::GetInstance();
+  shaderMaster = ShaderMaster::GetInstance();
   glfwSetInputMode(windowMaster->GetWindow(), GLFW_STICKY_KEYS, GL_TRUE); //keyboard input
   //initialize everything else
   init();
@@ -41,6 +44,7 @@ int main(int argc, char** argv)
     update();
 
   windowMaster->ReleaseInstance();
+  shaderMaster->ReleaseInstance();
   _CrtDumpMemoryLeaks();
 }
 
@@ -59,12 +63,18 @@ void init()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
+	//hook up our shaders
+	shaderMaster->AddShader("shaders/vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
+	shaderMaster->AddShader("shaders/fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
+	shaderMaster->LoadProgram();
+
 }
 
 //run once a frame
 void update()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glUseProgram(shaderMaster->GetProgramID());
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
