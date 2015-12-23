@@ -31,8 +31,8 @@ public:
 	void SetWindowY(uint y);
 	uint SetWindowY(void){ return m_windowY; }
 
-	void SetWindowName(char* nm);
-	char* GetWindowName(void){return m_windowName;};
+	void SetWindowName(String nm);
+	String GetWindowName(void){return m_windowName;};
 
 	//returns aspect ratio of the window, or the proportion of the width to the height
 	float GetWindowRatio(void){ return (float)m_windowWidth / (float)m_windowHeight; }
@@ -56,7 +56,6 @@ private:
 	uint m_windowY = 0;
 	GLFWwindow* m_window = nullptr;
 	static WindowMaster* m_instance; //singleton
-	//name for the window, 20 character limit
-	char* m_windowName;
+	String m_windowName; //name for the window
 
 };

@@ -31,8 +31,8 @@ void WindowMaster::ReleaseInstance(void)
 	///copy constructor
 	WindowMaster::WindowMaster(WindowMaster const& other)
 	{
-		//m_windowName = other.m_windowName;
-		m_window = other.m_window;
+		
+		m_window = other.m_window; //give them the same memory
 
 	}
 
@@ -42,7 +42,7 @@ void WindowMaster::ReleaseInstance(void)
 		if (this != &other)
 		{
 
-			m_windowName = other.m_windowName;
+			
 			if (m_window != other.m_window)
 			{
 				if (m_window != nullptr)
@@ -51,7 +51,7 @@ void WindowMaster::ReleaseInstance(void)
 					free(m_window);
 					
 				}
-				m_window = other.m_window;
+				m_window = other.m_window; //give them the same memory
 			}
 		}
 		return *this;
@@ -59,7 +59,6 @@ void WindowMaster::ReleaseInstance(void)
 	//destructor
 	WindowMaster:: ~WindowMaster(void)
 	{
-		
 		if (m_window != nullptr)
 		{
 			glfwSetWindowShouldClose(m_window, GL_TRUE);
@@ -112,11 +111,11 @@ void WindowMaster::ReleaseInstance(void)
 			glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 			//windowed fullscreen - chosen over true fullscreen due to speed and flexibility. put it on the primary monitor
-			GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, m_windowName, glfwGetPrimaryMonitor(), NULL);
+			GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, m_windowName.c_str(), glfwGetPrimaryMonitor(), NULL);
 		}
 		else //back to window, doesn't matter what monitor since we're giving our own mode stuff
 		{
-			GLFWwindow* window = glfwCreateWindow(m_windowWidth,m_windowHeight, m_windowName, NULL, NULL);
+			GLFWwindow* window = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName.c_str(), NULL, NULL);
 		}
 	}
 
@@ -156,11 +155,11 @@ void WindowMaster::ReleaseInstance(void)
 		glfwSetWindowPos(m_window, m_windowX, m_windowY);
 	}
 
-	void WindowMaster::SetWindowName(char* nm)
+	void WindowMaster::SetWindowName(String nm)
 	{
 		//more costly to string compare than it is to just reassign and call it good
 		m_windowName = nm;
-		glfwSetWindowTitle(m_window, m_windowName);
+		glfwSetWindowTitle(m_window, m_windowName.c_str());
 		
 
 	}

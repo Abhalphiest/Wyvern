@@ -24,7 +24,7 @@
 //for window creation
 const int windowWidth = 800;
 const int windowHeight = 600;
-const char* windowString = "Test Window";
+String windowString = "Test Window";
 WindowMaster* windowMaster;
 
 //function prototypes
@@ -35,8 +35,8 @@ int main(int argc, char** argv)
 {
   windowMaster = WindowMaster::GetInstance();
   glfwSetInputMode(windowMaster->GetWindow(), GLFW_STICKY_KEYS, GL_TRUE); //keyboard input
+  windowMaster->SetWindowName(windowString);
   //initialize everything else
-  _CrtSetBreakAlloc(155);
   init();
   //main loop
   while(!glfwWindowShouldClose(windowMaster->GetWindow()) && glfwGetKey(windowMaster->GetWindow(),GLFW_KEY_ESCAPE)!=GLFW_PRESS)
