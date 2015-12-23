@@ -20,34 +20,34 @@
 #include<locale>
 #include<fstream>
 #include<sstream>
-
+#include"include/glm/glm.hpp"
 
 typedef std::string String;
 typedef unsigned int uint;
 
 //reimplementation of glm classes
 //for my own education
-class vector2{
+//class vector2{
 
-};
-class vector3{
-	private:
-		float x, y, z;
+//};
+//class vector3{
+	//private:
+		//float x, y, z;
 
-	public:
-		vector3(GLfloat x, GLfloat y, GLfloat z); //standard constructor, componentwise
+	//public:
+		//vector3(GLfloat x, GLfloat y, GLfloat z); //standard constructor, componentwise
 
-};
-class vector4{
+//};
+//class vector4{
 
-};
-class matrix4{
-private:
-	int elements [16];
-};
-class quaternion{
+//};
+//class matrix4{
+//private:
+	//int elements [16];
+//};
+//class quaternion{
 
-};
+//};
 	
 #define SafeDelete(p){if(p){delete p; p = nullptr;}} //so we won't try to delete a null pointer in the chaos that is our program
 

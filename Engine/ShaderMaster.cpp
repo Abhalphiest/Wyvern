@@ -151,21 +151,21 @@ GLuint ShaderMaster::LoadFragmentShader(const char* p_fragmentFilePath)
 
 //this function seems slightly pointless now, but it might be useful in the future depending on implementation
 //I'm kind of flying blind here
-void ShaderMaster::AddShader(const char* filepath, ShaderType shader) //add some shaders
+void ShaderMaster::AddShader(const char* p_filepath, ShaderType p_shader) //add some shaders
 {
-	switch (shader)
+	switch (p_shader)
 	{
 		case VERTEX_SHADER:
 		{
-			if (LoadVertexShader(filepath) > 0)
-				m_shadersLoaded = m_shadersLoaded | shader;
+			if (LoadVertexShader(p_filepath) > 0)
+				m_shadersLoaded = m_shadersLoaded | p_shader;
 
 			break;
 		}
 		case FRAGMENT_SHADER:
 		{
-			if(LoadFragmentShader(filepath)>0)
-				m_shadersLoaded = m_shadersLoaded | shader;
+			if(LoadFragmentShader(p_filepath)>0)
+				m_shadersLoaded = m_shadersLoaded | p_shader;
 			break;
 		}
 	}

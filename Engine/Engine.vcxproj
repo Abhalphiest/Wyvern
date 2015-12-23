@@ -101,6 +101,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ShaderMaster.cpp" />
+    <ClCompile Include="TimeMaster.cpp" />
     <ClCompile Include="WindowMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -114,12 +115,10 @@
     <ClInclude Include="masters.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ShaderMaster.h" />
+    <ClInclude Include="TimeMaster.h" />
     <ClInclude Include="WindowMaster.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragmentshader.glsl">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="shaders\fragmentshader.glsl">
       <DeploymentContent>true</DeploymentContent>
       <FileType>Text</FileType>
@@ -128,9 +127,6 @@
     <None Include="shaders\vertexshader.glsl">
       <DeploymentContent>true</DeploymentContent>
       <FileType>Text</FileType>
-    </None>
-    <None Include="vertexshader.glsl">
-      <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
