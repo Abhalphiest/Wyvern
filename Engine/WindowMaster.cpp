@@ -1,8 +1,9 @@
 #include "WindowMaster.h"
-#define _CRTDBG_MAP_ALLOC
-#include<stdlib.h>
-#include<crtdbg.h>
+
 WindowMaster* WindowMaster::m_instance = nullptr;
+
+
+///singleton functions
 WindowMaster* WindowMaster::GetInstance(void)
 {
 	if (!m_instance) //our singleton doesn't exist yet
@@ -19,6 +20,8 @@ void WindowMaster::ReleaseInstance(void)
 	}
 		
 }
+
+
 ///Constructor
 	WindowMaster::WindowMaster(void)
 	{
@@ -92,3 +95,72 @@ void WindowMaster::ReleaseInstance(void)
 		return 0; //exit success
 	}
 
+
+	//setters
+	void WindowMaster::SetWindowFullscreen(bool fullscreen)
+	{
+		if (m_fullScreen == fullscreen)
+			return; //we don't need to do anything, so don't waste the time
+
+		m_fullScreen = fullscreen;
+		if (m_fullScreen)
+		{
+			//get the video mode of the main monitor
+			const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+			glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+			glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+			glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+			//windowed fullscreen - chosen over true fullscreen due to speed and flexibility. put it on the primary monitor
+			GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, m_windowName, glfwGetPrimaryMonitor(), NULL);
+		}
+		else //back to window, doesn't matter what monitor since we're giving our own mode stuff
+		{
+			GLFWwindow* window = glfwCreateWindow(m_windowWidth,m_windowHeight, m_windowName, NULL, NULL);
+		}
+	}
+
+	void WindowMaster::SetWindowHeight(uint height)
+	{
+		if (m_windowHeight == height)
+			return; //don't bother doing any costly function calls if we don't need to change anything
+
+		m_windowHeight = height;
+		glfwSetWindowSize(m_window, m_windowWidth, m_windowHeight);
+	}
+	void WindowMaster::SetWindowWidth(uint width)
+	{
+		if (m_windowWidth == width)
+			return; //don't bother doing any costly function calls if we don't need to change anything
+
+		m_windowWidth = width;
+		glfwSetWindowSize(m_window, m_windowWidth, m_windowHeight);
+
+	}
+
+	void WindowMaster::SetWindowX(uint x)
+	{
+		if (m_windowX == x)
+			return; //don't bother doing anything
+
+		m_windowX = x;
+		glfwSetWindowPos(m_window, m_windowX, m_windowY);
+	}
+
+	void WindowMaster::SetWindowY(uint y)
+	{
+		if (m_windowY == y)
+			return; //don't bother doing anything
+
+		m_windowY = y;
+		glfwSetWindowPos(m_window, m_windowX, m_windowY);
+	}
+
+	void WindowMaster::SetWindowName(char* nm)
+	{
+		//more costly to string compare than it is to just reassign and call it good
+		m_windowName = nm;
+		glfwSetWindowTitle(m_window, m_windowName);
+		
+
+	}
