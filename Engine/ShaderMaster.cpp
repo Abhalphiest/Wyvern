@@ -63,6 +63,7 @@ ShaderMaster::~ShaderMaster(void)
 
 GLuint ShaderMaster::LoadVertexShader(const char* p_vertexFilePath)
 {
+	
 	m_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	String vertexShaderSource;
 	std::ifstream vertexShaderStream(p_vertexFilePath, std::ios::in);
@@ -180,7 +181,7 @@ GLuint ShaderMaster::LoadProgram(void)
 	}
 	if (FRAGMENT_SHADER&m_shadersLoaded)
 	{
-		glAttachShader(m_programID, m_vertexShaderID);
+		glAttachShader(m_programID, m_fragmentShaderID);
 	}
 
 	glLinkProgram(m_programID);
@@ -203,7 +204,7 @@ GLuint ShaderMaster::LoadProgram(void)
 	}
 	if (FRAGMENT_SHADER&m_shadersLoaded)
 	{
-		glDetachShader(m_programID, m_vertexShaderID);
+		glDetachShader(m_programID, m_fragmentShaderID);
 		glDeleteShader(m_fragmentShaderID);
 	}
 	return m_programID;

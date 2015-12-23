@@ -64,8 +64,8 @@ void init()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 	//hook up our shaders
-	shaderMaster->AddShader("shaders/vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
-	shaderMaster->AddShader("shaders/fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
+	shaderMaster->AddShader("vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
+	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
 }

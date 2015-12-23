@@ -73,5 +73,11 @@
     <None Include="shaders\fragmentshader.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="fragmentshader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="vertexshader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
