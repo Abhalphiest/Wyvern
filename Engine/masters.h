@@ -3,6 +3,13 @@
 #define _masters_h_
 
 #include"definitions.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<Windows.h>
+#include"GL\glew.h"
+#include<GL\GLU.h>
+#include<GL\GL.h>
+#include"glfw3.h"
 
 class CameraMaster{
 
@@ -18,64 +25,7 @@ class ShaderMaster{
 
 };
 
-class WindowMaster{
-	bool fullScreen = false;
-	bool borderless = false; //for borderless window
-	
-	//window dimensions
-	uint windowWidth = 1280;
-	uint windowHeight = 720;
-	uint windowX = 0;
-	uint windowY = 0;
 
-	
-
-	static WindowMaster* instance; //singleton
-
-	//names
-	String windowName = "Engine";
-	String appName = "Application";
-
-	
-
-public:
-	static WindowMaster* GetInstance(void); //accessor
-	static void ReleaseInstance(void); //release
-
-	//properties
-	String GetAppName(void);
-
-	void SetWindowFullscreen(bool fullscreen);
-	bool IsWindowFullscreen(void);
-
-	void SetWindowWidth(uint width);
-	uint GetWindowWidth(void);
-
-	void SetWindowHeight(uint height);
-	uint GetWindowHeight(void);
-
-	void SetWindowX(uint x);
-	uint GetWindowX(void);
-
-	void SetWindowY(uint y);
-	uint SetWindowY(void);
-
-	void SetWindowName(String nm);
-	String GetWindowName(void);
-
-	//returns aspect ratio of the window, or the proportion of the width to the height
-	float GetWindowRatio(void);
-
-private:
-	WindowMaster(void); //constructor
-	WindowMaster(WindowMaster const& other); //copy constructor
-	WindowMaster & operator=(WindowMaster const& other); //copy assignment operator
-	~WindowMaster(void); //destructor
-
-	void Release(void); //give up our memory
-	void Init(void); //initialize
-
-};
 
 class TimeMaster{
 
@@ -156,7 +106,6 @@ private:
 	uint findMesh(Mesh* mesh); //finds the index of the given mesh
 
 	void Init(void);
-	void Release(void);
 	void ResetList(void);
 	
 

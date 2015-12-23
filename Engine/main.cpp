@@ -7,13 +7,16 @@
 //be moved out of the main file and put into a master init function once it's ironed out.
 
 //include the libraries
-#include<stdio.h>
+#define _CRTDBG_MAP_ALLOC
 #include<stdlib.h>
+#include<crtdbg.h>
+#include<stdio.h>
 #include<Windows.h>
 #include"GL\glew.h"
 #include<GL\GLU.h>
 #include<GL\GL.h>
 #include"glfw3.h"
+#include"WindowMaster.h"
 //---------------------
 //variable declarations
 //---------------------
@@ -22,7 +25,7 @@
 const int windowWidth = 800;
 const int windowHeight = 600;
 const char* windowString = "Test Window";
-GLFWwindow* window;
+WindowMaster* windowMaster;
 
 //function prototypes
 void init();
@@ -30,42 +33,23 @@ void update();
 //main
 int main(int argc, char** argv)
 {
-  //initialize glfw library and make a window
-	if (!glfwInit())
-	{
-		fprintf(stderr, "Failed to initialize GLFW. \n");
-		return -1; //exit failure
-	}
-  window = glfwCreateWindow(windowWidth,windowHeight, windowString, NULL, NULL);
- 
-  if (window == NULL)
-  {
-	  fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not compatible with GL 3.3+.");
-	  glfwTerminate();
-	  return -1;
-  }
-  //makes openGL context current for created window
-  glfwMakeContextCurrent(window); 
-  glewExperimental = true;
-  if (glewInit() != GLEW_OK) //Initialize GLEW
-  {
-	  fprintf(stderr, "Failed to initialize GLEW \n");
-	  return -1; //exit failure
-  }
-  glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); //keyboard input
+  windowMaster = WindowMaster::GetInstance();
+  glfwSetInputMode(windowMaster->GetWindow(), GLFW_STICKY_KEYS, GL_TRUE); //keyboard input
   //initialize everything else
+  _CrtSetBreakAlloc(155);
   init();
-
   //main loop
-  while(!glfwWindowShouldClose(window) && glfwGetKey(window,GLFW_KEY_ESCAPE)!=GLFW_PRESS)
+  while(!glfwWindowShouldClose(windowMaster->GetWindow()) && glfwGetKey(windowMaster->GetWindow(),GLFW_KEY_ESCAPE)!=GLFW_PRESS)
     update();
 
-  glfwTerminate(); //cleanup after we're done
+  windowMaster->ReleaseInstance();
+  _CrtDumpMemoryLeaks();
 }
 
 //run this once
 void init()
-{
+{	
+	
 	glClearColor(0.392f, 0.584f, 0.929f, 1.0f); //cornflower blue, for nostalgia's sake.
 }
 
@@ -74,6 +58,6 @@ void update()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	//swap buffers and catch keyboard input
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(windowMaster->GetWindow());
 	glfwPollEvents();
 }

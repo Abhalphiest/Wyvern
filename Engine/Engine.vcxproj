@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="WindowMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="definitions.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="include\wglew.h" />
     <ClInclude Include="masters.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="WindowMaster.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
