@@ -24,6 +24,9 @@
     <ClCompile Include="WindowMaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InputMaster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\glew.h">
@@ -52,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="WindowMaster.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMaster.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

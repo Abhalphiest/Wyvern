@@ -97,6 +97,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputMaster.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="WindowMaster.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="include\glfw3native.h" />
     <ClInclude Include="include\glxew.h" />
     <ClInclude Include="include\wglew.h" />
+    <ClInclude Include="InputMaster.h" />
     <ClInclude Include="masters.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="WindowMaster.h" />

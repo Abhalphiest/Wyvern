@@ -22,11 +22,10 @@
 //---------------------
 
 //for window creation
-const int windowWidth = 800;
-const int windowHeight = 600;
-String windowString = "Test Window";
 WindowMaster* windowMaster;
 
+GLuint VertexArrayID;
+GLuint vertexbuffer;
 //function prototypes
 void init();
 void update();
@@ -35,7 +34,6 @@ int main(int argc, char** argv)
 {
   windowMaster = WindowMaster::GetInstance();
   glfwSetInputMode(windowMaster->GetWindow(), GLFW_STICKY_KEYS, GL_TRUE); //keyboard input
-  windowMaster->SetWindowName(windowString);
   //initialize everything else
   init();
   //main loop
@@ -49,14 +47,29 @@ int main(int argc, char** argv)
 //run this once
 void init()
 {	
-	
+	//create and bind VAO
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
 	glClearColor(0.392f, 0.584f, 0.929f, 1.0f); //cornflower blue, for nostalgia's sake.
+
+	static const GLfloat g_vertex_buffer_data[] = 
+	{
+		-1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+	glGenBuffers(1, &vertexbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
 }
 
 //run once a frame
 void update()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDisableVertexAttribArray(0);
 	//swap buffers and catch keyboard input
 	glfwSwapBuffers(windowMaster->GetWindow());
 	glfwPollEvents();
