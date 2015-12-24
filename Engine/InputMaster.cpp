@@ -1,6 +1,7 @@
 #include"InputMaster.h"
 InputMaster* InputMaster::m_instance = nullptr;
-
+WindowMaster* InputMaster::m_windowMaster = nullptr;
+CameraMaster* InputMaster::m_cameraMaster = nullptr;
 //singleton functions
 InputMaster* InputMaster::GetInstance(void)
 {
