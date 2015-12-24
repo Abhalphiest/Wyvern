@@ -25,7 +25,7 @@ CameraMaster::CameraMaster(void)
 {
 	m_windowMaster = WindowMaster::GetInstance();//do this first!
 	m_cameras = std::vector<Camera*>(); //automatic variable, no new keyword
-	uint cameraid = createCamera(vec4(0.0f, 0.0f, -1.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
+	uint cameraid = createCamera(vec4(0.0f, 0.0f, -10.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
 	bindCamera(cameraid);
 	
 }
