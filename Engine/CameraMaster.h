@@ -24,7 +24,7 @@ public:
 	void orbitCamera(float p_angleRad); //move the camera around its focal point, like a planet orbiting the sun
 	void pointCamera(vec3 p_focalPoint); 
 	void bindCamera(uint p_index);
-	uint createCamera(vec4 p_position, vec3 p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip);
+	uint createCamera(vec4& p_position, vec3& p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip);
 	
 
 	//getters
@@ -57,6 +57,7 @@ private:
 	CameraMaster(void);
 	CameraMaster(const CameraMaster& other);
 	CameraMaster& operator=(const CameraMaster& other);
+	~CameraMaster(void);
 	void Update(void); //so we only update when something changes
 	typedef struct Camera Camera;
 };

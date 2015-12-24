@@ -24,14 +24,14 @@ void CameraMaster::ReleaseInstance(void)
 CameraMaster::CameraMaster(void)
 {
 	m_cameras = std::vector<Camera*>(); //automatic variable, no new keyword
-	m_currentCamera = -1; //flag value, this will still work because it will simply store the binary value for -1.. I think
+	
 
 }
 //copy constructor
 CameraMaster::CameraMaster(const CameraMaster& other)
 {
 	m_cameras = std::vector<Camera*>(); //automatic variable, no new keyword
-	for (uint i = 0; i < other.m_cameras.size; i++)
+	for (uint i = 0; i < other.m_cameras.size(); i++)
 	{
 		m_cameras.push_back(m_cameras[i]); //because this is a singleton and we only want one instance anyways
 											//it's okay to just give them the exact same pointers instead of deep copying
@@ -43,26 +43,35 @@ CameraMaster& CameraMaster::operator=(const CameraMaster& other)
 {
 	if (this != &other)
 	{
-		for (uint i = 0; i < m_cameras.size; i++)
+		for (uint i = 0; i < m_cameras.size(); i++)
 		{
 			
-			SafeDelete(m_cameras[i]);
+			if (m_cameras[i] != nullptr)
+			{
+				_aligned_free(m_cameras[i]);
+				m_cameras[i] = nullptr;
+			}
 		}
 		m_cameras.clear(); //clear does not delete for us, so we needed to delete first
-		for (uint i = 0; i < other.m_cameras.size; i++)
+		for (uint i = 0; i < other.m_cameras.size(); i++)
 		{
 			m_cameras.push_back(m_cameras[i]); //because this is a singleton and we only want one instance anyways
 			//it's okay to just give them the exact same pointers instead of deep copying
 		}										//or at least that's what I think at the moment
 		m_currentCamera = other.m_currentCamera;
 	}
+	return *this;
 }
 //destructor
 CameraMaster::~CameraMaster(void)
 {
-	for (uint i = 0; i < m_cameras.size; i++)
+	for (uint i = 0; i < m_cameras.size(); i++)
 	{
-		SafeDelete(m_cameras[i]);
+		if (m_cameras[i] != nullptr)
+		{
+			_aligned_free(m_cameras[i]);
+			m_cameras[i] = nullptr;
+		}
 	}
 }
 
@@ -129,9 +138,9 @@ void CameraMaster::bindCamera(uint p_index)
 		Update();
 	}
 }
-uint CameraMaster::createCamera(vec4 p_position, vec3 p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip)
+uint CameraMaster::createCamera(vec4& p_position, vec3& p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip)
 {
-	Camera* newCamera = new Camera;
+	Camera* newCamera = (Camera*)_aligned_malloc(sizeof(Camera),16);
 	newCamera->m_position = p_position;
 	newCamera->m_focalPoint = p_focalPoint;
 	newCamera->m_mode = p_mode;
