@@ -2,11 +2,10 @@ ENGINE DOCUMENTATION
 
 Creator: Margaret Dorsey
 Start Date: 10/18/2015
-Latest Update: 10/21/2015
+Latest Update: 12/24/2015
 Institution: Rochester Institute of Technology
 
 Written in C/C++ using OpenGL, GLEW, GLFW, and Visual Studio 2013.
-Original Version with g++, switching platforms currently.
 Relevant specs of the machine(s) used for testing and implementation:
 
 Machine 1:
@@ -18,5 +17,21 @@ Machine 1:
 	OpenGL Version 4.4
 
 
-Thank you very much to Dr. David Schwartz, Professor Alberto Bobadilla, Dr. Jay Alan Jackson, and the rest of the wonderful faculty and student body of RIT. All code is mine, but I could not have written it without their guidance or instruction.
+Thank you very much to Dr. David Schwartz, Professor Alberto Bobadilla, Dr. Jay Alan Jackson, and the rest of the wonderful faculty and student body of RIT.
+ All code is mine, but I could not have written it without their guidance or instruction.
 
+Code Conventions
+	member variables are preceded by m_
+	parameters are preceded by p_
+	
+Disclaimer:
+	I am a student, and am primarily self taught when it comes to engine programming
+	and C++ at this point in time. Please excuse my code for being non-optimal, I assure you
+	that I am always learning and would love to be contacted regarding any concerning code in this project.
+	
+Currently Working On:
+	Camera System Implementation
+	Mesh Primitives
+	Meshes in general
+	Textures
+	.obj loading
