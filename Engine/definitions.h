@@ -66,18 +66,18 @@ typedef glm::mat3 mat3;
 #define TWO_PI 6.2831853071795864769252867665590057683943387987502116
 
 //colors
-#define BLACK vector3(0.0f, 0.0f, 0.0f)
-#define WHITE vector3(1.0f, 1.0f, 1.0f)
-#define GREY  vector3(.5f, .5f, .5f)
+#define BLACK vec3(0.0f, 0.0f, 0.0f)
+#define WHITE vec3(1.0f, 1.0f, 1.0f)
+#define GREY  vec3(.5f, .5f, .5f)
 
-#define RED vector3(1.0f, 0.0f, 0.0f)
-#define GREEN vector3(0.0f, 1.0f, 0.0f)
-#define BLUE vector3(0.0f, 0.0f, 1.0f)
+#define RED vec3(1.0f, 0.0f, 0.0f)
+#define GREEN vec3(0.0f, 1.0f, 0.0f)
+#define BLUE vec3(0.0f, 0.0f, 1.0f)
 
-#define ZEROVECTOR vector3(0.0f,0.0f,0.0f)
-#define XAXIS vector3(1.0f, 0.0f, 0.0f)
-#define YAXIS vector3(0.0f, 1.0f, 0.0f)
-#define ZAXIS vector3(0.0f, 0.0f, 1.0f)
+#define ZEROVECTOR vec3(0.0f,0.0f,0.0f)
+#define XAXIS vec3(1.0f, 0.0f, 0.0f)
+#define YAXIS vec3(0.0f, 1.0f, 0.0f)
+#define ZAXIS vec3(0.0f, 0.0f, 1.0f)
 
 //Enums
 
@@ -87,12 +87,6 @@ enum OPTIONS
 	YES = 1
 };
 
-enum CAMERAMODE
-{
-	PERSPECTIVE = 0,
-	ORTHOGONALX = 1,
-	ORTHOGONALY = 2,
-	ORTHOGONALZ = 3
-};
+
 
 #endif

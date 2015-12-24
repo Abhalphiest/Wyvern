@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 {
   windowMaster = WindowMaster::GetInstance();
   shaderMaster = ShaderMaster::GetInstance();
-  glfwSetInputMode(windowMaster->GetWindow(), GLFW_STICKY_KEYS, GL_TRUE); //keyboard input
+  
   //initialize everything else
   init();
   //main loop
@@ -56,6 +56,8 @@ int main(int argc, char** argv)
 //run this once
 void init()
 {	
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	//create and bind VAO
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
@@ -155,7 +157,7 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
-	mat4 View = glm::lookAt(vec3(4, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
+	mat4 View = glm::lookAt(vec3(4, 3, -3), vec3(0, 0, 0), vec3(0, 1, 0));
 	mat4 Projection = glm::perspective(glm::radians(45.0f), windowMaster->GetWindowRatio(), 0.1f, 100.0f);
 	mat4 Model = mat4(1.0f); //identity
 	mvp = Projection*View*Model;

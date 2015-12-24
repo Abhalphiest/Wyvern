@@ -100,11 +100,14 @@
     <ClCompile Include="InputMaster.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshMaster.cpp" />
+    <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="ShaderMaster.cpp" />
     <ClCompile Include="TimeMaster.cpp" />
     <ClCompile Include="WindowMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraMaster.h" />
     <ClInclude Include="definitions.h" />
     <ClInclude Include="include\glew.h" />
     <ClInclude Include="include\glfw3.h" />
@@ -112,8 +115,11 @@
     <ClInclude Include="include\glxew.h" />
     <ClInclude Include="include\wglew.h" />
     <ClInclude Include="InputMaster.h" />
-    <ClInclude Include="masters.h" />
+    <ClInclude Include="LightMaster.h" />
+    <ClInclude Include="MaterialMaster.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshMaster.h" />
+    <ClInclude Include="Primitive.h" />
     <ClInclude Include="ShaderMaster.h" />
     <ClInclude Include="TimeMaster.h" />
     <ClInclude Include="WindowMaster.h" />
