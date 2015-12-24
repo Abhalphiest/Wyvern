@@ -121,8 +121,11 @@ void CameraMaster::rotateCamera(float p_angleRad, vec3 p_axis)
 {
 
 }
-void CameraMaster::orbitCamera(float p_angleRad)
+void CameraMaster::orbitCamera(float p_angleRad, vec3 p_axis)
 {
+	Camera* camera = m_cameras[m_currentCamera];
+	vec3 focalSpacePos = (vec3)camera->m_position - camera->m_focalPoint;
+	glm::rotate(glm::degrees(p_angleRad), p_axis);
 
 }
 void CameraMaster::pointCamera(vec3 p_focalPoint)

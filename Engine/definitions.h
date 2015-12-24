@@ -22,6 +22,8 @@
 #include<sstream>
 #include"include/glm/glm.hpp"
 #include"include/glm/gtc/quaternion.hpp"
+#include"include/glm/gtc/matrix_transform.hpp"
+#include"include/glm/gtx/transform.hpp"
 
 typedef std::string String;
 typedef unsigned int uint;

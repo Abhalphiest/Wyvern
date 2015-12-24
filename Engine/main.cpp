@@ -8,18 +8,11 @@
 
 //include the libraries
 #define _CRTDBG_MAP_ALLOC
-#include<stdlib.h>
-#include<crtdbg.h>
-#include<stdio.h>
-#include<Windows.h>
-#include"GL\glew.h"
-#include<GL\GLU.h>
-#include<GL\GL.h>
-#include"glfw3.h"
+#include"definitions.h"
 #include"WindowMaster.h"
 #include"ShaderMaster.h"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtx/transform.hpp"
+#include"InputMaster.h"
+
 //---------------------
 //variable declarations
 //---------------------
@@ -27,6 +20,7 @@
 //for window creation
 WindowMaster* windowMaster;
 ShaderMaster* shaderMaster;
+InputMaster* inputMaster;
 
 mat4 mvp;
 GLuint mvp_handle;
@@ -41,7 +35,7 @@ int main(int argc, char** argv)
 {
   windowMaster = WindowMaster::GetInstance();
   shaderMaster = ShaderMaster::GetInstance();
-  
+  inputMaster = InputMaster::GetInstance();
   //initialize everything else
   init();
   //main loop
@@ -50,6 +44,7 @@ int main(int argc, char** argv)
 
   windowMaster->ReleaseInstance();
   shaderMaster->ReleaseInstance();
+  inputMaster->ReleaseInstance();
   _CrtDumpMemoryLeaks();
 }
 

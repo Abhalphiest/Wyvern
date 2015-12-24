@@ -57,7 +57,8 @@ void InputMaster::Init(void)
 
 void InputMaster::KeyPressCallback(GLFWwindow* p_window, int p_key, int p_scancode, int p_action, int p_mods)
 {
-
+	if (p_key == GLFW_KEY_A)
+		printf("a");
 }
 void InputMaster::CharCallback(GLFWwindow* p_window, uint p_codepoint)
 {

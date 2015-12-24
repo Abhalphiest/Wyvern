@@ -21,7 +21,7 @@ public:
 	void zoomCamera(float p_zoomDistance);
 	void truckCamera(float p_dist, vec3 p_axis); //translation
 	void rotateCamera(float p_angleRad, vec3 p_axis);
-	void orbitCamera(float p_angleRad); //move the camera around its focal point, like a planet orbiting the sun
+	void orbitCamera(float p_angleRad, vec3 p_axis); //move the camera around its focal point, like a planet orbiting the sun
 	void pointCamera(vec3 p_focalPoint); 
 	void bindCamera(uint p_index);
 	uint createCamera(vec4& p_position, vec3& p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip);
