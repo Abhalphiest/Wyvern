@@ -1,6 +1,7 @@
 #ifndef _CAMERAMASTER_H
 #define _CAMERAMASTER_H
 #include "definitions.h"
+#include "WindowMaster.h"
 class CameraMaster{
 
 public:
@@ -24,7 +25,7 @@ public:
 	void orbitCamera(float p_angleRad, vec3 p_axis); //move the camera around its focal point, like a planet orbiting the sun
 	void pointCamera(vec3 p_focalPoint); 
 	void bindCamera(uint p_index);
-	uint createCamera(vec4& p_position, vec3& p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip);
+	uint createCamera(vec4& p_position, vec3& p_focalPoint, vec3 &p_up, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip);
 	
 
 	//getters
@@ -43,17 +44,19 @@ private:
 		mat4 m_viewMatrix;
 		mat4 m_perspMatrix;
 		vec4 m_position;
-		vec3 m_focalPoint; //will serve as our orientation, I think this will work okay
+		vec3 m_focalPoint; //will serve as our orientation along with up, I think this will work okay
+		vec3 m_up;
 		float m_fov;
 		float m_nearClip;
 		float m_farClip;
-		CameraMode m_mode;
-
-		
+		CameraMode m_mode;	
 	};
 	static CameraMaster* m_instance;
 	std::vector<Camera*> m_cameras; //going to have to memory manage this time
 	uint m_currentCamera;
+
+	WindowMaster* m_windowMaster;
+
 	CameraMaster(void);
 	CameraMaster(const CameraMaster& other);
 	CameraMaster& operator=(const CameraMaster& other);

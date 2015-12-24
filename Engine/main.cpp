@@ -12,6 +12,7 @@
 #include"WindowMaster.h"
 #include"ShaderMaster.h"
 #include"InputMaster.h"
+#include"CameraMaster.h"
 
 //---------------------
 //variable declarations
@@ -21,6 +22,7 @@
 WindowMaster* windowMaster;
 ShaderMaster* shaderMaster;
 InputMaster* inputMaster;
+CameraMaster* cameraMaster;
 
 mat4 mvp;
 GLuint mvp_handle;
@@ -36,6 +38,7 @@ int main(int argc, char** argv)
   windowMaster = WindowMaster::GetInstance();
   shaderMaster = ShaderMaster::GetInstance();
   inputMaster = InputMaster::GetInstance();
+  cameraMaster = CameraMaster::GetInstance();
   //initialize everything else
   init();
   //main loop
@@ -45,6 +48,7 @@ int main(int argc, char** argv)
   windowMaster->ReleaseInstance();
   shaderMaster->ReleaseInstance();
   inputMaster->ReleaseInstance();
+  cameraMaster->ReleaseInstance();
   _CrtDumpMemoryLeaks();
 }
 
@@ -165,6 +169,10 @@ void init()
 //run once a frame
 void update()
 {
+	mat4 View = cameraMaster->GetViewMatrix();
+	mat4 Projection = cameraMaster->GetPerspMatrix();
+	mat4 Model = mat4(1.0f); //identity
+	mvp = Projection*View*Model;
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glUseProgram(shaderMaster->GetProgramID());
 	glEnableVertexAttribArray(0);

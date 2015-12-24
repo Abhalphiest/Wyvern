@@ -15,7 +15,8 @@ class InputMaster
 		InputMaster& operator=(const InputMaster &other); //assignment overload
 		~InputMaster(void); //destructor
 		
-		WindowMaster* windowMaster;
+		static WindowMaster* m_windowMaster;
+		static CameraMaster* m_cameraMaster;
 		static InputMaster* m_instance;
 
 		//input handling - made static to comply with GLFW callback needs

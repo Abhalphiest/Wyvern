@@ -35,8 +35,9 @@ InputMaster::~InputMaster(void)
 }
 void InputMaster::Init(void)
 {
-	windowMaster = WindowMaster::GetInstance();
-	GLFWwindow* window = windowMaster->GetWindow();
+	m_windowMaster = WindowMaster::GetInstance();
+	GLFWwindow* window = m_windowMaster->GetWindow();
+	m_cameraMaster = CameraMaster::GetInstance();
 
 	//set up modes
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -58,7 +59,7 @@ void InputMaster::Init(void)
 void InputMaster::KeyPressCallback(GLFWwindow* p_window, int p_key, int p_scancode, int p_action, int p_mods)
 {
 	if (p_key == GLFW_KEY_A)
-		printf("a");
+		m_cameraMaster->orbitCamera((float)QUARTER_PI,YAXIS);
 }
 void InputMaster::CharCallback(GLFWwindow* p_window, uint p_codepoint)
 {

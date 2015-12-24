@@ -24,8 +24,9 @@ void CameraMaster::ReleaseInstance(void)
 CameraMaster::CameraMaster(void)
 {
 	m_cameras = std::vector<Camera*>(); //automatic variable, no new keyword
-	
-
+	uint cameraid = createCamera(vec4(0.0f, 0.0f, -1.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
+	bindCamera(cameraid);
+	m_windowMaster = WindowMaster::GetInstance();
 }
 //copy constructor
 CameraMaster::CameraMaster(const CameraMaster& other)
@@ -37,6 +38,7 @@ CameraMaster::CameraMaster(const CameraMaster& other)
 											//it's okay to just give them the exact same pointers instead of deep copying
 	}										//or at least that's what I think at the moment
 	m_currentCamera = other.m_currentCamera;
+	m_windowMaster = other.m_windowMaster;
 }
 //assignment operator
 CameraMaster& CameraMaster::operator=(const CameraMaster& other)
@@ -59,6 +61,7 @@ CameraMaster& CameraMaster::operator=(const CameraMaster& other)
 			//it's okay to just give them the exact same pointers instead of deep copying
 		}										//or at least that's what I think at the moment
 		m_currentCamera = other.m_currentCamera;
+		m_windowMaster = other.m_windowMaster;
 	}
 	return *this;
 }
@@ -87,11 +90,13 @@ void CameraMaster::SetCameraMode(CameraMode p_mode)
 
 void CameraMaster::Update()
 {
-	switch (m_cameras[m_currentCamera]->m_mode)
+	Camera* camera = m_cameras[m_currentCamera];
+	switch (camera->m_mode)
 	{
 	case PERSPECTIVE:
 	{
-
+		camera->m_viewMatrix = glm::lookAt((vec3)camera->m_position, camera->m_focalPoint, camera->m_up);
+		camera->m_perspMatrix = glm::perspective(camera->m_fov, m_windowMaster->GetWindowRatio(), camera->m_nearClip, camera->m_farClip);
 		break;
 	}
 	case ORTHOGONALX:
@@ -124,8 +129,11 @@ void CameraMaster::rotateCamera(float p_angleRad, vec3 p_axis)
 void CameraMaster::orbitCamera(float p_angleRad, vec3 p_axis)
 {
 	Camera* camera = m_cameras[m_currentCamera];
-	vec3 focalSpacePos = (vec3)camera->m_position - camera->m_focalPoint;
-	glm::rotate(glm::degrees(p_angleRad), p_axis);
+	vec4 focalSpacePos = vec4((vec3)camera->m_position - camera->m_focalPoint,0.0f);
+	mat4 rotation = glm::rotate(glm::degrees(p_angleRad), p_axis);
+	vec4 rotated = rotation*focalSpacePos;
+	camera->m_position = glm::translate((vec3)(rotated - focalSpacePos))*camera->m_position;
+	Update();
 
 }
 void CameraMaster::pointCamera(vec3 p_focalPoint)
@@ -141,15 +149,18 @@ void CameraMaster::bindCamera(uint p_index)
 		Update();
 	}
 }
-uint CameraMaster::createCamera(vec4& p_position, vec3& p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip)
+uint CameraMaster::createCamera(vec4& p_position, vec3& p_focalPoint, vec3 &p_up, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip)
 {
 	Camera* newCamera = (Camera*)_aligned_malloc(sizeof(Camera),16);
 	newCamera->m_position = p_position;
 	newCamera->m_focalPoint = p_focalPoint;
+	newCamera->m_up = p_up;
 	newCamera->m_mode = p_mode;
 	newCamera->m_fov = p_fov;
 	newCamera->m_nearClip = p_nearClip;
 	newCamera->m_farClip = p_farClip;
+	newCamera->m_perspMatrix = mat4(1.0f);
+	newCamera->m_perspMatrix = mat4(1.0f); //initialize to identity matrices
 	m_cameras.push_back(newCamera);
 	return m_cameras.size() - 1; //return our new index
 
