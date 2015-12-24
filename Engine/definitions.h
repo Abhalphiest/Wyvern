@@ -21,6 +21,7 @@
 #include<fstream>
 #include<sstream>
 #include"include/glm/glm.hpp"
+#include"include/glm/gtc/quaternion.hpp"
 
 typedef std::string String;
 typedef unsigned int uint;
@@ -54,7 +55,7 @@ typedef glm::mat4 mat4;
 typedef glm::vec3 vec3;
 typedef glm::vec4 vec4;
 typedef glm::mat3 mat3;
-
+typedef glm::quat quaternion;
 #define SafeDelete(p){if(p){delete p; p = nullptr;}} //so we won't try to delete a null pointer in the chaos that is our program
 
 //constants

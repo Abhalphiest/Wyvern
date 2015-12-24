@@ -6,7 +6,9 @@
 
 #include"definitions.h"
 #include"ShaderMaster.h"
-#include"masters.h"
+#include"CameraMaster.h"
+#include"MaterialMaster.h"
+#include"LightMaster.h"
 
 
 class Mesh
@@ -30,7 +32,7 @@ protected:
 	mat4 m_toWorld;
 	mat4 m_modelMatrix;
 	vec4 m_position;
-	vec4 m_orientation;
+	quaternion m_orientation;
 
 	CameraMaster* camera = nullptr;
 	MaterialMaster* material = nullptr;
