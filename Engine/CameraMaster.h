@@ -13,7 +13,7 @@ public:
 	};
 
 	
-	//singletonfunctions
+	//singleton functions
 	static CameraMaster* GetInstance(void);
 	static void ReleaseInstance(void);
 
@@ -23,36 +23,41 @@ public:
 	void rotateCamera(float p_angleRad, vec3 p_axis);
 	void orbitCamera(float p_angleRad); //move the camera around its focal point, like a planet orbiting the sun
 	void pointCamera(vec3 p_focalPoint); 
-	void bindCamera(uint index);
-	void createCamera(vec4 p_position, vec3 p_focalPoint,quaternion p_orientation);
-	void Update(void);
+	void bindCamera(uint p_index);
+	uint createCamera(vec4 p_position, vec3 p_focalPoint, CameraMode p_mode, float p_fov, float p_nearClip, float p_farClip);
+	
 
 	//getters
-	mat4 GetViewMatrix(void){ return cameras[currentCamera]->m_viewMatrix; }
-	mat4 GetPerspMatrix(void){ return cameras[currentCamera]->m_perspMatrix; }
-	CameraMode GetCameraMode(void){	return cameras[currentCamera]->m_mode;}
+	mat4 GetViewMatrix(void){ return m_cameras[m_currentCamera]->m_viewMatrix; }
+	mat4 GetPerspMatrix(void){ return m_cameras[m_currentCamera]->m_perspMatrix; }
+	CameraMode GetCameraMode(void){	return m_cameras[m_currentCamera]->m_mode;}
+	uint GetCurrentCamera(void){ return m_currentCamera; }
 	//setters
 	void SetCameraMode(CameraMode p_mode);
-	void SetNearClipping(float p_nearclip);
-	void SetFarClipping(float p_farclip);
+	void SetNearClipping(float p_nearclip){ m_cameras[m_currentCamera]->m_nearClip= p_nearclip; Update(); }
+	void SetFarClipping(float p_farclip){ m_cameras[m_currentCamera]->m_nearClip = p_farclip; Update(); }
+	void SetFOV(float p_fovRad){ m_cameras[m_currentCamera]->m_fov = p_fovRad; Update(); }
 private:
 	struct Camera
 	{
 		mat4 m_viewMatrix;
 		mat4 m_perspMatrix;
 		vec4 m_position;
-		vec3 m_focalPoint;
-		quaternion m_orientation;
+		vec3 m_focalPoint; //will serve as our orientation, I think this will work okay
+		float m_fov;
+		float m_nearClip;
+		float m_farClip;
 		CameraMode m_mode;
+
+		
 	};
-	CameraMaster* m_instance;
-	std::vector<Camera*> cameras;
-	uint currentCamera;
+	static CameraMaster* m_instance;
+	std::vector<Camera*> m_cameras; //going to have to memory manage this time
+	uint m_currentCamera;
 	CameraMaster(void);
 	CameraMaster(const CameraMaster& other);
 	CameraMaster& operator=(const CameraMaster& other);
-	void Init(void);
-	
+	void Update(void); //so we only update when something changes
 	typedef struct Camera Camera;
 };
 #endif
