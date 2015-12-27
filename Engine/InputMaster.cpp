@@ -84,7 +84,7 @@ void InputMaster::MouseButtonCallback(GLFWwindow* p_window, int p_button, int p_
 }
 void InputMaster::ScrollCallback(GLFWwindow* p_window, double p_xoffset, double p_yoffset)
 {
-	m_cameraMaster->zoomCamera(p_yoffset);
+	m_cameraMaster->zoomCamera((float)p_yoffset);
 }
 void InputMaster::JoystickManager()
 {

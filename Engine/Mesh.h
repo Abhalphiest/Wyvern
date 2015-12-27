@@ -14,36 +14,32 @@
 class Mesh
 {
 protected:
-	bool isBound = false; //is it bound?
-	bool isCopy = false; //is this a copy?
-	bool wireframe = false; //draw it in wireframe?
-	GLuint numVertices = 0; //better to use the GL unsigned ints, for portability's sake
-	GLuint materialIndex; 
+	bool m_isBound = false; //is it bound?
+	bool m_wireframe = false; //draw it in wireframe?
+	uint m_numVertices = 0; 
+	uint m_materialIndex; 
 	
-	GLuint vao = 0; //vertex array object index
-	GLuint vertexBuffer = 0; //vertex buffer index
-	GLuint colorBuffer = 0; //color  buffer index
-	GLuint UVBuffer = 0; //UV buffer index
-	GLuint tangentBuffer = 0;
-	GLuint binormalBuffer = 0;
-	GLuint shaderIndex = 0;
-	GLuint ogShaderIndex = 0; //for the original shader
+	GLuint m_vao = 0; //vertex array object index
+	GLuint m_vertexBuffer = 0; //vertex buffer index
+	GLuint m_colorBuffer = 0; //color  buffer index
+	GLuint m_uvBuffer = 0; //UV buffer index
+	GLuint m_tangentBuffer = 0;
+	GLuint m_binormalBuffer = 0;
+	GLuint m_shaderIndex = 0;
+	GLuint m_ogShaderIndex = 0; //for the original shader
 
-	mat4 m_toWorld;
-	mat4 m_modelMatrix;
-	vec4 m_position;
-	quaternion m_orientation;
 
-	CameraMaster* camera = nullptr;
-	MaterialMaster* material = nullptr;
-	LightMaster* light = nullptr;
-	ShaderMaster* shader = nullptr;
+	CameraMaster* m_camera = nullptr;
+	MaterialMaster* m_material = nullptr;
+	LightMaster* m_light = nullptr;
+	ShaderMaster* m_shader = nullptr;
 
-	char* name = '\0'; //empty string for uninitialized name
+	char* m_name = '\0'; //empty string for uninitialized name
 	
 
 public:
 	Mesh(void); //constructor
+	String GetName(void){ return m_name; }
 
 private:
 
