@@ -125,7 +125,11 @@ void CameraMaster::truckCamera(float p_dist, vec3 p_axis)
 }
 void CameraMaster::rotateCamera(float p_angleRad, vec3 p_axis)
 {
-
+	mat4 rotation = glm::rotate(glm::degrees(p_angleRad), p_axis);
+	Camera*camera = m_cameras[m_currentCamera];
+	camera->m_up = (vec3)(rotation*vec4(camera->m_up, 1.0f));
+	camera->m_focalPoint = (vec3)(rotation*vec4(camera->m_focalPoint-(vec3)camera->m_position,1.0f))+(vec3)camera->m_position;
+	Update();
 }
 void CameraMaster::orbitCamera(float p_angleRad, vec3 p_axis)
 {

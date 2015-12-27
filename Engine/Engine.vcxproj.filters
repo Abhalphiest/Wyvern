@@ -51,9 +51,6 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files\Mesh Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Source Files\Mesh Classes</Filter>
-    </ClCompile>
     <ClCompile Include="CameraMaster.cpp">
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
@@ -91,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="MeshMaster.h">
       <Filter>Header Files\MasterHeaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Header Files\Mesh Classes</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files\Mesh Classes</Filter>

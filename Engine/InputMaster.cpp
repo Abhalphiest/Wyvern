@@ -59,8 +59,12 @@ void InputMaster::Init(void)
 
 void InputMaster::KeyPressCallback(GLFWwindow* p_window, int p_key, int p_scancode, int p_action, int p_mods)
 {
-	if (p_key == GLFW_KEY_A)
+	if (p_key == GLFW_KEY_O)
 		m_cameraMaster->orbitCamera(.01f,XAXIS);
+	if (p_key == GLFW_KEY_R)
+	{
+		m_cameraMaster->rotateCamera(.01f, YAXIS);
+	}
 }
 void InputMaster::CharCallback(GLFWwindow* p_window, uint p_codepoint)
 {
