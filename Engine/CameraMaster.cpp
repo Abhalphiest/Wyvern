@@ -121,7 +121,11 @@ void CameraMaster::zoomCamera(float p_zoomDistance)
 }
 void CameraMaster::truckCamera(float p_dist, vec3 p_axis)
 {
-
+	vec3 dir = glm::normalize(p_axis);
+	Camera* camera = m_cameras[m_currentCamera];
+	camera->m_position = glm::translate(dir*p_dist)*camera->m_position;
+	camera->m_focalPoint =(vec3)( glm::translate(dir*p_dist)*vec4(camera->m_focalPoint, 1.0f));
+	Update();
 }
 void CameraMaster::rotateCamera(float p_angleRad, vec3 p_axis)
 {

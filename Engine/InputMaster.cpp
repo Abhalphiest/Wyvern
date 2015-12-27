@@ -65,6 +65,10 @@ void InputMaster::KeyPressCallback(GLFWwindow* p_window, int p_key, int p_scanco
 	{
 		m_cameraMaster->rotateCamera(.01f, YAXIS);
 	}
+	if (p_key == GLFW_KEY_T)
+	{
+		m_cameraMaster->truckCamera(.1f, XAXIS);
+	}
 }
 void InputMaster::CharCallback(GLFWwindow* p_window, uint p_codepoint)
 {
