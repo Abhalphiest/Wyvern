@@ -6,9 +6,6 @@
 struct MeshData{
 	uint m_numInstances = 0;
 	std::vector<mat4> m_toWorld; //transformation matrices per instance
-	std::vector<mat4> m_modelMatrix;
-	std::vector<vec4> m_position;
-	std::vector<quaternion> m_orientation;
 	//constructor
 	MeshData(void);
 	MeshData(MeshData& other);
@@ -34,8 +31,8 @@ public:
 
 	Mesh* GetMesh(uint p_index); //gets mesh associated with given index
 
-	void AddToRenderList(Mesh* p_mesh, vec4& p_position, quaternion& p_orientation);
-	void AddToRenderList(uint p_index, vec4& p_position, quaternion& p_orientation);
+	void AddToRenderList(Mesh* p_mesh, mat4& p_toWorld);
+	void AddToRenderList(uint p_index, mat4& p_toWorld);
 	void Render(void);
 
 private:

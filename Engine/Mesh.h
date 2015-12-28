@@ -16,9 +16,12 @@ class Mesh
 protected:
 	bool m_isBound = false; //is it bound?
 	bool m_wireframe = false; //draw it in wireframe?
+	bool m_isInstanced = false; //does it have multiple instances?
 	uint m_numVertices = 0; 
 	uint m_materialIndex; 
-	
+	mat4 m_modelMatrix;
+	vec4 m_position;
+	quaternion m_orientation;
 	GLuint m_vao = 0; //vertex array object index
 	GLuint m_vertexBuffer = 0; //vertex buffer index
 	GLuint m_colorBuffer = 0; //color  buffer index

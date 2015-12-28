@@ -1,5 +1,5 @@
 #include"MeshMaster.h"
-MeshMaster* m_instance = nullptr;
+MeshMaster* MeshMaster::m_instance = nullptr;
 
 MeshMaster* MeshMaster::GetInstance(void)
 {
@@ -37,7 +37,7 @@ MeshMaster::MeshMaster(MeshMaster const& other)
 	memcpy(m_floatMatrices, other.m_floatMatrices, sizeof(float)*m_numRenderMeshes);
 	m_meshList = std::vector <Mesh*> ();
 	Mesh* temp; //deep copy
-	for (int i = 0; i < other.m_meshList.size(); i++)
+	for (uint i = 0; i < other.m_meshList.size(); i++)
 	{
 		temp = (Mesh*)malloc(sizeof(Mesh));
 		memcpy(temp, other.m_meshList[i], sizeof(Mesh));
@@ -45,7 +45,7 @@ MeshMaster::MeshMaster(MeshMaster const& other)
 	}
 	m_meshDataList = std::vector<MeshData*>();
 	MeshData* tempData; //deep copy
-	for (int i = 0; i < other.m_meshDataList.size(); i++)
+	for (uint i = 0; i < other.m_meshDataList.size(); i++)
 	{
 		tempData = (MeshData*)malloc(sizeof(MeshData));
 		memcpy(tempData, other.m_meshDataList[i], sizeof(MeshData));
@@ -62,7 +62,7 @@ MeshMaster& MeshMaster::operator=(MeshMaster const& other)
 	memcpy(m_floatMatrices, other.m_floatMatrices, sizeof(float)*m_numRenderMeshes);
 	m_meshList = std::vector <Mesh*>();
 	Mesh* temp; //deep copy
-	for (int i = 0; i < other.m_meshList.size(); i++)
+	for (uint i = 0; i < other.m_meshList.size(); i++)
 	{
 		temp = (Mesh*)malloc(sizeof(Mesh));
 		memcpy(temp, other.m_meshList[i], sizeof(Mesh));
@@ -70,13 +70,14 @@ MeshMaster& MeshMaster::operator=(MeshMaster const& other)
 	}
 	m_meshDataList = std::vector<MeshData*>();
 	MeshData* tempData; //deep copy
-	for (int i = 0; i < other.m_meshDataList.size(); i++)
+	for (uint i = 0; i < other.m_meshDataList.size(); i++)
 	{
 		tempData = (MeshData*)malloc(sizeof(MeshData));
 		memcpy(tempData, other.m_meshDataList[i], sizeof(MeshData));
 		m_meshDataList.push_back(tempData);
 	}
 	m_map = other.m_map;
+	return *this;
 }
 //destructor
 MeshMaster::~MeshMaster(void)
@@ -86,7 +87,7 @@ MeshMaster::~MeshMaster(void)
 		free(m_floatMatrices);
 		m_floatMatrices = nullptr;
 	}
-	for (int i = 0; i < m_meshList.size(); i++)
+	for (uint i = 0; i < m_meshList.size(); i++)
 	{
 		if (m_meshList[i] != nullptr)
 		{
@@ -94,7 +95,7 @@ MeshMaster::~MeshMaster(void)
 			m_meshList[i] = nullptr;
 		}
 	}
-	for (int i = 0; i < m_meshDataList.size(); i++)
+	for (uint i = 0; i < m_meshDataList.size(); i++)
 	{
 		
 		if (m_meshDataList[i] != nullptr)
@@ -112,6 +113,7 @@ uint MeshMaster::AddMesh(Mesh* p_mesh)
 		uint index = m_meshList.size(); //index on 0
 		m_meshList.push_back(p_mesh);
 		m_map.insert(std::pair<String,int>(p_mesh->GetName(),index));
+		return index;
 	}
 	else return FindMesh(p_mesh);
 }
@@ -124,11 +126,11 @@ Mesh* MeshMaster::GetMesh(uint p_index)
 {
 	return nullptr;
 }
-void MeshMaster::AddToRenderList(Mesh* p_mesh, vec4& p_position, quaternion& p_orientation)
+void MeshMaster::AddToRenderList(Mesh* p_mesh, mat4& p_toWorld)
 {
 
 }
-void MeshMaster::AddToRenderList(uint p_index, vec4& p_position, quaternion& p_orientation)
+void MeshMaster::AddToRenderList(uint p_index, mat4& p_toWorld)
 {
 
 }
@@ -166,7 +168,7 @@ MeshData::MeshData(MeshData& other)
 }
 MeshData& MeshData::operator=(MeshData& other)
 {
-
+	return *this;
 }
 MeshData::~MeshData(void)
 {
