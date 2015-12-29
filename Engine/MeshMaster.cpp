@@ -120,23 +120,57 @@ uint MeshMaster::AddMesh(Mesh* p_mesh)
 
 Mesh* MeshMaster::GetMesh(String p_name)
 {
-	return nullptr;
+	try
+	{
+		int index = m_map.at(p_name);
+		return m_meshList[index];
+	}
+	catch (std::out_of_range e)
+	{
+		return nullptr; //not found
+	}
 }
 Mesh* MeshMaster::GetMesh(uint p_index)
 {
-	return nullptr;
+	try
+	{
+		return m_meshList[p_index];
+	}
+	catch (std::out_of_range e)
+	{
+		return nullptr; //not found
+	}
 }
+
 void MeshMaster::AddToRenderList(Mesh* p_mesh, mat4& p_toWorld)
 {
-
+	int index;
+	if ((index = FindMesh(p_mesh)) == -1)
+	{
+		index = AddMesh(p_mesh);
+	}
+	m_meshDataList[index]->m_toWorld.push_back(p_toWorld);
+	m_meshDataList[index]->m_numInstances++;
 }
 void MeshMaster::AddToRenderList(uint p_index, mat4& p_toWorld)
 {
+	try{
 
+
+		m_meshDataList[p_index]->m_toWorld.push_back(p_toWorld);
+		m_meshDataList[p_index]->m_numInstances++;
+	}
+	catch (std::out_of_range e)
+	{
+		fprintf(stdout, "AddToRenderList error: mesh not contained in data list");
+	}
 }
 void MeshMaster::Render(void)
 {
+	for (int i = 0; i < m_meshDataList.size(); i++)
+	{
 
+	}
 }
 
 int MeshMaster::FindMesh(Mesh* p_mesh)
