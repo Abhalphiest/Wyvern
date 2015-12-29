@@ -21,10 +21,9 @@
 #include<fstream>
 #include<sstream>
 #include"include/glm/glm.hpp"
-#include"include/glm/gtc/quaternion.hpp"
 #include"include/glm/gtc/matrix_transform.hpp"
 #include"include/glm/gtx/transform.hpp"
-
+#include"include/glm/gtc/quaternion.hpp"
 typedef std::string String;
 typedef unsigned int uint;
 
@@ -90,6 +89,15 @@ enum OPTIONS
 	YES = 1
 };
 
+static quaternion angleAxis(float &angle, vec3 & axis)
+{
+	quaternion q = quaternion();
 
+	float s = glm::sin(angle*.5f);
+	q.w = glm::cos(angle*.5f);
+	q.x = axis.x*s;
+	q.y = axis.y*s;
+	q.z = axis.z*s;
+}
 
 #endif

@@ -167,7 +167,7 @@ void MeshMaster::AddToRenderList(uint p_index, mat4& p_toWorld)
 }
 void MeshMaster::Render(void)
 {
-	for (int i = 0; i < m_meshDataList.size(); i++)
+	for (uint i = 0; i < m_meshDataList.size(); i++)
 	{
 
 	}
