@@ -195,6 +195,67 @@ Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
 	sphere->CompileMesh();
 	return sphere;
 }
+
+Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
+{
+	Mesh* torus = new Mesh();
+
+	torus->CompileMesh();
+	return torus;
+}
+
+Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint p_subdivisions)
+{
+	Mesh* pipe = new Mesh();
+	if (p_subdivisions < 3)
+	{
+		p_subdivisions = 3;
+	}
+	else if (p_subdivisions > 360)
+	{
+		p_subdivisions = 360;
+	}
+
+	float approxStep = 360.0f / p_subdivisions;
+	vec3 baseCenter = vec3(0, -p_height*.5f, 0);
+	vec3 topCenter = vec3(0, p_height*.5f, 0);
+	float leftx;
+	float leftz;
+	float rightx;
+	float rightz;
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+		leftx = glm::cos(glm::radians(i*approxStep));
+		leftz = glm::sin(glm::radians(i*approxStep));
+		rightx = glm::cos(glm::radians((i + 1)*approxStep));
+		rightz = glm::sin(glm::radians((i + 1)*approxStep));
+		pipe->AddQuad(vec3(rightx*p_outerRadius, baseCenter.y, rightz*p_outerRadius),
+			vec3(rightx*p_innerRadius, baseCenter.y, rightz*p_innerRadius),
+			vec3(leftx*p_innerRadius, baseCenter.y, leftz*p_innerRadius),
+			vec3(leftx*p_outerRadius, baseCenter.y, leftz*p_outerRadius)
+			);
+
+		pipe->AddQuad(vec3(leftx*p_innerRadius, topCenter.y, leftz*p_innerRadius),
+			vec3(rightx*p_innerRadius, topCenter.y, rightz*p_innerRadius),
+			vec3(rightx*p_outerRadius, topCenter.y, rightz*p_outerRadius),
+			vec3(leftx*p_outerRadius, topCenter.y, leftz*p_outerRadius)
+			);
+		pipe->AddQuad(
+			vec3(rightx*p_innerRadius, baseCenter.y, rightz*p_innerRadius),
+			vec3(rightx*p_innerRadius, topCenter.y, rightz*p_innerRadius),
+			vec3(leftx*p_innerRadius, topCenter.y, leftz*p_innerRadius),
+			vec3(leftx*p_innerRadius, baseCenter.y, leftz*p_innerRadius)
+			);
+		pipe->AddQuad(vec3(leftx*p_outerRadius, topCenter.y, leftz*p_outerRadius),
+			vec3(rightx*p_outerRadius, topCenter.y, rightz*p_outerRadius),
+			vec3(rightx*p_outerRadius, baseCenter.y, rightz*p_outerRadius),
+			vec3(leftx*p_outerRadius, baseCenter.y, leftz*p_outerRadius)
+			);
+
+	}
+	pipe->CompileMesh();
+	return pipe;
+}
 void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 {
 	//see if these vertices have already been used, because we're doing indexed rendering
@@ -223,7 +284,7 @@ void Mesh::CheckVertex(vec3 &p)
 {
 	if (m_indexMap.find(p) == m_indexMap.end()) //not in there already
 	{
-		p = TruncateVector(p);
+		p = TruncateVector(p); //get rid of redundant points due to rounding error
 		m_indexMap[p] = m_vertices.size()/3;
 		m_vertices.push_back(p.x);
 		fprintf(stdout, "%f ",p.x);

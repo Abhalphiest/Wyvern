@@ -21,6 +21,7 @@ public:
 	static Mesh* Torus(float p_innerRad, float p_outerRad, uint p_subdivisions);
 	static Mesh* Cone(float p_radius, float p_height, uint p_subdivisions);
 	static Mesh* Cylinder(float p_radius, float p_height, uint p_subdivisions);
+	static Mesh* Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint p_subdivisions);
 	String GetName(void){ return m_name; }
 	void Render(mat4 &p_modelMatrix);
 	~Mesh(void); //destructor

@@ -60,6 +60,8 @@ void init()
 {	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	glFrontFace(GL_CW);
+	glCullFace(GL_BACK);
 	glClearColor(0.392f, 0.584f, 0.929f, 1.0f); //cornflower blue, for nostalgia's sake.
 
 	
@@ -70,8 +72,8 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
-	mesh = Mesh::Sphere(2.0f, 10);
-	mesh->SetWireframe(true);
+	mesh = Mesh::Pipe(2.0f, 1.5f, 5.0f, 10);
+	
 
 	
 
