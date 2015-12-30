@@ -70,7 +70,7 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
-	mesh = Mesh::Cone(2.0f, 2.0f, 10);
+	mesh = Mesh::Sphere(2.0f, 50);
 
 	
 

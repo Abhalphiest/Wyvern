@@ -144,6 +144,65 @@ Mesh* Mesh::Cone(float p_radius, float p_height, uint p_subdivisions)
 	cone->CompileMesh();
 	return cone;
 }
+
+Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
+{
+	Mesh* sphere = new Mesh();
+	if (p_subdivisions < 3)
+		p_subdivisions = 3;
+	else if (p_subdivisions > 360)
+		p_subdivisions = 360;
+
+	float approxStep = 360.0f / p_subdivisions;
+	float heightstep = p_radius*2.0f / p_subdivisions;
+	vec3 baseCenter = vec3(0, -p_radius, 0);
+	vec3 topCenter = vec3(0, p_radius, 0);
+	float leftx;
+	float leftz;
+	float rightx;
+	float rightz;
+	float topy;
+	float bottomy;
+	float bottomrad;
+	float toprad;
+
+	//taking the easy O(n^2) time solution here
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+		if (i == 0)
+		{
+			for (uint j = 0; j < p_subdivisions; j++)
+			{
+				leftx = glm::cos(glm::radians(j*approxStep))*p_radius;
+				leftz = glm::sin(glm::radians(j*approxStep))*p_radius;
+				rightx = glm::cos(glm::radians((j + 1)*approxStep))*p_radius;
+				rightz = glm::sin(glm::radians((j + 1)*approxStep))*p_radius;
+				sphere->AddTri(baseCenter, vec3(leftx, baseCenter.y + heightstep, leftz), 
+					vec3(rightx, baseCenter.y + heightstep, rightz));
+			}
+		}
+		else if (i == p_subdivisions - 1)
+		{
+			for (uint j = 0; j < p_subdivisions; j++)
+			{
+				leftx = glm::cos(glm::radians(j*approxStep))*p_radius;
+				leftz = glm::sin(glm::radians(j*approxStep))*p_radius;
+				rightx = glm::cos(glm::radians((j + 1)*approxStep))*p_radius;
+				rightz = glm::sin(glm::radians((j + 1)*approxStep))*p_radius;
+				sphere->AddTri(topCenter, vec3(rightx, topCenter.y - heightstep, rightz),
+					vec3(leftx, topCenter.y - heightstep, leftz));
+			}
+		}
+		else
+		{
+			
+		}
+	}
+
+
+	sphere->CompileMesh();
+	return sphere;
+}
 void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 {
 	//see if these vertices have already been used, because we're doing indexed rendering
@@ -174,11 +233,11 @@ void Mesh::CheckVertex(vec3 &p)
 	{
 		m_indexMap[p] = m_vertices.size()/3;
 		m_vertices.push_back(p.x);
-		//fprintf(stdout, "%f ",p.x);
+		fprintf(stdout, "%f ",p.x);
 		m_vertices.push_back(p.y);
-		//fprintf(stdout, "%f ",p.y);
+		fprintf(stdout, "%f ",p.y);
 		m_vertices.push_back(p.z);
-		//fprintf(stdout, "%f \n",p.z);
+		fprintf(stdout, "%f \n",p.z);
 		
 	}
 }
