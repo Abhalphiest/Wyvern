@@ -32,7 +32,8 @@ void Mesh::Render(mat4 &p_modelMatrix)
 	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+	glDrawElements(GL_TRIANGLES,m_numVertices, GL_UNSIGNED_INT,(void*)0);
 	glDisableVertexAttribArray(0);
 
 }
@@ -40,89 +41,23 @@ void Mesh::Render(mat4 &p_modelMatrix)
 Mesh* Mesh::Cube(float size)
 {
 	Mesh* cube = new Mesh();
-	GLfloat g_vertex_buffer_data[] =
-	{
-		size, -size, -size, // triangle 1 : begin
-		-size, -size, size,
-		-size, size, size, // triangle 1 : end
-		size, size, -size, // triangle 2 : begin
-		-size, -size, -size,
-		-size, size, -size, // triangle 2 : end
-		size, -size, size,
-		-size, -size, -size,
-		size, -size, -size,
-		size, size, -size,
-		size, -size, -size,
-		-size, -size, -size,
-		-size, -size, -size,
-		-size, size, size,
-		-size, size, -size,
-		size, -size, size,
-		-size, -size, size,
-		-size, -size, -size,
-		-size, size, size,
-		-size, -size, size,
-		size, -size, size,
-		size, size, size,
-		size, -size, -size,
-		size, size, -size,
-		size, -size, -size,
-		size, size, size,
-		size, -size, size,
-		size, size, size,
-		size, size, -size,
-		-size, size, -size,
-		size, size, size,
-		-size, size, -size,
-		-size, size, size,
-		size, size, size,
-		-size, size, size,
-		size, -size, size
-	};
-
-	GLfloat g_color_buffer_data[] =
-	{
-		-1.0f, -1.0f, -1.0f, // triangle 1 : begin
-		-1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f, // triangle 1 : end
-		1.0f, 1.0f, -1.0f, // triangle 2 : begin
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f, // triangle 2 : end
-		1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f,
-		1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f
-	};
+	float vertices[] = {
+		-size/2,size/2,size/2,
+		size/2,size/2,size/2,
+		-size/2,-size/2,size/2,
+		size / 2, -size / 2, size / 2,
+		-size / 2, size / 2, -size / 2,
+		size / 2, size / 2, -size / 2,
+		-size / 2, -size / 2,-size / 2,
+		size / 2, -size / 2, -size / 2 };
+	uint indices[] = { 0,1,2,2,1,3,1,5,7,1,7,3,7,5,4,4,6,7,3,7,4,0,3,4,0,4,1,1,4,5,3,2,6,3,6,7};
 
 	glBindBuffer(GL_ARRAY_BUFFER, cube->m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, cube->m_colorBuffer); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube->m_indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+	cube->m_numVertices = sizeof(indices);
 	return cube;
 }
