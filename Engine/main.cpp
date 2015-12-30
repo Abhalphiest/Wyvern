@@ -63,12 +63,14 @@ void init()
 	glClearColor(0.392f, 0.584f, 0.929f, 1.0f); //cornflower blue, for nostalgia's sake.
 
 	
-	mesh = Mesh::Cube(2.0f);
+	
 
 	//hook up our shaders
 	shaderMaster->AddShader("vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
+
+	mesh = Mesh::Cylinder(2.0f, 2.0f, 10);
 
 	
 

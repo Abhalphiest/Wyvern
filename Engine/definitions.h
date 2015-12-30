@@ -20,6 +20,7 @@
 #include<locale>
 #include<fstream>
 #include<sstream>
+#include<map>
 #include"include/glm/glm.hpp"
 #include"include/glm/gtc/matrix_transform.hpp"
 #include"include/glm/gtx/transform.hpp"
@@ -100,4 +101,12 @@ static quaternion angleAxis(float &angle, vec3 & axis)
 	q.z = axis.z*s;
 }
 
+struct vec3Comparison
+{
+	bool operator()(const vec3& lhs, const vec3& rhs) const
+	{
+		return lhs.x < rhs.x ||
+			lhs.x == rhs.x && (lhs.y < rhs.y || lhs.y == rhs.y && lhs.z < rhs.z);
+	}
+};
 #endif
