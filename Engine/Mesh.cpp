@@ -154,7 +154,8 @@ Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
 		p_subdivisions = 360;
 
 	float approxStep = 360.0f / p_subdivisions;
-	float heightstep = p_radius*2.0f / p_subdivisions;
+	float radstep = 180.0f / p_subdivisions;
+	float heightstep = 180.0f/p_subdivisions;
 	vec3 baseCenter = vec3(0, -p_radius, 0);
 	vec3 topCenter = vec3(0, p_radius, 0);
 	float leftx;
@@ -169,34 +170,25 @@ Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
 	//taking the easy O(n^2) time solution here
 	for (uint i = 0; i < p_subdivisions; i++)
 	{
-		if (i == 0)
-		{
+		
+		
 			for (uint j = 0; j < p_subdivisions; j++)
 			{
-				leftx = glm::cos(glm::radians(j*approxStep))*p_radius;
-				leftz = glm::sin(glm::radians(j*approxStep))*p_radius;
-				rightx = glm::cos(glm::radians((j + 1)*approxStep))*p_radius;
-				rightz = glm::sin(glm::radians((j + 1)*approxStep))*p_radius;
-				sphere->AddTri(baseCenter, vec3(leftx, baseCenter.y + heightstep, leftz), 
-					vec3(rightx, baseCenter.y + heightstep, rightz));
+				leftx = glm::cos(glm::radians(j*approxStep));
+				rightx = glm::cos(glm::radians((j + 1)*approxStep));
+				leftz = glm::sin(glm::radians(j*approxStep));
+				rightz = glm::sin(glm::radians((j + 1)*approxStep));
+				topy = baseCenter.y + glm::cos(glm::radians((i + 1)*radstep))*p_radius;
+				bottomy = baseCenter.y + glm::cos(glm::radians((i*radstep)))*p_radius;
+				bottomrad = glm::sin(glm::radians(i*radstep))*p_radius;
+				toprad = glm::sin(glm::radians((i + 1)*radstep))*p_radius;
+
+				sphere->AddQuad(vec3(leftx*toprad, topy, leftz*toprad),
+					vec3(rightx*toprad, topy, rightz*toprad),
+					vec3(rightx*bottomrad, bottomy, rightz*bottomrad),
+					vec3(leftx*bottomrad, bottomy, leftz*bottomrad));
 			}
-		}
-		else if (i == p_subdivisions - 1)
-		{
-			for (uint j = 0; j < p_subdivisions; j++)
-			{
-				leftx = glm::cos(glm::radians(j*approxStep))*p_radius;
-				leftz = glm::sin(glm::radians(j*approxStep))*p_radius;
-				rightx = glm::cos(glm::radians((j + 1)*approxStep))*p_radius;
-				rightz = glm::sin(glm::radians((j + 1)*approxStep))*p_radius;
-				sphere->AddTri(topCenter, vec3(rightx, topCenter.y - heightstep, rightz),
-					vec3(leftx, topCenter.y - heightstep, leftz));
-			}
-		}
-		else
-		{
-			
-		}
+		
 	}
 
 
@@ -231,6 +223,7 @@ void Mesh::CheckVertex(vec3 &p)
 {
 	if (m_indexMap.find(p) == m_indexMap.end()) //not in there already
 	{
+		p = TruncateVector(p);
 		m_indexMap[p] = m_vertices.size()/3;
 		m_vertices.push_back(p.x);
 		fprintf(stdout, "%f ",p.x);
@@ -250,4 +243,13 @@ void Mesh::CompileMesh(void)
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size()*sizeof(uint), &m_indices[0], GL_STATIC_DRAW);
+}
+
+vec3 Mesh::TruncateVector(const vec3& v)
+{
+	vec3 returnV = vec3();
+	returnV.x = std::trunc(1000 * v.x) / 1000;
+	returnV.y = std::trunc(1000 * v.y) / 1000;
+	returnV.z = std::trunc(1000 * v.z) / 1000;
+	return returnV;
 }

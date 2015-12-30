@@ -28,6 +28,12 @@
     <Filter Include="Header Files\Mesh Classes">
       <UniqueIdentifier>{3eda7c2a-f2ac-4f18-a022-b9b761a862f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{ac8525e6-fc06-4166-a846-4154d0571c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{e00cc8db-78e1-49d9-8ad4-772d106f7110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

@@ -70,7 +70,8 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
-	mesh = Mesh::Sphere(2.0f, 50);
+	mesh = Mesh::Sphere(2.0f, 10);
+	mesh->SetWireframe(true);
 
 	
 
@@ -82,6 +83,7 @@ void update()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	mesh->Render(mat4(1.0f));
+	
 	//swap buffers and catch keyboard input
 	glfwSwapBuffers(windowMaster->GetWindow());
 	glfwPollEvents();

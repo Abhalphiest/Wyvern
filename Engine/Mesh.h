@@ -35,7 +35,7 @@ private:
 	void CheckVertex(vec3 &p);
 	void CompileMesh(void);
 	void CompileMesh(vec3 color);
-
+	vec3 TruncateVector(const vec3& v);
 	uint m_numVertices = 0;
 	uint m_materialIndex;
 	GLuint m_vao = 0; //vertex array object index
