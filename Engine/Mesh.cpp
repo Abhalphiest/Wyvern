@@ -225,20 +225,20 @@ Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
 
 	for (uint i = 0; i < p_subdivisions; i++)
 	{
-		leftEnd = vec3(glm::cos(glm::radians(i*approxStep))*centRad, 0, glm::sin(glm::radians(i*approxStep)))*centRad;
-		rightEnd = vec3(glm::cos(glm::radians((i + 1)*approxStep))*centRad, 0, glm::sin(glm::radians((i + 1)*approxStep))*centRad);
+		leftEnd = vec3(glm::cos(glm::radians(i*approxStep)), 0, glm::sin(glm::radians(i*approxStep)));
+		rightEnd = vec3(glm::cos(glm::radians((i + 1)*approxStep)), 0, glm::sin(glm::radians((i + 1)*approxStep)));
 		for (uint j = 0; j < p_subdivisions; j++)
 		{
 			righty = glm::sin(glm::radians(j*approxStep))*radRing;
 			lefty = glm::sin(glm::radians((j+1)*approxStep))*radRing;
 			rightxtop = glm::cos(glm::radians(j*approxStep))*radRing + rightEnd.x;
-			leftxtop = glm::cos(glm::radians((j+1)*approxStep))*radRing + rightEnd.x;
-			rightztop = glm::cos(glm::radians(j*approxStep))*radRing + rightEnd.z;
-			leftztop = glm::cos(glm::radians((j + 1)*approxStep))*radRing + rightEnd.z;
-			rightxbottom = glm::cos(glm::radians(j*approxStep))*radRing + leftEnd.x;
-			leftxbottom = glm::cos(glm::radians((j + 1)*approxStep))*radRing + leftEnd.x;
-			rightzbottom = glm::cos(glm::radians(j*approxStep))*radRing + leftEnd.z;
-			leftzbottom = glm::cos(glm::radians((j + 1)*approxStep))*radRing + leftEnd.z;
+			leftxtop = (glm::cos(glm::radians((j+1)*approxStep))*radRing + centRad)*rightEnd.x;
+			rightztop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.z;
+			leftztop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.z;
+			rightxbottom =( glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.x;
+			leftxbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.x;
+			rightzbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.z;
+			leftzbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.z;
 
 			torus->AddQuad(vec3(leftxtop,lefty,leftztop),
 				vec3(rightxtop,righty,rightztop),
