@@ -110,6 +110,40 @@ Mesh* Mesh::Cylinder(float p_radius, float p_height, uint p_subdivisions)
 	cylinder->CompileMesh();
 	return cylinder;
 }
+
+Mesh* Mesh::Cone(float p_radius, float p_height, uint p_subdivisions)
+{
+	Mesh* cone = new Mesh();
+	if (p_subdivisions < 3)
+		p_subdivisions = 3;
+	else if (p_subdivisions > 360)
+		p_subdivisions = 360;
+
+	float approxStep = 360.0f / p_subdivisions;
+	vec3 baseCenter = vec3(0, -p_height*.5f, 0);
+	vec3 topCenter = vec3(0, p_height*.5f, 0);
+	float leftx;
+	float leftz;
+	float rightx;
+	float rightz;
+
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+		leftx = glm::cos(glm::radians(i*approxStep))*p_radius;
+		leftz = glm::sin(glm::radians(i*approxStep))*p_radius;
+		rightx = glm::cos(glm::radians((i + 1)*approxStep))*p_radius;
+		rightz = glm::sin(glm::radians((i + 1)*approxStep))*p_radius;
+
+		cone->AddTri(baseCenter, vec3(leftx, baseCenter.y, leftz),
+			vec3(rightx, baseCenter.y, rightz));
+		cone->AddTri(topCenter, vec3(rightx, baseCenter.y, rightz), vec3(leftx, baseCenter.y, leftz));
+	}
+
+
+
+	cone->CompileMesh();
+	return cone;
+}
 void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 {
 	//see if these vertices have already been used, because we're doing indexed rendering
