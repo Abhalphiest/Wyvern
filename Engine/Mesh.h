@@ -14,38 +14,41 @@
 class Mesh
 {
 protected:
-	bool m_isBound = false; //is it bound?
-	bool m_wireframe = false; //draw it in wireframe?
-	bool m_isInstanced = false; //does it have multiple instances?
 	uint m_numVertices = 0; 
 	uint m_materialIndex; 
-	mat4 m_modelMatrix;
-	vec4 m_position;
-	quaternion m_orientation;
 	GLuint m_vao = 0; //vertex array object index
+	GLuint m_indexBuffer = 0;
 	GLuint m_vertexBuffer = 0; //vertex buffer index
 	GLuint m_colorBuffer = 0; //color  buffer index
 	GLuint m_uvBuffer = 0; //UV buffer index
 	GLuint m_tangentBuffer = 0;
-	GLuint m_binormalBuffer = 0;
+	GLuint m_bitangentBuffer = 0;
 	GLuint m_shaderIndex = 0;
-	GLuint m_ogShaderIndex = 0; //for the original shader
 
 
-	CameraMaster* m_camera = nullptr;
-	MaterialMaster* m_material = nullptr;
-	LightMaster* m_light = nullptr;
-	ShaderMaster* m_shader = nullptr;
+	CameraMaster* m_cameraMaster = nullptr;
+	MaterialMaster* m_materialMaster = nullptr;
+	LightMaster* m_lightMaster = nullptr;
+	ShaderMaster* m_shaderMaster = nullptr;
 
 	char* m_name = '\0'; //empty string for uninitialized name
 	
 
 public:
-	Mesh(void); //constructor
+	
+	static Mesh* Cube(float size);
+	static Mesh* Sphere();
+	static Mesh* Torus();
+	static Mesh* Cone(float radius, float height, uint subdivisions);
+	static Mesh* Cylinder(float radius, float height, uint subdivisions);
 	String GetName(void){ return m_name; }
+	void Render(mat4 &p_modelMatrix);
+	~Mesh(void); //destructor
+	Mesh& operator=(Mesh& other); //assignment operator
+	Mesh(Mesh& other); //copy constructor
 
 private:
-
+	Mesh(void); //constructor
 
 };
 #endif

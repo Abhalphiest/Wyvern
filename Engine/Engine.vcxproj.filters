@@ -45,9 +45,6 @@
     <ClCompile Include="TimeMaster.cpp">
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
-    <ClCompile Include="MeshMaster.cpp">
-      <Filter>Source Files\Masters</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files\Mesh Classes</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="include\wglew.h">
       <Filter>Header Files\ExternalLibraries</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshMaster.h">
-      <Filter>Header Files\MasterHeaders</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files\Mesh Classes</Filter>

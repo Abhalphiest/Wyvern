@@ -24,7 +24,7 @@ CameraMaster::CameraMaster(void)
 {
 	m_windowMaster = WindowMaster::GetInstance();//do this first!
 	m_cameras = std::vector<Camera*>(); //automatic variable, no new keyword
-	uint cameraid = createCamera(vec4(.0f, 3.0f, -10.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
+	uint cameraid = createCamera(vec4(0.0f, 8.0f, -10.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
 	bindCamera(cameraid);
 	
 }
@@ -134,7 +134,7 @@ void CameraMaster::rotateCamera(float p_angleRad, vec3 p_axis)
 	quaternion rotation = angleAxis(glm::degrees(p_angleRad), p_axis);
 	Camera*camera = m_cameras[m_currentCamera];
 	camera->m_up = (vec3)(rotation*vec4(camera->m_up, 0.0f));
-	camera->m_focalPoint = (vec3)(rotation*vec4(camera->m_focalPoint-(vec3)camera->m_position,1.0f))+(vec3)camera->m_position;
+	camera->m_focalPoint = (vec3)(rotation*vec4(camera->m_focalPoint-(vec3)camera->m_position,0.0f))+(vec3)camera->m_position;
 	Update();
 }
 void CameraMaster::orbitCamera(float p_angleRad, vec3 p_axis)
