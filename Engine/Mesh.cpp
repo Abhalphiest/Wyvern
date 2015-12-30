@@ -199,6 +199,29 @@ Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
 Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
 {
 	Mesh* torus = new Mesh();
+	if (p_subdivisions < 3)
+		p_subdivisions = 3;
+	else if (p_subdivisions > 360)
+		p_subdivisions = 360;
+
+	float approxStep = 360.0f / p_subdivisions;
+	float radstep = 180.0f / p_subdivisions;
+	float heightstep = 180.0f / p_subdivisions;
+	float rad = p_outerRad - p_innerRad;
+	float leftx;
+	float leftz;
+	float rightx;
+	float rightz;
+	float topy;
+	float bottomy;
+	float bottomrad;
+	float toprad;
+
+
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+
+	}
 
 	torus->CompileMesh();
 	return torus;
