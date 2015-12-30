@@ -205,22 +205,46 @@ Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
 		p_subdivisions = 360;
 
 	float approxStep = 360.0f / p_subdivisions;
-	float radstep = 180.0f / p_subdivisions;
-	float heightstep = 180.0f / p_subdivisions;
-	float rad = p_outerRad - p_innerRad;
-	float leftx;
-	float leftz;
-	float rightx;
-	float rightz;
-	float topy;
-	float bottomy;
-	float bottomrad;
-	float toprad;
+	float radRing = (p_outerRad - p_innerRad)*.5f;
+	float centRad = (p_outerRad + p_innerRad)*.5f;
+	vec3 leftEnd;
+	vec3 rightEnd;
+	float lefty;
+	float righty;
+	float leftxtop;
+	float rightxtop;
+	float leftztop;
+	float rightztop;
+	float leftzbottom;
+	float rightzbottom;
+	float leftxbottom;
+	float rightxbottom;
+	
 
+	//again, easy O(n^2) solution
 
 	for (uint i = 0; i < p_subdivisions; i++)
 	{
+		leftEnd = vec3(glm::cos(glm::radians(i*approxStep))*centRad, 0, glm::sin(glm::radians(i*approxStep)))*centRad;
+		rightEnd = vec3(glm::cos(glm::radians((i + 1)*approxStep))*centRad, 0, glm::sin(glm::radians((i + 1)*approxStep))*centRad);
+		for (uint j = 0; j < p_subdivisions; j++)
+		{
+			righty = glm::sin(glm::radians(j*approxStep))*radRing;
+			lefty = glm::sin(glm::radians((j+1)*approxStep))*radRing;
+			rightxtop = glm::cos(glm::radians(j*approxStep))*radRing + rightEnd.x;
+			leftxtop = glm::cos(glm::radians((j+1)*approxStep))*radRing + rightEnd.x;
+			rightztop = glm::cos(glm::radians(j*approxStep))*radRing + rightEnd.z;
+			leftztop = glm::cos(glm::radians((j + 1)*approxStep))*radRing + rightEnd.z;
+			rightxbottom = glm::cos(glm::radians(j*approxStep))*radRing + leftEnd.x;
+			leftxbottom = glm::cos(glm::radians((j + 1)*approxStep))*radRing + leftEnd.x;
+			rightzbottom = glm::cos(glm::radians(j*approxStep))*radRing + leftEnd.z;
+			leftzbottom = glm::cos(glm::radians((j + 1)*approxStep))*radRing + leftEnd.z;
 
+			torus->AddQuad(vec3(leftxtop,lefty,leftztop),
+				vec3(rightxtop,righty,rightztop),
+				vec3(rightxbottom,righty,rightzbottom),
+				vec3(leftxbottom,lefty,leftzbottom));
+		}
 	}
 
 	torus->CompileMesh();
