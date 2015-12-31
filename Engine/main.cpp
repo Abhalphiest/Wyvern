@@ -72,7 +72,7 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
-	mesh = Mesh::Torus(4.0f, 5.0f, 10);
+	mesh = Mesh::Torus(3.0f, 5.0f, 7);
 	mesh->SetWireframe(true);
 	
 

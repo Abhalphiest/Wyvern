@@ -309,7 +309,7 @@ void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 	CheckVertex(p1);
 	CheckVertex(p2);
 	CheckVertex(p3);
-
+	fprintf(stdout, "\n");
 	//should check for counter clockwise here with crossproduct
 
 	//add the vertices
@@ -329,9 +329,10 @@ void Mesh::AddQuad(vec3 &p1, vec3 &p2, vec3 &p3, vec3 &p4)
 
 void Mesh::CheckVertex(vec3 &p)
 {
+	p = TruncateVector(p); //get rid of redundant points due to rounding error
 	if (m_indexMap.find(p) == m_indexMap.end()) //not in there already
 	{
-		p = TruncateVector(p); //get rid of redundant points due to rounding error
+		
 		m_indexMap[p] = m_vertices.size()/3;
 		m_vertices.push_back(p.x);
 		fprintf(stdout, "%f ",p.x);
