@@ -219,10 +219,10 @@ Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
 	float rightzbottom;
 	float leftxbottom;
 	float rightxbottom;
-	
+
 
 	//again, easy O(n^2) solution
-
+	
 	for (uint i = 0; i < p_subdivisions; i++)
 	{
 		leftEnd = vec3(glm::cos(glm::radians(i*approxStep)), 0, glm::sin(glm::radians(i*approxStep)));
@@ -230,20 +230,20 @@ Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
 		for (uint j = 0; j < p_subdivisions; j++)
 		{
 			righty = glm::sin(glm::radians(j*approxStep))*radRing;
-			lefty = glm::sin(glm::radians((j+1)*approxStep))*radRing;
-			rightxtop = glm::cos(glm::radians(j*approxStep))*radRing + rightEnd.x;
-			leftxtop = (glm::cos(glm::radians((j+1)*approxStep))*radRing + centRad)*rightEnd.x;
+			lefty = glm::sin(glm::radians((j + 1)*approxStep))*radRing;
+			rightxtop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.x;
+			leftxtop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.x;
 			rightztop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.z;
 			leftztop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.z;
-			rightxbottom =( glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.x;
+			rightxbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.x;
 			leftxbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.x;
 			rightzbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.z;
 			leftzbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.z;
 
-			torus->AddQuad(vec3(leftxtop,lefty,leftztop),
-				vec3(rightxtop,righty,rightztop),
-				vec3(rightxbottom,righty,rightzbottom),
-				vec3(leftxbottom,lefty,leftzbottom));
+			torus->AddQuad(vec3(leftxtop, lefty, leftztop),
+				vec3(rightxtop, righty, rightztop),
+				vec3(rightxbottom, righty, rightzbottom),
+				vec3(leftxbottom, lefty, leftzbottom));
 		}
 	}
 
