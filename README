@@ -2,7 +2,7 @@ ENGINE DOCUMENTATION
 
 Creator: Margaret Dorsey
 Start Date: 10/18/2015
-Latest Update: 12/24/2015
+Latest Update: 12/30/2015
 Institution: Rochester Institute of Technology
 
 Written in C/C++ using OpenGL, GLEW, GLFW, and Visual Studio 2013.
@@ -28,10 +28,26 @@ Disclaimer:
 	I am a student, and am primarily self taught when it comes to engine programming
 	and C++ at this point in time. Please excuse my code for being non-optimal, I assure you
 	that I am always learning and would love to be contacted regarding any concerning code in this project.
-	
+
+Implemented:
+	Input Master Singleton
+	Shader Master Singleton
+	Camera Singleton + Simple Camera Functions
+	Window Master Singleton
+	Mesh Primitive Generation
+	Indexed Rendering
+	Rudimentary Mesh Class
+
 Currently Working On:
-	Camera System Implementation
-	Mesh Primitives
-	Meshes in general
+	Finishing Up the Mesh Class
+	Mesh Master Singleton
 	Textures
 	.obj loading
+	Starting Formal Documentation
+
+After that comes:
+	More complex shading
+	Normal Maps
+	Text Rendering
+	System Time Singleton
+	..and much, much more!
