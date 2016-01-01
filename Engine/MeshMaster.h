@@ -30,9 +30,10 @@ public:
 private:
 	MeshMaster(void); //constructor
 	~MeshMaster(void); //destructor
-	
+	MeshMaster& operator=(MeshMaster& other);
+	MeshMaster(MeshMaster& other);
 
-	MeshMaster* m_instance; //singleton pointer
+	static MeshMaster* m_instance; //singleton pointer
 	std::vector<MeshData> m_renderList;
 
 	
