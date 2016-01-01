@@ -20,7 +20,47 @@ Mesh::Mesh(void)
 }
 Mesh::~Mesh(void)
 {
-
+	//remove our reference to all the buffer objects
+	//if we're the last reference, that memory will be freed
+	glDeleteVertexArrays(1,&m_vao);
+	m_vao = 0; //just in case, I guess?
+}
+Mesh& Mesh::operator=(Mesh& other)
+{
+	glDeleteVertexArrays(1, &m_vao);
+	m_vao = other.m_vao;
+	m_vertexBuffer = other.m_vertexBuffer;
+	m_colorBuffer = other.m_colorBuffer;
+	m_uvBuffer = other.m_uvBuffer;
+	m_tangentBuffer = other.m_tangentBuffer;
+	m_bitangentBuffer = other.m_bitangentBuffer;
+	m_indexBuffer = other.m_indexBuffer;
+	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
+	m_indices = other.m_indices;
+	m_indexMap = other.m_indexMap;
+	m_renderWireframe = other.m_renderWireframe;
+	m_name = other.m_name;
+	//don't need to bother with the singletons, they'll be the same anyway.
+	//technically we didn't need to bother with anything other than the vao here, the rest would have been done for us
+	//but it's nice to have it all explicit here in case the structure of the class changes to need something more complicated, like memory management
+}
+Mesh::Mesh(Mesh& other)
+{
+	m_vao = other.m_vao;
+	m_vertexBuffer = other.m_vertexBuffer;
+	m_colorBuffer = other.m_colorBuffer;
+	m_uvBuffer = other.m_uvBuffer;
+	m_tangentBuffer = other.m_tangentBuffer;
+	m_bitangentBuffer = other.m_bitangentBuffer;
+	m_indexBuffer = other.m_indexBuffer;
+	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
+	m_indices = other.m_indices;
+	m_indexMap = other.m_indexMap;
+	m_renderWireframe = other.m_renderWireframe;
+	m_name = other.m_name;
+	//don't need to bother with the singletons, they'll be the same anyway.
+	//technically we didn't need to bother with anything other than the vao here, the rest would have been done for us
+	//but it's nice to have it all explicit here in case the structure of the class changes to need something more complicated, like memory management
 }
 void Mesh::Render(mat4 &p_modelMatrix)
 {
@@ -69,7 +109,143 @@ Mesh* Mesh::Cube(float p_size)
 	cube->CompileMesh();
 	return cube;
 }
+Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
+{
+	Mesh* sphere = new Mesh();
+	if (p_subdivisions < 3)
+		p_subdivisions = 3;
+	else if (p_subdivisions > 360)
+		p_subdivisions = 360;
 
+	float approxStep = 360.0f / p_subdivisions;
+	float radstep = 180.0f / p_subdivisions;
+	float heightstep = 180.0f / p_subdivisions;
+	vec3 baseCenter = vec3(0, -p_radius, 0);
+	vec3 topCenter = vec3(0, p_radius, 0);
+	float leftx;
+	float leftz;
+	float rightx;
+	float rightz;
+	float topy;
+	float bottomy;
+	float bottomrad;
+	float toprad;
+
+	//taking the easy O(n^2) time solution here
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+
+
+		for (uint j = 0; j < p_subdivisions; j++)
+		{
+			leftx = glm::cos(glm::radians(j*approxStep));
+			rightx = glm::cos(glm::radians((j + 1)*approxStep));
+			leftz = glm::sin(glm::radians(j*approxStep));
+			rightz = glm::sin(glm::radians((j + 1)*approxStep));
+			topy = baseCenter.y + glm::cos(glm::radians((i + 1)*radstep))*p_radius;
+			bottomy = baseCenter.y + glm::cos(glm::radians((i*radstep)))*p_radius;
+			bottomrad = glm::sin(glm::radians(i*radstep))*p_radius;
+			toprad = glm::sin(glm::radians((i + 1)*radstep))*p_radius;
+
+			sphere->AddQuad(vec3(leftx*toprad, topy, leftz*toprad),
+				vec3(rightx*toprad, topy, rightz*toprad),
+				vec3(rightx*bottomrad, bottomy, rightz*bottomrad),
+				vec3(leftx*bottomrad, bottomy, leftz*bottomrad));
+		}
+
+	}
+
+
+	sphere->CompileMesh();
+	return sphere;
+}
+Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
+{
+	Mesh* torus = new Mesh();
+	if (p_subdivisions < 3)
+		p_subdivisions = 3;
+	else if (p_subdivisions > 360)
+		p_subdivisions = 360;
+
+	float approxStep = 360.0f / p_subdivisions;
+	float radRing = (p_outerRad - p_innerRad)*.5f;
+	float centRad = (p_outerRad + p_innerRad)*.5f;
+	vec3 leftEnd;
+	vec3 rightEnd;
+	float lefty;
+	float righty;
+	float leftxtop;
+	float rightxtop;
+	float leftztop;
+	float rightztop;
+	float leftzbottom;
+	float rightzbottom;
+	float leftxbottom;
+	float rightxbottom;
+
+
+	//again, easy O(n^2) solution
+
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+		leftEnd = vec3(glm::cos(glm::radians(i*approxStep)), 0, glm::sin(glm::radians(i*approxStep)));
+		rightEnd = vec3(glm::cos(glm::radians((i + 1)*approxStep)), 0, glm::sin(glm::radians((i + 1)*approxStep)));
+		for (uint j = 0; j < p_subdivisions; j++)
+		{
+			righty = glm::sin(glm::radians(j*approxStep))*radRing;
+			lefty = glm::sin(glm::radians((j + 1)*approxStep))*radRing;
+			rightxtop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.x;
+			leftxtop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.x;
+			rightztop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.z;
+			leftztop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.z;
+			rightxbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.x;
+			leftxbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.x;
+			rightzbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.z;
+			leftzbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.z;
+
+			torus->AddQuad(vec3(leftxtop, lefty, leftztop),
+				vec3(rightxtop, righty, rightztop),
+				vec3(rightxbottom, righty, rightzbottom),
+				vec3(leftxbottom, lefty, leftzbottom));
+		}
+	}
+
+	torus->CompileMesh();
+	return torus;
+}
+Mesh* Mesh::Cone(float p_radius, float p_height, uint p_subdivisions)
+{
+	Mesh* cone = new Mesh();
+	if (p_subdivisions < 3)
+		p_subdivisions = 3;
+	else if (p_subdivisions > 360)
+		p_subdivisions = 360;
+
+	float approxStep = 360.0f / p_subdivisions;
+	vec3 baseCenter = vec3(0, -p_height*.5f, 0);
+	vec3 topCenter = vec3(0, p_height*.5f, 0);
+	float leftx;
+	float leftz;
+	float rightx;
+	float rightz;
+
+	for (uint i = 0; i < p_subdivisions; i++)
+	{
+		leftx = glm::cos(glm::radians(i*approxStep))*p_radius;
+		leftz = glm::sin(glm::radians(i*approxStep))*p_radius;
+		rightx = glm::cos(glm::radians((i + 1)*approxStep))*p_radius;
+		rightz = glm::sin(glm::radians((i + 1)*approxStep))*p_radius;
+
+		cone->AddTri(baseCenter, vec3(leftx, baseCenter.y, leftz),
+			vec3(rightx, baseCenter.y, rightz));
+		cone->AddTri(topCenter, vec3(rightx, baseCenter.y, rightz), vec3(leftx, baseCenter.y, leftz));
+	}
+
+
+
+	cone->CompileMesh();
+	return cone;
+}
 Mesh* Mesh::Cylinder(float p_radius, float p_height, uint p_subdivisions)
 {
 	Mesh* cylinder = new Mesh();
@@ -110,147 +286,6 @@ Mesh* Mesh::Cylinder(float p_radius, float p_height, uint p_subdivisions)
 	cylinder->CompileMesh();
 	return cylinder;
 }
-
-Mesh* Mesh::Cone(float p_radius, float p_height, uint p_subdivisions)
-{
-	Mesh* cone = new Mesh();
-	if (p_subdivisions < 3)
-		p_subdivisions = 3;
-	else if (p_subdivisions > 360)
-		p_subdivisions = 360;
-
-	float approxStep = 360.0f / p_subdivisions;
-	vec3 baseCenter = vec3(0, -p_height*.5f, 0);
-	vec3 topCenter = vec3(0, p_height*.5f, 0);
-	float leftx;
-	float leftz;
-	float rightx;
-	float rightz;
-
-	for (uint i = 0; i < p_subdivisions; i++)
-	{
-		leftx = glm::cos(glm::radians(i*approxStep))*p_radius;
-		leftz = glm::sin(glm::radians(i*approxStep))*p_radius;
-		rightx = glm::cos(glm::radians((i + 1)*approxStep))*p_radius;
-		rightz = glm::sin(glm::radians((i + 1)*approxStep))*p_radius;
-
-		cone->AddTri(baseCenter, vec3(leftx, baseCenter.y, leftz),
-			vec3(rightx, baseCenter.y, rightz));
-		cone->AddTri(topCenter, vec3(rightx, baseCenter.y, rightz), vec3(leftx, baseCenter.y, leftz));
-	}
-
-
-
-	cone->CompileMesh();
-	return cone;
-}
-
-Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
-{
-	Mesh* sphere = new Mesh();
-	if (p_subdivisions < 3)
-		p_subdivisions = 3;
-	else if (p_subdivisions > 360)
-		p_subdivisions = 360;
-
-	float approxStep = 360.0f / p_subdivisions;
-	float radstep = 180.0f / p_subdivisions;
-	float heightstep = 180.0f/p_subdivisions;
-	vec3 baseCenter = vec3(0, -p_radius, 0);
-	vec3 topCenter = vec3(0, p_radius, 0);
-	float leftx;
-	float leftz;
-	float rightx;
-	float rightz;
-	float topy;
-	float bottomy;
-	float bottomrad;
-	float toprad;
-
-	//taking the easy O(n^2) time solution here
-	for (uint i = 0; i < p_subdivisions; i++)
-	{
-		
-		
-			for (uint j = 0; j < p_subdivisions; j++)
-			{
-				leftx = glm::cos(glm::radians(j*approxStep));
-				rightx = glm::cos(glm::radians((j + 1)*approxStep));
-				leftz = glm::sin(glm::radians(j*approxStep));
-				rightz = glm::sin(glm::radians((j + 1)*approxStep));
-				topy = baseCenter.y + glm::cos(glm::radians((i + 1)*radstep))*p_radius;
-				bottomy = baseCenter.y + glm::cos(glm::radians((i*radstep)))*p_radius;
-				bottomrad = glm::sin(glm::radians(i*radstep))*p_radius;
-				toprad = glm::sin(glm::radians((i + 1)*radstep))*p_radius;
-
-				sphere->AddQuad(vec3(leftx*toprad, topy, leftz*toprad),
-					vec3(rightx*toprad, topy, rightz*toprad),
-					vec3(rightx*bottomrad, bottomy, rightz*bottomrad),
-					vec3(leftx*bottomrad, bottomy, leftz*bottomrad));
-			}
-		
-	}
-
-
-	sphere->CompileMesh();
-	return sphere;
-}
-
-Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
-{
-	Mesh* torus = new Mesh();
-	if (p_subdivisions < 3)
-		p_subdivisions = 3;
-	else if (p_subdivisions > 360)
-		p_subdivisions = 360;
-
-	float approxStep = 360.0f / p_subdivisions;
-	float radRing = (p_outerRad - p_innerRad)*.5f;
-	float centRad = (p_outerRad + p_innerRad)*.5f;
-	vec3 leftEnd;
-	vec3 rightEnd;
-	float lefty;
-	float righty;
-	float leftxtop;
-	float rightxtop;
-	float leftztop;
-	float rightztop;
-	float leftzbottom;
-	float rightzbottom;
-	float leftxbottom;
-	float rightxbottom;
-
-
-	//again, easy O(n^2) solution
-	
-	for (uint i = 0; i < p_subdivisions; i++)
-	{
-		leftEnd = vec3(glm::cos(glm::radians(i*approxStep)), 0, glm::sin(glm::radians(i*approxStep)));
-		rightEnd = vec3(glm::cos(glm::radians((i + 1)*approxStep)), 0, glm::sin(glm::radians((i + 1)*approxStep)));
-		for (uint j = 0; j < p_subdivisions; j++)
-		{
-			righty = glm::sin(glm::radians(j*approxStep))*radRing;
-			lefty = glm::sin(glm::radians((j + 1)*approxStep))*radRing;
-			rightxtop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.x;
-			leftxtop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.x;
-			rightztop = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*rightEnd.z;
-			leftztop = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)*rightEnd.z;
-			rightxbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.x;
-			leftxbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.x;
-			rightzbottom = (glm::cos(glm::radians(j*approxStep))*radRing + centRad)*leftEnd.z;
-			leftzbottom = (glm::cos(glm::radians((j + 1)*approxStep))*radRing + centRad)* leftEnd.z;
-
-			torus->AddQuad(vec3(leftxtop, lefty, leftztop),
-				vec3(rightxtop, righty, rightztop),
-				vec3(rightxbottom, righty, rightzbottom),
-				vec3(leftxbottom, lefty, leftzbottom));
-		}
-	}
-
-	torus->CompileMesh();
-	return torus;
-}
-
 Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint p_subdivisions)
 {
 	Mesh* pipe = new Mesh();
@@ -303,6 +338,7 @@ Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint 
 	pipe->CompileMesh();
 	return pipe;
 }
+
 void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 {
 	//see if these vertices have already been used, because we're doing indexed rendering
@@ -320,13 +356,11 @@ void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 
 	
 }
-
 void Mesh::AddQuad(vec3 &p1, vec3 &p2, vec3 &p3, vec3 &p4)
 {
 	AddTri(p1, p2, p3);
 	AddTri(p1, p3, p4);
 }
-
 void Mesh::CheckVertex(vec3 &p)
 {
 	p = TruncateVector(p); //get rid of redundant points due to rounding error
