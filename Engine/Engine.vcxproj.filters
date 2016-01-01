@@ -57,6 +57,9 @@
     <ClCompile Include="CameraMaster.cpp">
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
+    <ClCompile Include="MeshMaster.cpp">
+      <Filter>Source Files\Masters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="definitions.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files\MasterHeaders</Filter>
     </ClInclude>
     <ClInclude Include="LightMaster.h">
+      <Filter>Header Files\MasterHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshMaster.h">
       <Filter>Header Files\MasterHeaders</Filter>
     </ClInclude>
   </ItemGroup>

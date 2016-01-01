@@ -23,7 +23,7 @@ public:
 	static Mesh* Cylinder(float p_radius, float p_height, uint p_subdivisions);
 	static Mesh* Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint p_subdivisions);
 	String GetName(void){ return m_name; }
-	void SetName(String p_name){ m_name = p_name }; //to be called by the mesh manager
+	void SetName(String p_name){ m_name = p_name;} //to be called by the mesh manager
 	void Render(mat4 &p_modelMatrix);
 	~Mesh(void); //destructor
 	Mesh& operator=(Mesh& other); //assignment operator
@@ -59,7 +59,7 @@ private:
 	LightMaster* m_lightMaster = nullptr;
 	ShaderMaster* m_shaderMaster = nullptr;
 
-	String m_name = '\0'; //empty string for uninitialized name
+	String m_name = ""; //empty string for uninitialized name
 
 };
 #endif

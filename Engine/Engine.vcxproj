@@ -101,6 +101,7 @@
     <ClCompile Include="InputMaster.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshMaster.cpp" />
     <ClCompile Include="ShaderMaster.cpp" />
     <ClCompile Include="TimeMaster.cpp" />
     <ClCompile Include="WindowMaster.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="LightMaster.h" />
     <ClInclude Include="MaterialMaster.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshMaster.h" />
     <ClInclude Include="ShaderMaster.h" />
     <ClInclude Include="TimeMaster.h" />
     <ClInclude Include="WindowMaster.h" />

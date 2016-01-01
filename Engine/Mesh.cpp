@@ -43,6 +43,7 @@ Mesh& Mesh::operator=(Mesh& other)
 	//don't need to bother with the singletons, they'll be the same anyway.
 	//technically we didn't need to bother with anything other than the vao here, the rest would have been done for us
 	//but it's nice to have it all explicit here in case the structure of the class changes to need something more complicated, like memory management
+	return *this;
 }
 Mesh::Mesh(Mesh& other)
 {
@@ -53,12 +54,21 @@ Mesh::Mesh(Mesh& other)
 	m_tangentBuffer = other.m_tangentBuffer;
 	m_bitangentBuffer = other.m_bitangentBuffer;
 	m_indexBuffer = other.m_indexBuffer;
+	glGenVertexArrays(1, &m_vao);
+	glBindVertexArray(m_vao);
+	glGenBuffers(1, &m_vertexBuffer);
+	glGenBuffers(1, &m_colorBuffer);
+	glGenBuffers(1, &m_uvBuffer);
+	glGenBuffers(1, &m_tangentBuffer);
+	glGenBuffers(1, &m_bitangentBuffer);
+	glGenBuffers(1, &m_indexBuffer);
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
 	m_indices = other.m_indices;
 	m_indexMap = other.m_indexMap;
 	m_renderWireframe = other.m_renderWireframe;
 	m_name = other.m_name;
-	//don't need to bother with the singletons, they'll be the same anyway.
+	m_cameraMaster = other.m_cameraMaster;
+	m_shaderMaster = other.m_shaderMaster;
 	//technically we didn't need to bother with anything other than the vao here, the rest would have been done for us
 	//but it's nice to have it all explicit here in case the structure of the class changes to need something more complicated, like memory management
 }
@@ -345,7 +355,6 @@ void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
 	CheckVertex(p1);
 	CheckVertex(p2);
 	CheckVertex(p3);
-	fprintf(stdout, "\n");
 	//should check for counter clockwise here with crossproduct
 
 	//add the vertices
@@ -391,8 +400,8 @@ void Mesh::CompileMesh(void)
 vec3 Mesh::TruncateVector(const vec3& v)
 {
 	vec3 returnV = vec3();
-	returnV.x = std::trunc(1000 * v.x) / 1000;
-	returnV.y = std::trunc(1000 * v.y) / 1000;
-	returnV.z = std::trunc(1000 * v.z) / 1000;
+	returnV.x = std::trunc(100000 * v.x) / 100000;
+	returnV.y = std::trunc(100000 * v.y) / 100000;
+	returnV.z = std::trunc(100000 * v.z) / 100000;
 	return returnV;
 }
