@@ -99,18 +99,14 @@ void CameraMaster::Update()
 		camera->m_perspMatrix = glm::perspective(camera->m_fov, m_windowMaster->GetWindowRatio(), camera->m_nearClip, camera->m_farClip);
 		break;
 	}
-	case ORTHOGONALX:
+	case ORTHOGRAPHIC:
 	{
+		camera->m_viewMatrix = glm::lookAt((vec3)camera->m_position, camera->m_focalPoint, camera->m_up);
+		float distance = (camera->m_focalPoint - (vec3)camera->m_position).length;
+		camera->m_perspMatrix = glm::ortho(-distance, distance, -distance, distance);
 		break;
 	}
-	case ORTHOGONALY:
-	{
-		break;
-	}
-	case ORTHOGONALZ:
-	{
-		break;
-	}
+	
 	}
 }
 

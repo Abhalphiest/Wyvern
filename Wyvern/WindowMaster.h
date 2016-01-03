@@ -1,14 +1,5 @@
 #ifndef _WINDOWMASTER_H
 #define _WINDOWMASTER_H
-
-#define _CRTDBG_MAP_ALLOC //for tracking memory leaks
-#include<stdlib.h>
-#include<crtdbg.h> //for tracking memory leaks
-#include<Windows.h> //can't honestly remember why I wanted this, I'll take it out later and see if anything explodes
-#include"GL\glew.h" //needs to go first
-#include<GL\GLU.h>  //openGL libraries
-#include<GL\GL.h>
-#include"glfw3.h" //for windowing and input
 #include "definitions.h" //a bunch of typedefs and whatnot
 class WindowMaster{
 
