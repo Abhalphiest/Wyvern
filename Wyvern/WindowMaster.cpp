@@ -26,7 +26,25 @@ void WindowMaster::ReleaseInstance(void)
 	WindowMaster::WindowMaster(void)
 	{
 		m_windowName = "Engine";
-		Init();
+		//initialize glfw library and make a window
+		if (!glfwInit())
+		{
+			fprintf(stderr, "Failed to initialize GLFW. \n");
+		}
+		m_window = glfwCreateWindow(m_windowWidth, m_windowHeight, "Engine", NULL, NULL);
+
+		if (m_window == NULL)
+		{
+			fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not compatible with GL 3.3+.");
+			glfwTerminate();
+		}
+		//makes openGL context current for created window
+		glfwMakeContextCurrent(m_window);
+		glewExperimental = true;
+		if (glewInit() != GLEW_OK) //Initialize GLEW
+		{
+			fprintf(stderr, "Failed to initialize GLEW \n");
+		}
 	}
 	///copy constructor
 	WindowMaster::WindowMaster(WindowMaster const& other)
@@ -67,32 +85,7 @@ void WindowMaster::ReleaseInstance(void)
 	}
 
 
-	int WindowMaster::Init(void)
-	{
-		//initialize glfw library and make a window
-		if (!glfwInit())
-		{
-			fprintf(stderr, "Failed to initialize GLFW. \n");
-			return -1; //exit failure
-		}
-		m_window = glfwCreateWindow(m_windowWidth, m_windowHeight, "Engine", NULL, NULL);
-
-		if (m_window == NULL)
-		{
-			fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not compatible with GL 3.3+.");
-			glfwTerminate();
-			return -2; //exit failure
-		}
-		//makes openGL context current for created window
-		glfwMakeContextCurrent(m_window);
-		glewExperimental = true;
-		if (glewInit() != GLEW_OK) //Initialize GLEW
-		{
-			fprintf(stderr, "Failed to initialize GLEW \n");
-			return -3;
-		}
-		return 0; //exit success
-	}
+	
 
 
 	//setters

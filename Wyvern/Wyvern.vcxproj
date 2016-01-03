@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0AF2806C-B157-4F6C-8992-8C662B63D952}</ProjectGuid>
     <RootNamespace>Engine</RootNamespace>
+    <ProjectName>Wyvern</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
