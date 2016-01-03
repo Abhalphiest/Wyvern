@@ -1,6 +1,5 @@
 #include"CameraMaster.h"
 CameraMaster* CameraMaster::m_instance = nullptr;
-
 //singleton functions
 CameraMaster* CameraMaster::GetInstance(void)
 {
@@ -25,7 +24,7 @@ CameraMaster::CameraMaster(void)
 {
 	m_windowMaster = WindowMaster::GetInstance();//do this first!
 	m_cameras = std::vector<Camera*>(); //automatic variable, no new keyword
-	uint cameraid = createCamera(vec4(0.0f, 0.0f, -10.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
+	uint cameraid = createCamera(vec4(0.0f, 8.0f, -10.0f, 1.0f), vec3(0.0f), vec3(0.0f,1.0f,0.0f), PERSPECTIVE, 45.0f, .01f, 100.0f); //default camera to start with
 	bindCamera(cameraid);
 	
 }
@@ -132,19 +131,18 @@ void CameraMaster::truckCamera(float p_dist, vec3 p_axis)
 }
 void CameraMaster::rotateCamera(float p_angleRad, vec3 p_axis)
 {
-	mat4 rotation = glm::rotate(glm::degrees(p_angleRad), p_axis);
+	quaternion rotation = angleAxis(glm::degrees(p_angleRad), p_axis);
 	Camera*camera = m_cameras[m_currentCamera];
-	camera->m_up = (vec3)(rotation*vec4(camera->m_up, 1.0f));
-	camera->m_focalPoint = (vec3)(rotation*vec4(camera->m_focalPoint-(vec3)camera->m_position,1.0f))+(vec3)camera->m_position;
+	camera->m_up = (vec3)(rotation*vec4(camera->m_up, 0.0f));
+	camera->m_focalPoint = (vec3)(rotation*vec4(camera->m_focalPoint-(vec3)camera->m_position,0.0f))+(vec3)camera->m_position;
 	Update();
 }
 void CameraMaster::orbitCamera(float p_angleRad, vec3 p_axis)
 {
 	Camera* camera = m_cameras[m_currentCamera];
-	vec4 focalSpacePos = vec4((vec3)camera->m_position - camera->m_focalPoint,0.0f);
-	mat4 rotation = glm::rotate(glm::degrees(p_angleRad), p_axis);
-	vec4 rotated = rotation*focalSpacePos;
-	camera->m_position = glm::translate((vec3)(rotated - focalSpacePos))*camera->m_position;
+	quaternion rotation = angleAxis(glm::degrees(p_angleRad), p_axis);
+	camera->m_position = vec4(camera->m_focalPoint,0.0f)+rotation*(camera->m_position - vec4(camera->m_focalPoint,0.0f));
+	camera->m_up = rotation*camera->m_up;
 	Update();
 
 }

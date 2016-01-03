@@ -20,11 +20,11 @@
 #include<locale>
 #include<fstream>
 #include<sstream>
+#include<map>
 #include"include/glm/glm.hpp"
-#include"include/glm/gtc/quaternion.hpp"
 #include"include/glm/gtc/matrix_transform.hpp"
 #include"include/glm/gtx/transform.hpp"
-
+#include"include/glm/gtc/quaternion.hpp"
 typedef std::string String;
 typedef unsigned int uint;
 
@@ -90,6 +90,25 @@ enum OPTIONS
 	YES = 1
 };
 
+static quaternion angleAxis(float &angle, vec3 & axis)
+{
+	quaternion q = quaternion();
+
+	float s = glm::sin(angle*.5f);
+	q.w = glm::cos(angle*.5f);
+	q.x = axis.x*s;
+	q.y = axis.y*s;
+	q.z = axis.z*s;
+}
+
+struct vec3Comparison
+{
+	bool operator()(const vec3& lhs, const vec3& rhs) const
+	{
+		return lhs.x < rhs.x ||
+			lhs.x == rhs.x && (lhs.y < rhs.y || lhs.y == rhs.y && lhs.z < rhs.z);
+	}
+};
 
 
 #endif

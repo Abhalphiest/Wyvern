@@ -28,6 +28,12 @@
     <Filter Include="Header Files\Mesh Classes">
       <UniqueIdentifier>{3eda7c2a-f2ac-4f18-a022-b9b761a862f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{ac8525e6-fc06-4166-a846-4154d0571c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{e00cc8db-78e1-49d9-8ad4-772d106f7110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,13 +51,13 @@
     <ClCompile Include="TimeMaster.cpp">
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
-    <ClCompile Include="MeshMaster.cpp">
-      <Filter>Source Files\Masters</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files\Mesh Classes</Filter>
     </ClCompile>
     <ClCompile Include="CameraMaster.cpp">
+      <Filter>Source Files\Masters</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshMaster.cpp">
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,9 +92,6 @@
     <ClInclude Include="include\wglew.h">
       <Filter>Header Files\ExternalLibraries</Filter>
     </ClInclude>
-    <ClInclude Include="MeshMaster.h">
-      <Filter>Header Files\MasterHeaders</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files\Mesh Classes</Filter>
     </ClInclude>
@@ -99,6 +102,9 @@
       <Filter>Header Files\MasterHeaders</Filter>
     </ClInclude>
     <ClInclude Include="LightMaster.h">
+      <Filter>Header Files\MasterHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshMaster.h">
       <Filter>Header Files\MasterHeaders</Filter>
     </ClInclude>
   </ItemGroup>

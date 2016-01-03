@@ -1,60 +1,44 @@
 #ifndef _MESHMASTER_H
 #define _MESHMASTER_H
-
+#include"definitions.h"
 #include"Mesh.h"
-#include<map>
-struct MeshData{
-	uint m_numInstances = 0;
-	std::vector<mat4> m_toWorld; //transformation matrices per instance
-	//constructor
-	MeshData(void);
-	MeshData(MeshData& other);
-	MeshData& operator=(MeshData& other);
-	~MeshData(void);
+class MeshMaster
+{
+	struct MeshData
+	{
+		Mesh* m_mesh;
+		uint m_numInstances;
+		std::vector<mat4> m_toWorld;
 
-	//need an array of floats for shaders
-	void GetMatArray(float* p_arrayDest);
-};
-class MeshMaster{
-
-	
-
+		MeshData(Mesh* mesh); //constructor
+		~MeshData(void); //destructor
+		MeshData& operator=(MeshData& other); //assignment operator
+		MeshData(MeshData& other); //copy constructor
+	};
 public:
 	//singleton functions
-	static MeshMaster* GetInstance();
-	static void Release(void);
+	MeshMaster* GetInstance(void);
+	void Release(void);
 
-	//render list functions
-	uint AddMesh(Mesh* p_mesh); //adds a new mesh to the mesh list, returns index
-
-	Mesh* GetMesh(String p_name); //gets the mesh associated with a given name
-
-	Mesh* GetMesh(uint p_index); //gets mesh associated with given index
-
-	void AddToRenderList(Mesh* p_mesh, mat4& p_toWorld);
-	void AddToRenderList(uint p_index, mat4& p_toWorld);
+	uint AddMesh(Mesh* p_mesh, String p_name);
+	void RemoveMesh(uint p_index);
+	uint AddInstance(uint p_index, mat4& p_toWorld);
+	void UpdateInstance(uint p_meshIndex, uint p_instanceIndex, mat4& p_toWorld);
+	void RemoveInstance(uint p_meshIndex, uint p_instanceIndex);
 	void Render(void);
-
+	
 private:
-	//constructor, copy constructor, destructor, etc
-	MeshMaster(void);
-	MeshMaster(MeshMaster const& other);
-	MeshMaster& operator=(MeshMaster const& other);
-	~MeshMaster(void);
+	MeshMaster(void); //constructor
+	~MeshMaster(void); //destructor
+	MeshMaster& operator=(MeshMaster& other);
+	MeshMaster(MeshMaster& other);
 
-	int FindMesh(Mesh* p_mesh); //finds the index of the given mesh
+	static MeshMaster* m_instance; //singleton pointer
+	std::vector<MeshData> m_renderList;
 
-	void Init(void);
-	void ResetList(void);
-
-	int m_numRenderMeshes; //number of meshes in the render list
-	static MeshMaster* m_instance; //singleton
-	std::vector<Mesh*> m_meshList;
-	std::vector<MeshData*> m_meshDataList;
-	float* m_floatMatrices; //list of matrices to render in float form
-	std::map<String, int> m_map; //objects in the list
-
-
+	
+	
+	
 };
 
 #endif
