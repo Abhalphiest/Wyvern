@@ -10,7 +10,7 @@ class MeshMaster
 		uint m_numInstances;
 		std::vector<mat4> m_toWorld;
 
-		MeshData(Mesh* mesh); //constructor
+		MeshData(Mesh* p_mesh); //constructor
 		~MeshData(void); //destructor
 		MeshData& operator=(MeshData& other); //assignment operator
 		MeshData(MeshData& other); //copy constructor
@@ -20,11 +20,17 @@ public:
 	MeshMaster* GetInstance(void);
 	void Release(void);
 
-	uint AddMesh(Mesh* p_mesh, String p_name);
-	void RemoveMesh(uint p_index);
+	uint AddMesh(Mesh* p_mesh, String &p_name);
+	Mesh* GetMesh(uint p_index);
+	Mesh* GetMesh(String p_name);
+	void ClearMeshes(void);
 	uint AddInstance(uint p_index, mat4& p_toWorld);
+	uint AddInstance(String p_name, mat4& p_toWorld);
 	void UpdateInstance(uint p_meshIndex, uint p_instanceIndex, mat4& p_toWorld);
-	void RemoveInstance(uint p_meshIndex, uint p_instanceIndex);
+	void UpdateInstance(String p_name, uint p_instanceIndex, mat4& p_toWorld);
+	void ClearInstances(uint p_meshIndex);
+	void ClearInstances(String p_name);
+	void ClearInstances(void);
 	void Render(void);
 	
 private:
@@ -35,6 +41,7 @@ private:
 
 	static MeshMaster* m_instance; //singleton pointer
 	std::vector<MeshData> m_renderList;
+	std::map<String, uint> m_nameMap;
 
 	
 	
