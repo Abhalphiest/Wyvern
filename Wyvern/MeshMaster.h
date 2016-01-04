@@ -12,8 +12,8 @@ class MeshMaster
 
 		MeshData(Mesh* p_mesh); //constructor
 		~MeshData(void); //destructor
-		MeshData& operator=(MeshData& other); //assignment operator
-		MeshData(MeshData& other); //copy constructor
+		MeshData& operator=(const MeshData& other); //assignment operator
+		MeshData(const MeshData& other); //copy constructor
 	};
 public:
 	//singleton functions
@@ -36,8 +36,8 @@ public:
 private:
 	MeshMaster(void); //constructor
 	~MeshMaster(void); //destructor
-	MeshMaster& operator=(MeshMaster& other);
-	MeshMaster(MeshMaster& other);
+	MeshMaster& operator=(const MeshMaster& other);
+	MeshMaster(const MeshMaster& other);
 
 	static MeshMaster* m_instance; //singleton pointer
 	std::vector<MeshData> m_renderList;

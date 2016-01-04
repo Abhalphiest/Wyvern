@@ -102,7 +102,7 @@ void CameraMaster::Update()
 	case ORTHOGRAPHIC:
 	{
 		camera->m_viewMatrix = glm::lookAt((vec3)camera->m_position, camera->m_focalPoint, camera->m_up);
-		float distance = (camera->m_focalPoint - (vec3)camera->m_position).length;
+		float distance = (float) (camera->m_focalPoint - (vec3)camera->m_position).length();
 		camera->m_perspMatrix = glm::ortho(-distance, distance, -distance, distance);
 		break;
 	}
