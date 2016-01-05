@@ -119,6 +119,8 @@ public:
 	///<remark> Calls the Mesh constructor and allocates heap memory, which is the responsibility of the caller, who should either delete it
 	/// manually or add it to the Mesh Master, which will handle deletions upon being released. </remark>
 	static Mesh* Pipe(float p_innerRadius, float p_outerRadius, float p_height, uint p_subdivisions);
+
+	static Mesh* LoadObj(const char* path);
 	///<summary> Property for the Mesh name. </summary>
 	///<returns> The name of the mesh </returns>
 	String GetName(void){ return m_name; }
@@ -173,10 +175,13 @@ private:
 	GLuint m_vertexBuffer = 0; //vertex buffer index
 	GLuint m_colorBuffer = 0; //color  buffer index
 	GLuint m_uvBuffer = 0; //UV buffer index
+	GLuint m_normalBuffer = 0;
 	GLuint m_tangentBuffer = 0;
 	GLuint m_bitangentBuffer = 0;
 	GLuint m_shaderIndex = 0;
 	std::vector<float> m_vertices;
+	std::vector<float> m_normals;
+	std::vector<float> m_uvs;
 	std::vector<uint> m_indices;
 	std::map<vec3, int, vec3Comparison> m_indexMap;
 

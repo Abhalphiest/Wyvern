@@ -12,9 +12,12 @@ Mesh::Mesh(void)
 	glGenBuffers(1, &m_tangentBuffer);
 	glGenBuffers(1, &m_bitangentBuffer);
 	glGenBuffers(1, &m_indexBuffer);
+	glGenBuffers(1, &m_normalBuffer);
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
 	m_vertices = std::vector<float>();
+	m_uvs = std::vector<float>();
+	m_normals = std::vector<float>();
 	m_indices = std::vector<uint>();
 	m_indexMap = std::map<vec3, int, vec3Comparison>();
 }
@@ -32,9 +35,12 @@ Mesh& Mesh::operator=(Mesh& other)
 	glGenBuffers(1, &m_tangentBuffer);
 	glGenBuffers(1, &m_bitangentBuffer);
 	glGenBuffers(1, &m_indexBuffer);
+	glGenBuffers(1, &m_normalBuffer);
 	m_shaderIndex = other.m_shaderIndex;
 	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
+	m_uvs = other.m_uvs;
+	m_normals = other.m_normals;
 	m_indices = other.m_indices;
 	m_indexMap = other.m_indexMap;
 	m_renderWireframe = other.m_renderWireframe;
@@ -52,11 +58,14 @@ Mesh::Mesh(Mesh& other)
 	m_vertexBuffer = other.m_vertexBuffer; 
 	m_colorBuffer = other.m_colorBuffer; 
 	m_uvBuffer = other.m_uvBuffer; 
+	m_normalBuffer = other.m_normalBuffer;
 	m_tangentBuffer = other.m_tangentBuffer;
 	m_bitangentBuffer = other.m_bitangentBuffer;
 	m_shaderIndex = other.m_shaderIndex;
 	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
+	m_uvs = other.m_uvs;
+	m_normals = other.m_normals;
 	m_indices = other.m_indices;
 	m_indexMap = other.m_indexMap;
 	m_renderWireframe = other.m_renderWireframe;
@@ -340,6 +349,12 @@ Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint 
 	}
 	pipe->CompileMesh();
 	return pipe;
+}
+
+
+Mesh* Mesh::LoadObj(const char* path)
+{
+
 }
 
 void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
