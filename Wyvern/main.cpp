@@ -12,6 +12,7 @@
 #include"ShaderMaster.h"
 #include"InputMaster.h"
 #include"CameraMaster.h"
+#include"MeshMaster.h"
 #include"Mesh.h"
 
 //---------------------
@@ -23,6 +24,7 @@ WindowMaster* windowMaster;
 ShaderMaster* shaderMaster;
 InputMaster* inputMaster;
 CameraMaster* cameraMaster;
+MeshMaster* meshMaster;
 Mesh* mesh;
 
 mat4 mvp;
@@ -41,6 +43,7 @@ int main(int argc, char** argv)
   shaderMaster = ShaderMaster::GetInstance();
   inputMaster = InputMaster::GetInstance();
   cameraMaster = CameraMaster::GetInstance();
+  meshMaster = MeshMaster::GetInstance();
   //initialize everything else
   init();
   //main loop
@@ -51,7 +54,7 @@ int main(int argc, char** argv)
   shaderMaster->ReleaseInstance();
   inputMaster->ReleaseInstance();
   cameraMaster->ReleaseInstance();
-  delete mesh;
+  meshMaster->ReleaseInstance();
   _CrtDumpMemoryLeaks();
 }
 
@@ -73,8 +76,15 @@ void init()
 	shaderMaster->LoadProgram();
 
 	mesh = Mesh::Sphere(3.0f, 10);
-	//mesh->SetWireframe(true);
-	
+	fprintf(stdout, "%X", mesh);
+	String sphereName = "sphere";
+	meshMaster->AddMesh(mesh, sphereName);
+	Mesh* cube = Mesh::Cube(1.0f);
+	fprintf(stdout, "%X",cube);
+	String cubeName = "cube";
+	meshMaster->AddMesh(cube, cubeName);
+	uint cubeinst1 = meshMaster->AddInstance(cubeName, mat4(1.0f));
+	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));
 
 	
 
@@ -85,7 +95,7 @@ void init()
 void update()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mesh->Render(mat4(1.0f));
+	meshMaster->Render();
 	
 	//swap buffers and catch keyboard input
 	glfwSwapBuffers(windowMaster->GetWindow());
@@ -139,4 +149,5 @@ GLuint loadBMP(const char* imgpath)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	return 0;
 }

@@ -17,8 +17,8 @@ class MeshMaster
 	};
 public:
 	//singleton functions
-	MeshMaster* GetInstance(void);
-	void Release(void);
+	static MeshMaster* GetInstance(void);
+	void ReleaseInstance(void);
 
 	uint AddMesh(Mesh* p_mesh, String &p_name);
 	Mesh* GetMesh(uint p_index);

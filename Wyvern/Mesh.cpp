@@ -20,14 +20,13 @@ Mesh::Mesh(void)
 }
 Mesh::~Mesh(void)
 {
-	//remove our reference to all the buffer objects
-	//if we're the last reference, that memory will be freed
-	glDeleteVertexArrays(1,&m_vao);
-	m_vao = 0; //just in case, I guess?
+	if (m_vao != 0)
+	{
+		m_vao = 0; //just in case, I guess?
+	}
 }
 Mesh& Mesh::operator=(Mesh& other)
 {
-	glDeleteVertexArrays(1, &m_vao);
 	m_vao = other.m_vao;
 	m_vertexBuffer = other.m_vertexBuffer;
 	m_colorBuffer = other.m_colorBuffer;

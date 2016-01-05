@@ -8,7 +8,7 @@ MeshMaster* MeshMaster::GetInstance(void)
 	}
 	return m_instance;
 }
-void MeshMaster::Release(void)
+void MeshMaster::ReleaseInstance(void)
 {
 	if (m_instance != nullptr)
 	{
@@ -138,8 +138,10 @@ void MeshMaster::Render(void)
 	for (uint i = 0; i < m_renderList.size(); i++)
 	{
 		for (uint j = 0; j < m_renderList[i].m_numInstances; j++)
+		{
 			m_renderList[i].m_mesh->Render(m_renderList[i].m_toWorld[j]);
-		
+			fprintf(stdout, "\n \n rendering %s", m_renderList[i].m_mesh->GetName());
+		}
 	}
 }
 
@@ -159,10 +161,16 @@ MeshMaster::MeshData::~MeshData(void)
 }
 MeshMaster::MeshData& MeshMaster::MeshData::operator=(const MeshData& other)
 {
-	if (m_mesh != nullptr)
+	if (other.m_mesh != nullptr)
 	{
-		delete m_mesh;
+		if (m_mesh != nullptr)
+		{
+			delete m_mesh;
+		}
+		m_mesh = new Mesh(*(other.m_mesh));
 	}
+	else
+		m_mesh = nullptr;
 	m_toWorld.clear();
 	m_mesh = other.m_mesh;
 	m_numInstances = other.m_numInstances;
@@ -171,7 +179,12 @@ MeshMaster::MeshData& MeshMaster::MeshData::operator=(const MeshData& other)
 }
 MeshMaster::MeshData::MeshData(const MeshData& other)
 {
-	m_mesh = other.m_mesh;
+	if (other.m_mesh != nullptr)
+	{
+		m_mesh = new Mesh(*(other.m_mesh));
+	}
+	else
+		m_mesh = nullptr;
 	m_numInstances = other.m_numInstances;
 	m_toWorld = other.m_toWorld;
 }
