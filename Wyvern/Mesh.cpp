@@ -23,6 +23,7 @@ Mesh::~Mesh(void)
 }
 Mesh& Mesh::operator=(Mesh& other)
 {
+	fprintf(stdout, "copy assignment called");
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
 	glGenBuffers(1, &m_vertexBuffer);
@@ -31,6 +32,8 @@ Mesh& Mesh::operator=(Mesh& other)
 	glGenBuffers(1, &m_tangentBuffer);
 	glGenBuffers(1, &m_bitangentBuffer);
 	glGenBuffers(1, &m_indexBuffer);
+	m_shaderIndex = other.m_shaderIndex;
+	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
 	m_indices = other.m_indices;
 	m_indexMap = other.m_indexMap;
@@ -39,18 +42,20 @@ Mesh& Mesh::operator=(Mesh& other)
 	CompileMesh();
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
+
 	return *this;
 }
 Mesh::Mesh(Mesh& other)
 {
-	glGenVertexArrays(1, &m_vao);
-	glBindVertexArray(m_vao);
-	glGenBuffers(1, &m_vertexBuffer);
-	glGenBuffers(1, &m_colorBuffer);
-	glGenBuffers(1, &m_uvBuffer);
-	glGenBuffers(1, &m_tangentBuffer);
-	glGenBuffers(1, &m_bitangentBuffer);
-	glGenBuffers(1, &m_indexBuffer);
+	m_vao = other.m_vao; 
+	m_indexBuffer = other.m_indexBuffer;
+	m_vertexBuffer = other.m_vertexBuffer; 
+	m_colorBuffer = other.m_colorBuffer; 
+	m_uvBuffer = other.m_uvBuffer; 
+	m_tangentBuffer = other.m_tangentBuffer;
+	m_bitangentBuffer = other.m_bitangentBuffer;
+	m_shaderIndex = other.m_shaderIndex;
+	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
 	m_indices = other.m_indices;
 	m_indexMap = other.m_indexMap;
@@ -62,7 +67,6 @@ Mesh::Mesh(Mesh& other)
 }
 void Mesh::Render(mat4 &p_modelMatrix)
 {
-	fprintf(stdout, "%p", m_cameraMaster);
 	mat4 persp=m_cameraMaster->GetPerspMatrix();
 	mat4 view= m_cameraMaster->GetViewMatrix();
 	mat4 mvp = persp*view*p_modelMatrix;

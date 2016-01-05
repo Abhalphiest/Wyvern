@@ -76,16 +76,16 @@ void init()
 	shaderMaster->LoadProgram();
 
 	mesh = Mesh::Sphere(3.0f, 10);
-	fprintf(stdout, "%X", mesh);
+	
 	String sphereName = "sphere";
 	meshMaster->AddMesh(mesh, sphereName);
 	Mesh* cube = Mesh::Cube(1.0f);
 	fprintf(stdout, "%X",cube);
 	String cubeName = "cube";
 	meshMaster->AddMesh(cube, cubeName);
-	uint cubeinst1 = meshMaster->AddInstance(cubeName, mat4(1.0f));
+	uint cubeinst1 = meshMaster->AddInstance(cubeName,glm::translate(vec3(-5.0f,0.0f,0.0f)));
 	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));
-
+	
 	
 
 
@@ -97,6 +97,7 @@ void update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//meshMaster->Render();
 	//swap buffers and catch keyboard input
+	meshMaster->Render();
 	glfwSwapBuffers(windowMaster->GetWindow());
 	glfwPollEvents();
 }
