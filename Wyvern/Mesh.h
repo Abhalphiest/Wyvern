@@ -141,6 +141,14 @@ public:
 	void SetWireframe(bool p_wireframe){ m_renderWireframe = p_wireframe; }
 
 private:
+	enum BufferType
+	{
+		VERTEX = 1,
+		UV = 2,
+		NORM = 4,
+		COLOR = 8
+	};
+
 	///<summary> The Mesh class' private constructor, only called by primitive generation functions or the .obj loader. </summary>
 	///<remarks> The constructor mainly sets up the OpenGL buffers and structures necessary for rendering. </remarks>
 	Mesh(void); 
@@ -165,6 +173,8 @@ private:
 	void CheckVertex(vec3 &p);
 	///<summary> Passes the finished vertex and index data to the Mesh's OpenGL buffers, so that it can be rendered at will. </summary>
 	void CompileMesh(void);
+	
+	bool IndexObj(std::vector<vec3> &p_vertices, std::vector<vec2> &p_uvs, std::vector<vec3> &p_normals, std::vector<uint> &p_vertIndices, std::vector<uint> &p_uvIndices, std::vector<uint> &p_normIndices);
 	///<summary> Truncates each component of a vector to the 5th decimal place. </summary>
 	///<param name="v"> The vector to be truncated </param>
 	vec3 TruncateVector(const vec3& v);
@@ -179,6 +189,7 @@ private:
 	GLuint m_tangentBuffer = 0;
 	GLuint m_bitangentBuffer = 0;
 	GLuint m_shaderIndex = 0;
+	int m_bufferType;
 	std::vector<float> m_vertices;
 	std::vector<float> m_normals;
 	std::vector<float> m_uvs;
@@ -193,6 +204,8 @@ private:
 	ShaderMaster* m_shaderMaster = nullptr;
 
 	String m_name = ""; //empty string for uninitialized name
+
+	
 
 };
 #endif

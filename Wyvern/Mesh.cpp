@@ -45,6 +45,7 @@ Mesh& Mesh::operator=(Mesh& other)
 	m_indexMap = other.m_indexMap;
 	m_renderWireframe = other.m_renderWireframe;
 	m_name = other.m_name;
+	m_bufferType = other.m_bufferType;
 	CompileMesh();
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
@@ -72,6 +73,7 @@ Mesh::Mesh(Mesh& other)
 	m_name = other.m_name;
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
+	m_bufferType = VERTEX | COLOR;
 	CompileMesh();
 }
 void Mesh::Render(mat4 &p_modelMatrix)
@@ -79,19 +81,46 @@ void Mesh::Render(mat4 &p_modelMatrix)
 	mat4 persp=m_cameraMaster->GetPerspMatrix();
 	mat4 view= m_cameraMaster->GetViewMatrix();
 	mat4 mvp = persp*view*p_modelMatrix;
+	int attribArray = 0;
 	if (m_renderWireframe)
 	{
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
 	glUseProgram(m_shaderMaster->GetProgramID());
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "MVP"), 1, GL_FALSE, &mvp[0][0]);
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	
+	
+	if (m_bufferType&VERTEX)
+	{
+		glEnableVertexAttribArray(attribArray);
+		attribArray++;
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "MVP"), 1, GL_FALSE, &mvp[0][0]);
+		
+	}
+	
+	if (m_bufferType&UV)
+	{
+		glEnableVertexAttribArray(attribArray);
+		attribArray++;
+		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+	if (m_bufferType&NORM)
+	{
+		glEnableVertexAttribArray(attribArray);
+		attribArray++;
+		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+	if (m_bufferType&COLOR)
+	{
+		glEnableVertexAttribArray(attribArray);
+		attribArray++;
+		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glDrawElements(GL_TRIANGLES,m_numVertices, GL_UNSIGNED_INT,(void*)0);
 	glDisableVertexAttribArray(0);
@@ -118,6 +147,7 @@ Mesh* Mesh::Cube(float p_size)
 	cube->AddQuad(p4, p0, p2, p6);
 	cube->AddQuad(p0, p4, p5, p1);
 	cube->AddQuad(p2, p3, p7, p6);
+	cube->m_bufferType = VERTEX | COLOR;
 	cube->CompileMesh();
 	return cube;
 }
@@ -167,7 +197,7 @@ Mesh* Mesh::Sphere(float p_radius, uint p_subdivisions)
 
 	}
 
-
+	sphere->m_bufferType = VERTEX | COLOR;
 	sphere->CompileMesh();
 	return sphere;
 }
@@ -221,7 +251,7 @@ Mesh* Mesh::Torus(float p_innerRad, float p_outerRad, uint p_subdivisions)
 				vec3(leftxbottom, lefty, leftzbottom));
 		}
 	}
-
+	torus->m_bufferType = VERTEX | COLOR;
 	torus->CompileMesh();
 	return torus;
 }
@@ -254,7 +284,7 @@ Mesh* Mesh::Cone(float p_radius, float p_height, uint p_subdivisions)
 	}
 
 
-
+	cone->m_bufferType = VERTEX | COLOR;
 	cone->CompileMesh();
 	return cone;
 }
@@ -295,6 +325,7 @@ Mesh* Mesh::Cylinder(float p_radius, float p_height, uint p_subdivisions)
 			vec3(rightx, topCenter.y, rightz), vec3(leftx, topCenter.y, leftz));
 
 	}
+	cylinder->m_bufferType = VERTEX | COLOR;
 	cylinder->CompileMesh();
 	return cylinder;
 }
@@ -347,6 +378,7 @@ Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint 
 			);
 
 	}
+	pipe->m_bufferType = VERTEX | COLOR;
 	pipe->CompileMesh();
 	return pipe;
 }
@@ -354,7 +386,69 @@ Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint 
 
 Mesh* Mesh::LoadObj(const char* path)
 {
-
+	Mesh* mesh = new Mesh();
+	std::vector<vec3> tempvertices;
+	std::vector<vec2> tempuvs;
+	std::vector<vec3> tempnormals;
+	std::vector<uint> vertexIndices, uvIndices, normalIndices;
+	FILE* file = fopen(path, "r");
+	if (file == NULL)
+	{
+		fprintf(stderr, "Could not open the obj file.");
+		return nullptr;
+	}
+	while (true)
+	{
+		char lineHeader[128];
+		int res = fscanf(file, "%s", lineHeader);
+		if (res == EOF)
+			break;
+		if (strcmp(lineHeader, "v") == 0)
+		{
+			vec3 v;
+			fscanf(file, "%f %f %f\n", &v.x, &v.y, &v.z);
+			tempvertices.push_back(v);
+			
+		}
+		else if (strcmp(lineHeader, "vt") == 0)
+		{
+			vec2 v;
+			fscanf(file, "%f %f\n", &v.x, &v.y);
+			tempuvs.push_back(v);
+		}
+		else if (strcmp(lineHeader, "vn") == 0)
+		{
+			vec3 v;
+			fscanf(file, "%f %f %f\n", &v.x, &v.y, &v.z);
+			tempnormals.push_back(v);
+		}
+		else if (strcmp(lineHeader, "f") == 0)
+		{
+			uint vertexIndex[3], uvIndex[3], normalIndex[3];
+			int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0],
+								&vertexIndex[1], &uvIndex[1], &normalIndex[1], 
+								&vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+			if (matches != 9)
+			{
+				printf(".obj file can't be read, try exporting with other options.");
+				return nullptr;
+			}
+			vertexIndices.push_back(vertexIndex[0]);
+			vertexIndices.push_back(vertexIndex[1]);
+			vertexIndices.push_back(vertexIndex[2]);
+			uvIndices.push_back(uvIndex[0]);
+			uvIndices.push_back(uvIndex[1]);
+			uvIndices.push_back(uvIndex[2]);
+			normalIndices.push_back(normalIndex[0]);
+			normalIndices.push_back(normalIndex[1]);
+			normalIndices.push_back(normalIndex[2]);
+		}
+	}
+	if (!mesh->IndexObj(tempvertices, tempuvs, tempnormals, vertexIndices, uvIndices, normalIndices))
+		return nullptr;
+	mesh->m_bufferType = VERTEX | UV | NORM;
+	mesh->CompileMesh();
+	return mesh;
 }
 
 void Mesh::AddTri(vec3 &p1, vec3 &p2, vec3 &p3)
@@ -397,12 +491,65 @@ void Mesh::CheckVertex(vec3 &p)
 
 void Mesh::CompileMesh(void)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+	if (m_bufferType&VERTEX)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+	}
+	if (m_bufferType&COLOR)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+	}
+	if (m_bufferType&UV)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_uvs.size()*sizeof(float), &m_uvs[0], GL_STATIC_DRAW);
+	}
+	if (m_bufferType&NORM)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_normals.size()*sizeof(float), &m_normals[0], GL_STATIC_DRAW);
+	}
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size()*sizeof(uint), &m_indices[0], GL_STATIC_DRAW);
+}
+
+bool Mesh::IndexObj(std::vector<vec3> &p_vertices, std::vector<vec2> &p_uvs, std::vector<vec3> &p_normals,
+	std::vector<uint> &p_vertIndices, std::vector<uint> &p_uvIndices, std::vector<uint> &p_normIndices)
+{
+	std::map<vec3, uint, vec3Comparison> objMap;
+	if (p_vertIndices.size() != p_uvIndices.size() || p_uvIndices.size() != p_normIndices.size())
+	{
+		fprintf(stderr, "Cannot read .obj file, try different export settings.");
+		return false;
+	}
+
+	vec3 indexVec;
+	for (uint i = 0; i < p_vertIndices.size(); i++)
+	{
+		indexVec = vec3(p_vertIndices[i], p_uvIndices[i], p_normIndices[i]);
+		if (objMap.find(indexVec) == objMap.end())
+		{
+			objMap[indexVec] = m_numVertices;
+			m_numVertices++;
+			m_vertices.push_back(p_vertices[p_vertIndices[i]].x);
+			m_vertices.push_back(p_vertices[p_vertIndices[i]].y);
+			m_vertices.push_back(p_vertices[p_vertIndices[i]].z);
+
+			m_uvs.push_back(p_uvs[p_uvIndices[i]].x);
+			m_uvs.push_back(p_uvs[p_uvIndices[i]].y);
+
+			m_normals.push_back(p_normals[p_normIndices[i]].x);
+			m_normals.push_back(p_normals[p_normIndices[i]].y);
+			m_normals.push_back(p_normals[p_normIndices[i]].z);
+		}
+		
+		m_indices.push_back(objMap[indexVec]);
+
+	}
+	return true;
 }
 
 vec3 Mesh::TruncateVector(const vec3& v)

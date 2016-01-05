@@ -75,7 +75,7 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->LoadProgram();
 
-	mesh = Mesh::Sphere(3.0f, 10);
+	/*mesh = Mesh::Sphere(3.0f, 10);
 	
 	String sphereName = "sphere";
 	meshMaster->AddMesh(mesh, sphereName);
@@ -84,10 +84,15 @@ void init()
 	String cubeName = "cube";
 	meshMaster->AddMesh(cube, cubeName);
 	uint cubeinst1 = meshMaster->AddInstance(cubeName,glm::translate(vec3(-5.0f,0.0f,0.0f)));
-	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));
+	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));*/
 	
-	
-
+	mesh = Mesh::LoadObj("test.obj");
+	if (mesh != nullptr)
+	{
+		String meshName = "suzanne";
+		meshMaster->AddMesh(mesh, meshName);
+		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
+	}
 
 }
 
