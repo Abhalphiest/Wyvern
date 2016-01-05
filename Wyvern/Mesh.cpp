@@ -534,16 +534,16 @@ bool Mesh::IndexObj(std::vector<vec3> &p_vertices, std::vector<vec2> &p_uvs, std
 		{
 			objMap[indexVec] = m_numVertices;
 			m_numVertices++;
-			m_vertices.push_back(p_vertices[p_vertIndices[i]].x);
-			m_vertices.push_back(p_vertices[p_vertIndices[i]].y);
-			m_vertices.push_back(p_vertices[p_vertIndices[i]].z);
+			m_vertices.push_back(p_vertices[p_vertIndices[i]-1].x);
+			m_vertices.push_back(p_vertices[p_vertIndices[i]-1].y);
+			m_vertices.push_back(p_vertices[p_vertIndices[i]-1].z);
 
-			m_uvs.push_back(p_uvs[p_uvIndices[i]].x);
-			m_uvs.push_back(p_uvs[p_uvIndices[i]].y);
+			m_uvs.push_back(p_uvs[p_uvIndices[i]-1].x);
+			m_uvs.push_back(p_uvs[p_uvIndices[i]-1].y);
 
-			m_normals.push_back(p_normals[p_normIndices[i]].x);
-			m_normals.push_back(p_normals[p_normIndices[i]].y);
-			m_normals.push_back(p_normals[p_normIndices[i]].z);
+			m_normals.push_back(p_normals[p_normIndices[i]-1].x);
+			m_normals.push_back(p_normals[p_normIndices[i]-1].y);
+			m_normals.push_back(p_normals[p_normIndices[i]-1].z);
 		}
 		
 		m_indices.push_back(objMap[indexVec]);
