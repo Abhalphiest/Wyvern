@@ -66,13 +66,13 @@ public:
 #pragma region Properties
 	///<summary> View Matrix property </summary>
 	///<returns> A 4x4 matrix representing the view transformation from the currently bound camera </returns>
-	mat4 GetViewMatrix(void){ return m_cameras[m_currentCamera]->m_viewMatrix; }
+	mat4 GetViewMatrix(void){ return m_cameras[m_currentCamera].m_viewMatrix; }
 	///<summary> Perspective Matrix property </summary>
 	///<returns> A 4x4 matrix representing the perspective transformation from the currently bound camera </returns>
-	mat4 GetPerspMatrix(void){ return m_cameras[m_currentCamera]->m_perspMatrix; }
+	mat4 GetPerspMatrix(void){ return m_cameras[m_currentCamera].m_perspMatrix; }
 	///<summary> Camera Mode property </summary>
 	///<returns> The mode of the currently bound camera </returns>
-	CameraMode GetCameraMode(void){	return m_cameras[m_currentCamera]->m_mode;}
+	CameraMode GetCameraMode(void){	return m_cameras[m_currentCamera].m_mode;}
 	///<summary> Current Camera property </summary>
 	///<returns> The index of the currently bound camera </returns>
 	uint GetCurrentCamera(void){ return m_currentCamera; }
@@ -82,13 +82,13 @@ public:
 	void SetCameraMode(CameraMode p_mode);
 	///<summary>Near clipping plane property </summary>
 	///<param name="p_mode"> The new near clipping distance of the camera. </param>
-	void SetNearClipping(float p_nearclip){ m_cameras[m_currentCamera]->m_nearClip= p_nearclip; Update(); }
+	void SetNearClipping(float p_nearclip){ m_cameras[m_currentCamera].m_nearClip= p_nearclip; Update(); }
 	///<summary>Far clipping plane property </summary>
 	///<param name="p_mode"> The new far clipping distance of the camera. </param>
-	void SetFarClipping(float p_farclip){ m_cameras[m_currentCamera]->m_nearClip = p_farclip; Update(); }
+	void SetFarClipping(float p_farclip){ m_cameras[m_currentCamera].m_nearClip = p_farclip; Update(); }
 	///<summary>Field of view property </summary>
 	///<param name="p_mode"> The new field of view angle of the camera, in radians. </param>
-	void SetFOV(float p_fovRad){ m_cameras[m_currentCamera]->m_fov = p_fovRad; Update(); }
+	void SetFOV(float p_fovRad){ m_cameras[m_currentCamera].m_fov = p_fovRad; Update(); }
 
 #pragma endregion
 private:
@@ -107,7 +107,7 @@ private:
 		CameraMode m_mode;	
 	};
 	static CameraMaster* m_instance;
-	std::vector<Camera*> m_cameras; //going to have to memory manage this time
+	std::vector<Camera> m_cameras; 
 	uint m_currentCamera;
 
 	WindowMaster* m_windowMaster;

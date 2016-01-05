@@ -140,7 +140,7 @@ void MeshMaster::Render(void)
 		for (uint j = 0; j < m_renderList[i].m_numInstances; j++)
 		{
 			m_renderList[i].m_mesh->Render(m_renderList[i].m_toWorld[j]);
-			fprintf(stdout, "\n \n rendering %s", m_renderList[i].m_mesh->GetName());
+			
 		}
 	}
 }

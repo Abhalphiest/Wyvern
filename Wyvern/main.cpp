@@ -95,8 +95,7 @@ void init()
 void update()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	meshMaster->Render();
-	
+	//meshMaster->Render();
 	//swap buffers and catch keyboard input
 	glfwSwapBuffers(windowMaster->GetWindow());
 	glfwPollEvents();
