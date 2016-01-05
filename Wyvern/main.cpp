@@ -92,6 +92,7 @@ void init()
 		String meshName = "suzanne";
 		meshMaster->AddMesh(mesh, meshName);
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
+		
 	}
 
 }

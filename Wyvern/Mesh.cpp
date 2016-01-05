@@ -129,6 +129,7 @@ void Mesh::Render(mat4 &p_modelMatrix)
 
 }
 
+
 Mesh* Mesh::Cube(float p_size)
 {
 	Mesh* cube = new Mesh();

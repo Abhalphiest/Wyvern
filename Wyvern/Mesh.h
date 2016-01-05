@@ -196,6 +196,7 @@ private:
 	std::vector<uint> m_indices;
 	std::map<vec3, int, vec3Comparison> m_indexMap;
 
+
 	bool m_renderWireframe = false;
 
 	CameraMaster* m_cameraMaster = nullptr;
