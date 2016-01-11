@@ -86,10 +86,10 @@ void init()
 	uint cubeinst1 = meshMaster->AddInstance(cubeName,glm::translate(vec3(-5.0f,0.0f,0.0f)));
 	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));*/
 	
-	mesh = Mesh::LoadObj("test.obj");
+	mesh = Mesh::Sphere(1.0f,20);
 	if (mesh != nullptr)
 	{
-		String meshName = "suzanne";
+		String meshName = "sphere";
 		meshMaster->AddMesh(mesh, meshName);
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
 		
