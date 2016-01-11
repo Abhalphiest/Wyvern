@@ -3,13 +3,6 @@
 #include "definitions.h"
 class MaterialMaster{
 
-	
-	struct Material
-	{
-		GLuint m_shaderID;
-		GLuint m_textureID;
-
-	};
 	struct Texture
 	{
 		uint m_width;
@@ -17,6 +10,16 @@ class MaterialMaster{
 		uint m_imageSize;
 		std::vector<char> m_data;
 	};
+	struct Material
+	{
+		GLuint m_shaderID;
+		GLuint m_textureID;
+		float m_specular;
+		vec3 m_color;
+		Texture* m_texture;
+
+	};
+	
 
 public:
 	bool LoadBMP(char* p_filepath, uint p_materialID);
@@ -25,5 +28,6 @@ public:
 
 private:
 	std::map<GLuint, Texture> m_textureIDmap;
+	std::vector<Material> m_materials;
 };
 #endif
