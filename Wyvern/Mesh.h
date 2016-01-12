@@ -120,6 +120,11 @@ public:
 	/// manually or add it to the Mesh Master, which will handle deletions upon being released. </remark>
 	static Mesh* Pipe(float p_innerRadius, float p_outerRadius, float p_height, uint p_subdivisions);
 
+	static Mesh* Plane(float p_width, float p_height);
+
+	static Mesh* Icosphere(float p_radius, uint p_subdivisions);
+	
+
 	static Mesh* LoadObj(const char* path);
 	///<summary> Property for the Mesh name. </summary>
 	///<returns> The name of the mesh </returns>

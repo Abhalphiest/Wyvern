@@ -22,17 +22,17 @@
     <Filter Include="Header Files\ExternalLibraries">
       <UniqueIdentifier>{c9205cfa-6670-4561-8481-55dc2e8546c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Mesh Classes">
-      <UniqueIdentifier>{057581d3-bdf5-4e58-829b-fc29a92a4231}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Mesh Classes">
-      <UniqueIdentifier>{3eda7c2a-f2ac-4f18-a022-b9b761a862f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{ac8525e6-fc06-4166-a846-4154d0571c7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Math">
       <UniqueIdentifier>{e00cc8db-78e1-49d9-8ad4-772d106f7110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ClassHeaders">
+      <UniqueIdentifier>{3eda7c2a-f2ac-4f18-a022-b9b761a862f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MathHeaders">
+      <UniqueIdentifier>{ac8525e6-fc06-4166-a846-4154d0571c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{057581d3-bdf5-4e58-829b-fc29a92a4231}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,13 +52,16 @@
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files\Mesh Classes</Filter>
+      <Filter>Source Files\Classes</Filter>
     </ClCompile>
     <ClCompile Include="CameraMaster.cpp">
       <Filter>Source Files\Masters</Filter>
     </ClCompile>
     <ClCompile Include="MeshMaster.cpp">
       <Filter>Source Files\Masters</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +96,7 @@
       <Filter>Header Files\ExternalLibraries</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Header Files\Mesh Classes</Filter>
+      <Filter>Header Files\ClassHeaders</Filter>
     </ClInclude>
     <ClInclude Include="CameraMaster.h">
       <Filter>Header Files\MasterHeaders</Filter>
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="MeshMaster.h">
       <Filter>Header Files\MasterHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\ClassHeaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
