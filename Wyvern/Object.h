@@ -22,7 +22,6 @@ public:
 	static Object& PrimitiveCone(float p_radius, float p_height, uint p_subdivisions, String p_name, uint p_materialIndex);
 	static Object& PrimitivePlane(float p_width, float p_height, String p_name, uint p_materialIndex);
 	static Object& PrimitiveIcosphere(float p_radius, uint p_subdivisions, String p_name, uint p_materialIndex);
-	static Object& PrimitiveIcosphere(float p_radius, uint p_subdivisions, String p_name, uint p_materialIndex);
 	static Object& MeshObject(char* m_meshPath, String p_name, uint p_materialIndex);
 
 

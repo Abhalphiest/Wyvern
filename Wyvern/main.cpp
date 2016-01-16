@@ -71,9 +71,11 @@ void init()
 	
 
 	//hook up our shaders
+	uint programindex = shaderMaster->CreateShaderProgram();
+	shaderMaster->BindShaderProgram(programindex);
 	shaderMaster->AddShader("vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
-	shaderMaster->LoadProgram();
+	shaderMaster->CompileProgram(programindex);
 
 	/*mesh = Mesh::Sphere(3.0f, 10);
 	

@@ -15,11 +15,11 @@ class MaterialMaster{
 	};
 	struct Material
 	{
-		GLuint m_shaderID;
 		GLuint m_textureID;
 		float m_specular;
 		vec3 m_color = BLACK;
 		Texture* m_texture;
+		uint m_shaderProgram;
 	};
 	
 
@@ -34,6 +34,7 @@ public:
 	void SetMaterialColor(uint p_materialIndex, vec3 color);
 	void RemoveTexture(uint p_materialIndex);
 	void SetSpecular(uint p_materialIndex, float p_specular);
+	void SetProgramIndex(GLuint p_programIndex);
 
 private:
 	MaterialMaster(void);
