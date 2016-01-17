@@ -63,6 +63,9 @@
     <ClCompile Include="Object.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="MaterialMaster.cpp">
+      <Filter>Source Files\Masters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="definitions.h">

@@ -135,6 +135,8 @@ public:
 	///<summary>Renders the model after transforming it with the given matrix, using the view and perspective matrices from the Camera Master</summary>
 	///<param name="p_modelMatrix"> A reference to a 4x4 matrix of floats representing the position, orientation, and scale to use when rendering the mesh. </param>
 	void Render(mat4 &p_modelMatrix);
+
+	void RenderInstanced(std::vector<mat4> p_modelMatrices);
 	///<summary> The Mesh class's destructor </summary>
 	~Mesh(void); 
 	///<summary> The Mesh class's assignment operator </summary>
@@ -144,7 +146,7 @@ public:
 	///<summary> Property for the Mesh class' wireframe display boolean </summary>
 	///<param name="p_wireframe"> A boolean representing whether or not to display the mesh in wireframe when rendered. </param>
 	void SetWireframe(bool p_wireframe){ m_renderWireframe = p_wireframe; }
-
+	void SetMaterialIndex(uint p_materialIndex){ m_materialIndex = p_materialIndex; }
 private:
 	enum BufferType
 	{
@@ -193,7 +195,7 @@ private:
 	GLuint m_normalBuffer = 0;
 	GLuint m_tangentBuffer = 0;
 	GLuint m_bitangentBuffer = 0;
-	GLuint m_shaderIndex = 0;
+	GLuint m_matrixBuffer;
 	int m_bufferType;
 	std::vector<float> m_vertices;
 	std::vector<float> m_normals;

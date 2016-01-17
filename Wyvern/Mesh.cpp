@@ -36,7 +36,8 @@ Mesh& Mesh::operator=(Mesh& other)
 	glGenBuffers(1, &m_bitangentBuffer);
 	glGenBuffers(1, &m_indexBuffer);
 	glGenBuffers(1, &m_normalBuffer);
-	m_shaderIndex = other.m_shaderIndex;
+	m_matrixBuffer = other.m_matrixBuffer;
+	m_materialIndex = other.m_materialIndex;
 	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
 	m_uvs = other.m_uvs;
@@ -62,7 +63,8 @@ Mesh::Mesh(Mesh& other)
 	m_normalBuffer = other.m_normalBuffer;
 	m_tangentBuffer = other.m_tangentBuffer;
 	m_bitangentBuffer = other.m_bitangentBuffer;
-	m_shaderIndex = other.m_shaderIndex;
+	m_matrixBuffer = other.m_matrixBuffer;
+	m_materialIndex = other.m_materialIndex;
 	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
 	m_uvs = other.m_uvs;
@@ -80,56 +82,136 @@ void Mesh::Render(mat4 &p_modelMatrix)
 {
 	mat4 persp=m_cameraMaster->GetPerspMatrix();
 	mat4 view= m_cameraMaster->GetViewMatrix();
-	mat4 mvp = persp*view*p_modelMatrix;
-	int attribArray = 0;
 	if (m_renderWireframe)
 	{
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
-	glUseProgram(m_shaderMaster->GetProgramID());
+	m_materialMaster->BindMaterial(m_materialIndex);
 	
 	
 	if (m_bufferType&VERTEX)
 	{
-		glEnableVertexAttribArray(attribArray);
-		attribArray++;
+		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "MVP"), 1, GL_FALSE, &mvp[0][0]);
-		
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "projection"), 1, GL_FALSE, &persp[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "view"), 1, GL_FALSE, &view[0][0]);
 	}
 	
 	if (m_bufferType&UV)
 	{
-		glEnableVertexAttribArray(attribArray);
-		attribArray++;
+		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&NORM)
 	{
-		glEnableVertexAttribArray(attribArray);
-		attribArray++;
+		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&COLOR)
 	{
-		glEnableVertexAttribArray(attribArray);
-		attribArray++;
+		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
+
+	
+	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &p_modelMatrix, GL_STATIC_DRAW);
+	GLsizei vec4Size = sizeof(glm::vec4);
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)0);
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX+1);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX + 1, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(vec4Size));
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX + 2);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX + 2, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(2 * vec4Size));
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX + 3);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX + 3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(3 * vec4Size));
+
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX, 1);
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX + 1, 1);
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX + 2, 1);
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX + 3, 1);
+
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-	glDrawElements(GL_TRIANGLES,m_numVertices, GL_UNSIGNED_INT,(void*)0);
+	glDrawElementsInstanced(GL_TRIANGLES,m_numVertices, GL_UNSIGNED_INT,(void*)0,1);
 	glDisableVertexAttribArray(0);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	glPolygonMode(GL_BACK, GL_FILL);
 
 }
 
+void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
+{
+	uint count = p_modelMatrices.size();
+	mat4 persp = m_cameraMaster->GetPerspMatrix();
+	mat4 view = m_cameraMaster->GetViewMatrix();
+	if (m_renderWireframe)
+	{
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
+	}
+	m_materialMaster->BindMaterial(m_materialIndex);
 
+
+	if (m_bufferType&VERTEX)
+	{
+		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "projection"), 1, GL_FALSE, &persp[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "view"), 1, GL_FALSE, &view[0][0]);
+	}
+
+	if (m_bufferType&UV)
+	{
+		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
+		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+	if (m_bufferType&NORM)
+	{
+		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
+		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+	if (m_bufferType&COLOR)
+	{
+		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
+		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	}
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4)*count, &p_modelMatrices[0], GL_STATIC_DRAW);
+	GLsizei vec4Size = sizeof(glm::vec4);
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)0);
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX + 1);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX + 1, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(vec4Size));
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX + 2);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX + 2, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(2 * vec4Size));
+	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX + 3);
+	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX + 3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)(3 * vec4Size));
+
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX, 1);
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX + 1, 1);
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX + 2, 1);
+	glVertexAttribDivisor(MODELMAT_ATTRIB_INDEX + 3, 1);
+
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+	glDrawElementsInstanced(GL_TRIANGLES, m_numVertices, GL_UNSIGNED_INT, (void*)0, count);
+	glDisableVertexAttribArray(0);
+	glPolygonMode(GL_FRONT, GL_FILL);
+	glPolygonMode(GL_BACK, GL_FILL);
+
+}
 Mesh* Mesh::Cube(float p_size)
 {
 	Mesh* cube = new Mesh();

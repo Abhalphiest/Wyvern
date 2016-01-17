@@ -83,6 +83,12 @@ typedef glm::quat quaternion;
 #define YAXIS vec3(0.0f, 1.0f, 0.0f)
 #define ZAXIS vec3(0.0f, 0.0f, 1.0f)
 
+#define POSITION_ATTRIB_INDEX 0
+#define UV_ATTRIB_INDEX 1
+#define COLOR_ATTRIB_INDEX 1
+#define MODELMAT_ATTRIB_INDEX 2
+#define NORMAL_ATTRIB_INDEX 6
+
 //Enums
 
 enum OPTIONS
