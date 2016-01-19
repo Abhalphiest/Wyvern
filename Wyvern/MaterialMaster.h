@@ -72,6 +72,7 @@ public:
 	void RemoveTexture(uint p_materialIndex);
 	void SetSpecular(uint p_materialIndex, float p_specular);
 	void SetProgramIndex(uint p_materialIndex, GLuint p_programIndex);
+	uint GetShaderProgram(void){ return m_materials[m_currentMaterial].m_shaderProgram; }
 
 private:
 	MaterialMaster(void);

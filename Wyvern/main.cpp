@@ -76,7 +76,7 @@ void init()
 	uint programindex = shaderMaster->CreateShaderProgram();
 	shaderMaster->BindShaderProgram(programindex);
 	shaderMaster->AddShader("vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
-	//shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
+	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->CompileProgram(programindex);
 
 	/*mesh = Mesh::Sphere(3.0f, 10);
@@ -98,6 +98,7 @@ void init()
 		uint materialIndex;
 		materialIndex = materialMaster->CreateMaterial();
 		materialMaster->SetMaterialColor(materialIndex, RED);
+		materialMaster->SetProgramIndex(materialIndex,programindex);
 		mesh->SetMaterialIndex(materialIndex);
 		meshMaster->AddMesh(mesh, meshName);
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));

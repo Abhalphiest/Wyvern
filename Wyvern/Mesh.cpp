@@ -168,7 +168,7 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 	GLuint programID = m_shaderMaster->GetProgramID();
 	glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, &persp[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
-
+	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram());
 	if (m_bufferType&VERTEX)
 	{
 		
