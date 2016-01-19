@@ -57,6 +57,7 @@ int main(int argc, char** argv)
   inputMaster->ReleaseInstance();
   cameraMaster->ReleaseInstance();
   meshMaster->ReleaseInstance();
+  materialMaster->ReleaseInstance();
   _CrtDumpMemoryLeaks();
 }
 
