@@ -150,15 +150,3 @@ MaterialMaster::MaterialMaster(void)
 	m_texturePathMap = std::map<String, Texture*>();
 	m_materials = std::vector<Material>();
 }
-MaterialMaster& MaterialMaster::operator=(const MaterialMaster& other)
-{
-	return *this;
-}
-MaterialMaster::MaterialMaster(const MaterialMaster& other)
-{
-
-}
-MaterialMaster::~MaterialMaster(void)
-{
-
-}

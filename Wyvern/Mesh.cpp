@@ -15,6 +15,7 @@ Mesh::Mesh(void)
 	glGenBuffers(1, &m_normalBuffer);
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
+	m_materialMaster = MaterialMaster::GetInstance();
 	m_vertices = std::vector<float>();
 	m_uvs = std::vector<float>();
 	m_normals = std::vector<float>();
@@ -50,6 +51,7 @@ Mesh& Mesh::operator=(Mesh& other)
 	CompileMesh();
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
+	m_materialMaster = MaterialMaster::GetInstance();
 
 	return *this;
 }
@@ -75,6 +77,7 @@ Mesh::Mesh(Mesh& other)
 	m_name = other.m_name;
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
+	m_materialMaster = MaterialMaster::GetInstance();
 	m_bufferType = VERTEX | COLOR;
 	CompileMesh();
 }

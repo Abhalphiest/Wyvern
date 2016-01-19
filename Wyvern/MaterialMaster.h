@@ -75,9 +75,6 @@ public:
 
 private:
 	MaterialMaster(void);
-	MaterialMaster& operator=(const MaterialMaster& other);
-	MaterialMaster(const MaterialMaster& other);
-	~MaterialMaster(void);
 	std::map<String, Texture*> m_texturePathMap; //to see if we already loaded this texture
 	std::vector<Material> m_materials;
 	uint m_currentMaterial;
