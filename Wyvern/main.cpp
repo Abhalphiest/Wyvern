@@ -76,7 +76,7 @@ void init()
 	uint programindex = shaderMaster->CreateShaderProgram();
 	shaderMaster->BindShaderProgram(programindex);
 	shaderMaster->AddShader("vertexshader.glsl", ShaderMaster::VERTEX_SHADER);
-	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
+	//shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->CompileProgram(programindex);
 
 	/*mesh = Mesh::Sphere(3.0f, 10);
@@ -94,6 +94,7 @@ void init()
 	if (mesh != nullptr)
 	{
 		String meshName = "sphere";
+		mesh->SetWireframe(true);
 		uint materialIndex;
 		materialIndex = materialMaster->CreateMaterial();
 		materialMaster->SetMaterialColor(materialIndex, RED);

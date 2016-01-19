@@ -127,17 +127,6 @@
     <ClInclude Include="TimeMaster.h" />
     <ClInclude Include="WindowMaster.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\fragmentshader.glsl">
-      <DeploymentContent>true</DeploymentContent>
-      <FileType>Text</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </None>
-    <None Include="shaders\vertexshader.glsl">
-      <DeploymentContent>true</DeploymentContent>
-      <FileType>Text</FileType>
-    </None>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -28,7 +28,7 @@ Mesh::~Mesh(void)
 }
 Mesh& Mesh::operator=(Mesh& other)
 {
-	fprintf(stdout, "copy assignment called");
+	//fprintf(stdout, "copy assignment called");
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
 	glGenBuffers(1, &m_vertexBuffer);
@@ -98,8 +98,9 @@ void Mesh::Render(mat4 &p_modelMatrix)
 	
 	if (m_bufferType&VERTEX)
 	{
-		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
 		glVertexAttribPointer(POSITION_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "projection"), 1, GL_FALSE, &persp[0][0]);
 		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "view"), 1, GL_FALSE, &view[0][0]);
@@ -107,20 +108,22 @@ void Mesh::Render(mat4 &p_modelMatrix)
 	
 	if (m_bufferType&UV)
 	{
-		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
+		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
 		glVertexAttribPointer(UV_ATTRIB_INDEX, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&NORM)
 	{
-		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
 		glVertexAttribPointer(NORMAL_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&COLOR)
 	{
-		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
 		glVertexAttribPointer(COLOR_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
@@ -162,33 +165,38 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
 	m_materialMaster->BindMaterial(m_materialIndex);
-
+	GLuint programID = m_shaderMaster->GetProgramID();
+	glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, &persp[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
 
 	if (m_bufferType&VERTEX)
 	{
-		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
 		glVertexAttribPointer(POSITION_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "projection"), 1, GL_FALSE, &persp[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "view"), 1, GL_FALSE, &view[0][0]);
+		
 	}
 
 	if (m_bufferType&UV)
 	{
-		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
+		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
 		glVertexAttribPointer(UV_ATTRIB_INDEX, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&NORM)
 	{
-		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
 		glVertexAttribPointer(NORMAL_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&COLOR)
 	{
-		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
+		
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
 		glVertexAttribPointer(COLOR_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
@@ -569,11 +577,11 @@ void Mesh::CheckVertex(vec3 &p)
 		
 		m_indexMap[p] = m_vertices.size()/3;
 		m_vertices.push_back(p.x);
-		fprintf(stdout, "%f ",p.x);
+		//fprintf(stdout, "%f ",p.x);
 		m_vertices.push_back(p.y);
-		fprintf(stdout, "%f ",p.y);
+		//fprintf(stdout, "%f ",p.y);
 		m_vertices.push_back(p.z);
-		fprintf(stdout, "%f \n",p.z);
+		//fprintf(stdout, "%f \n",p.z);
 		
 	}
 }
@@ -588,7 +596,7 @@ void Mesh::CompileMesh(void)
 	if (m_bufferType&COLOR)
 	{
 		std::vector<float> color = std::vector<float>();
-		for (int i = 0; i < m_vertices.size(); i += 3)
+		for (uint i = 0; i < m_vertices.size(); i += 3)
 		{
 			color.push_back(RED.x);
 			color.push_back(RED.y);

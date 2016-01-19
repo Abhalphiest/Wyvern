@@ -117,12 +117,4 @@
       <Filter>Header Files\ClassHeaders</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\vertexshader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\fragmentshader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
