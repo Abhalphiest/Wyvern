@@ -100,6 +100,7 @@ void init()
 		mesh->SetMaterialIndex(materialIndex);
 		meshMaster->AddMesh(mesh, meshName);
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
+		uint meshinst2 = meshMaster->AddInstance(meshName, glm::translate(vec3(1.0, 0, 0)));
 		
 	}
 

@@ -84,6 +84,7 @@ Mesh::Mesh(Mesh& other)
 }
 void Mesh::Render(mat4 &p_modelMatrix)
 {
+	glBindVertexArray(m_vao);
 	mat4 persp=m_cameraMaster->GetPerspMatrix();
 	mat4 view= m_cameraMaster->GetViewMatrix();
 	if (m_renderWireframe)
@@ -92,6 +93,7 @@ void Mesh::Render(mat4 &p_modelMatrix)
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
 	m_materialMaster->BindMaterial(m_materialIndex);
+	
 	
 	
 	if (m_bufferType&VERTEX)
@@ -124,7 +126,7 @@ void Mesh::Render(mat4 &p_modelMatrix)
 
 	
 	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &p_modelMatrix, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &p_modelMatrix[0], GL_STATIC_DRAW);
 	GLsizei vec4Size = sizeof(glm::vec4);
 	glEnableVertexAttribArray(MODELMAT_ATTRIB_INDEX);
 	glVertexAttribPointer(MODELMAT_ATTRIB_INDEX, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (GLvoid*)0);
