@@ -13,6 +13,7 @@ Mesh::Mesh(void)
 	glGenBuffers(1, &m_bitangentBuffer);
 	glGenBuffers(1, &m_indexBuffer);
 	glGenBuffers(1, &m_normalBuffer);
+	glGenBuffers(1, &m_matrixBuffer);
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
 	m_materialMaster = MaterialMaster::GetInstance();
@@ -37,7 +38,7 @@ Mesh& Mesh::operator=(Mesh& other)
 	glGenBuffers(1, &m_bitangentBuffer);
 	glGenBuffers(1, &m_indexBuffer);
 	glGenBuffers(1, &m_normalBuffer);
-	m_matrixBuffer = other.m_matrixBuffer;
+	glGenBuffers(1, &m_matrixBuffer);
 	m_materialIndex = other.m_materialIndex;
 	m_numVertices = other.m_numVertices;
 	m_vertices = other.m_vertices; //not a vector of pointers, so just this assignment is ok
@@ -97,7 +98,7 @@ void Mesh::Render(mat4 &p_modelMatrix)
 	{
 		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(POSITION_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "projection"), 1, GL_FALSE, &persp[0][0]);
 		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "view"), 1, GL_FALSE, &view[0][0]);
 	}
@@ -106,19 +107,19 @@ void Mesh::Render(mat4 &p_modelMatrix)
 	{
 		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(UV_ATTRIB_INDEX, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&NORM)
 	{
 		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(NORMAL_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&COLOR)
 	{
 		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(COLOR_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
 	
@@ -165,7 +166,7 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 	{
 		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(POSITION_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "projection"), 1, GL_FALSE, &persp[0][0]);
 		glUniformMatrix4fv(glGetUniformLocation(m_shaderMaster->GetProgramID(), "view"), 1, GL_FALSE, &view[0][0]);
 	}
@@ -174,19 +175,19 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 	{
 		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(UV_ATTRIB_INDEX, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&NORM)
 	{
 		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(NORMAL_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&COLOR)
 	{
 		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(COLOR_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
 
@@ -584,6 +585,7 @@ void Mesh::CompileMesh(void)
 	}
 	if (m_bufferType&COLOR)
 	{
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
 	}

@@ -6,7 +6,6 @@ layout (location = 2) in mat4 transfMatrix;
 out vec3 vcolor;
 uniform mat4 projection;
 uniform mat4 view;
-uniform mat4 model;
 void main()
 {
 	gl_Position = projection*view*transfMatrix*vec4(position,1);
