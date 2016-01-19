@@ -137,10 +137,13 @@ void MeshMaster::Render(void)
 {
 	for (uint i = 0; i < m_renderList.size(); i++)
 	{
-		for (uint j = 0; j < m_renderList[i].m_numInstances; j++)
+		if(m_renderList[i].m_numInstances == 1)
 		{
-			m_renderList[i].m_mesh->Render(m_renderList[i].m_toWorld[j]);
-			
+			m_renderList[i].m_mesh->Render(m_renderList[i].m_toWorld[0]);
+		}
+		else if (m_renderList[i].m_numInstances > 1)
+		{
+			m_renderList[i].m_mesh->RenderInstanced(m_renderList[i].m_toWorld);
 		}
 	}
 }

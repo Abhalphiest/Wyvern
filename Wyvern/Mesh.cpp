@@ -585,9 +585,16 @@ void Mesh::CompileMesh(void)
 	}
 	if (m_bufferType&COLOR)
 	{
+		std::vector<float> color = std::vector<float>();
+		for (int i = 0; i < m_vertices.size(); i += 3)
+		{
+			color.push_back(RED.x);
+			color.push_back(RED.y);
+			color.push_back(RED.z);
+		}
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &color[0], GL_STATIC_DRAW);
 	}
 	if (m_bufferType&UV)
 	{
