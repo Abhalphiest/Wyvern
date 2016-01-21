@@ -80,18 +80,20 @@ void init()
 	shaderMaster->AddShader("fragmentshader.glsl", ShaderMaster::FRAGMENT_SHADER);
 	shaderMaster->CompileProgram(programindex);
 
-	/*mesh = Mesh::Sphere(3.0f, 10);
 	
-	String sphereName = "sphere";
-	meshMaster->AddMesh(mesh, sphereName);
 	Mesh* cube = Mesh::Cube(1.0f);
-	fprintf(stdout, "%X",cube);
-	String cubeName = "cube";
-	meshMaster->AddMesh(cube, cubeName);
-	uint cubeinst1 = meshMaster->AddInstance(cubeName,glm::translate(vec3(-5.0f,0.0f,0.0f)));
-	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));*/
-	
-	/*mesh = Mesh::Sphere(1.0f,20);
+	if (cube != nullptr)
+	{
+		String cubeName = "cube";
+		uint materialIndex;
+		materialIndex = materialMaster->CreateMaterial();
+		materialMaster->SetMaterialColor(materialIndex, BLUE);
+		materialMaster->SetProgramIndex(materialIndex, programindex);
+		cube->SetMaterialIndex(materialIndex);
+		meshMaster->AddMesh(cube, cubeName);
+		uint cubeinst1 = meshMaster->AddInstance(cubeName, glm::translate(vec3(-5.0f, 0.0f, 0.0f)));
+	}
+	mesh = Mesh::Sphere(1.0f,20);
 	if (mesh != nullptr)
 	{
 		String meshName = "sphere";
@@ -105,9 +107,9 @@ void init()
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
 		uint meshinst2 = meshMaster->AddInstance(meshName, glm::translate(vec3(1.0, 0, 0)));
 		
-	}*/
+	}
 
-	Mesh* icosphere = Mesh::Icosphere(2, 4);
+	Mesh* icosphere = Mesh::Icosphere(2, 2);
 	if (icosphere != nullptr)
 	{
 		icosphere->SetWireframe(true);
@@ -117,7 +119,7 @@ void init()
 		materialMaster->SetProgramIndex(materialIndex, programindex);
 		icosphere->SetMaterialIndex(materialIndex);
 		meshMaster->AddMesh(icosphere, meshName);
-		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
+		uint meshinst1 = meshMaster->AddInstance(meshName, glm::translate(vec3(6.0,3.0,-2.0)));
 
 	}
 
