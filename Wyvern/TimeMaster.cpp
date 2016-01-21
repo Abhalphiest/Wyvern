@@ -19,34 +19,50 @@ void TimeMaster::ReleaseInstance(void)
 }
 uint TimeMaster::GetFPS(void)
 {
-	return 0;
+	return m_fps;
+}
+float TimeMaster::getMsPerFrame(void)
+{
+	return m_msPerFrame;
 }
 void TimeMaster::UpdateTime(void)
 {
-
+	for (int i = 0; i < m_clocks.size(); i++)
+	{
+		m_programTime = TimeDiff(m_programTime.getMilliseconds());
+	}
 }
 void TimeMaster::StartClock(uint p_clockIndex)
 {
 
 }
-float TimeMaster::TimeDiff(uint p_clockIndex)
+void SuspendClock(uint p_clockIndex)
+{
+
+}
+float TimeMaster::ClockLap(uint p_clockIndex)
 {
 	return 0.0f;
 }
-bool TimeMaster::Countdown(uint p_clockIndex, float p_time)
+bool TimeMaster::Countdown(uint p_clockIndex, long long p_milliseconds)
 {
 	return false;
 }
-TimeMaster::TimeMaster(void)
+void TimeMaster::SetClock(uint p_clockIndex, long long p_milliseconds)
 {
 
+}
+TimeMaster::TimeMaster(void)
+{
+	m_clocks = std::vector<Clock>();
 }
 TimeMaster::TimeMaster(TimeMaster const& other)
 {
-
+	m_clocks = other.m_clocks;
 }
 TimeMaster& TimeMaster::operator=(TimeMaster const& other)
 {
+	m_clocks = other.m_clocks;
 	return *this;
 }
 TimeMaster::~TimeMaster(void)
