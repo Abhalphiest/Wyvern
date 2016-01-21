@@ -14,6 +14,7 @@ Mesh::Mesh(void)
 	glGenBuffers(1, &m_indexBuffer);
 	glGenBuffers(1, &m_normalBuffer);
 	glGenBuffers(1, &m_matrixBuffer);
+	glBindVertexArray(0);
 	m_cameraMaster = CameraMaster::GetInstance();
 	m_shaderMaster = ShaderMaster::GetInstance();
 	m_materialMaster = MaterialMaster::GetInstance();
@@ -148,14 +149,14 @@ void Mesh::Render(mat4 &p_modelMatrix)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glDrawElementsInstanced(GL_TRIANGLES,m_numVertices, GL_UNSIGNED_INT,(void*)0,1);
-	glDisableVertexAttribArray(0);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	glPolygonMode(GL_BACK, GL_FILL);
-
+	glBindVertexArray(0);
 }
 
 void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 {
+	glBindVertexArray(m_vao);
 	uint count = p_modelMatrices.size();
 	mat4 persp = m_cameraMaster->GetPerspMatrix();
 	mat4 view = m_cameraMaster->GetViewMatrix();
@@ -169,36 +170,8 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 	glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, &persp[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
 	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram());
-	if (m_bufferType&VERTEX)
-	{
-		
-		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
-		glVertexAttribPointer(POSITION_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		
-	}
+	
 
-	if (m_bufferType&UV)
-	{
-		
-		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
-		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
-		glVertexAttribPointer(UV_ATTRIB_INDEX, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	}
-	if (m_bufferType&NORM)
-	{
-		
-		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
-		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
-		glVertexAttribPointer(NORMAL_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	}
-	if (m_bufferType&COLOR)
-	{
-		
-		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
-		glVertexAttribPointer(COLOR_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	}
 
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
@@ -221,7 +194,6 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glDrawElementsInstanced(GL_TRIANGLES, m_numVertices, GL_UNSIGNED_INT, (void*)0, count);
-	glDisableVertexAttribArray(0);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	glPolygonMode(GL_BACK, GL_FILL);
 
@@ -588,37 +560,49 @@ void Mesh::CheckVertex(vec3 &p)
 
 void Mesh::CompileMesh(void)
 {
+	glBindVertexArray(m_vao);
 	if (m_bufferType&VERTEX)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(POSITION_ATTRIB_INDEX);
+		glVertexAttribPointer(POSITION_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&COLOR)
 	{
+		vec3 colorVec = m_materialMaster->GetMaterialColor(m_materialIndex);
 		std::vector<float> color = std::vector<float>();
 		for (uint i = 0; i < m_vertices.size(); i += 3)
 		{
-			color.push_back(RED.x);
-			color.push_back(RED.y);
-			color.push_back(RED.z);
+			color.push_back(colorVec.x);
+			color.push_back(colorVec.y);
+			color.push_back(colorVec.z);
 		}
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), &color[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(COLOR_ATTRIB_INDEX);
+		glVertexAttribPointer(COLOR_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&UV)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_uvBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_uvs.size()*sizeof(float), &m_uvs[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(UV_ATTRIB_INDEX);
+		glVertexAttribPointer(UV_ATTRIB_INDEX, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	if (m_bufferType&NORM)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_normals.size()*sizeof(float), &m_normals[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(NORMAL_ATTRIB_INDEX);
+		glVertexAttribPointer(NORMAL_ATTRIB_INDEX, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size()*sizeof(uint), &m_indices[0], GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
 }
 
 bool Mesh::IndexObj(std::vector<vec3> &p_vertices, std::vector<vec2> &p_uvs, std::vector<vec3> &p_normals,

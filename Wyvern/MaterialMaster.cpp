@@ -127,6 +127,11 @@ void MaterialMaster::SetMaterialColor(uint p_materialIndex, vec3 p_color)
 		return;
 	m_materials[p_materialIndex].m_color = p_color;
 }
+vec3 MaterialMaster::GetMaterialColor(uint p_materialIndex){
+	if (p_materialIndex < 0 || p_materialIndex >= m_materials.size())
+		return vec3(0.0f);
+	return m_materials[p_materialIndex].m_color;
+}
 void MaterialMaster::RemoveTexture(uint p_materialIndex)
 {
 	if (p_materialIndex < 0 || p_materialIndex >= m_materials.size())

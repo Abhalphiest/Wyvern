@@ -69,6 +69,7 @@ public:
 	uint CreateMaterial(uint p_materialID);
 	void BindMaterial(uint p_materialIndex);
 	void SetMaterialColor(uint p_materialIndex, vec3 p_color);
+	vec3 GetMaterialColor(uint p_materialIndex);
 	void RemoveTexture(uint p_materialIndex);
 	void SetSpecular(uint p_materialIndex, float p_specular);
 	void SetProgramIndex(uint p_materialIndex, GLuint p_programIndex);
