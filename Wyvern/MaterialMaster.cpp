@@ -102,8 +102,8 @@ bool MaterialMaster::LoadTGA(char* p_filepath, uint p_materialID)
 }
 uint MaterialMaster::CreateMaterial(void)
 {
-
-	m_materials.push_back(Material());
+	Material newMaterial = Material();
+	m_materials.push_back(newMaterial);
 	return m_materials.size() - 1;
 }
 uint MaterialMaster::CreateMaterial(uint p_materialID)

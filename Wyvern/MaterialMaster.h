@@ -37,15 +37,20 @@ class MaterialMaster{
 					m_texture->DeleteTexture();
 			}
 		}
-		Material()
+		Material(void)
 		{
-			m_specular = 0;
+			fprintf(stdout, "material constructor called");
+			m_specular = 0.0f;
 		}
 		Material(const Material& other)
 		{
+			
+			m_texture = other.m_texture;
 			if (m_texture != nullptr)
 				m_texture->m_references++;
-
+			m_specular = other.m_specular;
+			m_shaderProgram = other.m_shaderProgram;
+			m_color = other.m_color;
 		}
 		~Material(void){
 			RemoveTexture();
@@ -53,7 +58,13 @@ class MaterialMaster{
 		Material& operator=(const Material& other)
 		{
 			if (m_texture != nullptr)
+				RemoveTexture();
+			m_texture = other.m_texture;
+			if (m_texture != nullptr)
 				m_texture->m_references++;
+			m_specular = other.m_specular;
+			m_shaderProgram = other.m_shaderProgram;
+			m_color = other.m_color;
 			return *this;
 		}
 
