@@ -180,7 +180,8 @@ private:
 	void CheckVertex(vec3 &p);
 	///<summary> Passes the finished vertex and index data to the Mesh's OpenGL buffers, so that it can be rendered at will. </summary>
 	void CompileMesh(void);
-	
+	void RecurseIcosphere(uint p_subdivisions, std::vector<vec3>& p_vertices);
+	vec3 DivideEdge(vec3 p1, vec3 p2);
 	bool IndexObj(std::vector<vec3> &p_vertices, std::vector<vec2> &p_uvs, std::vector<vec3> &p_normals, std::vector<uint> &p_vertIndices, std::vector<uint> &p_uvIndices, std::vector<uint> &p_normIndices);
 	///<summary> Truncates each component of a vector to the 5th decimal place. </summary>
 	///<param name="v"> The vector to be truncated </param>

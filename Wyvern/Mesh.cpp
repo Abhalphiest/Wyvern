@@ -401,13 +401,180 @@ Mesh* Mesh::Plane(float p_width, float p_height)
 
 Mesh* Mesh::Icosphere(float p_radius, uint p_subdivisions)
 {
-	Mesh* icosphere = new Mesh();
+	if (p_subdivisions < 0)
+		p_subdivisions = 0;
+	if (p_subdivisions > 360)
+		p_subdivisions = 360;
 
+	Mesh* icosphere = new Mesh();
+	//make an icosohedron to start out
+	std::vector<vec3> vertices = std::vector<vec3>();
+	float len = (1.0f + glm::sqrt(5.0) / 2.0);
+
+	//it's not really necessary to list out these vertices and faces here but it makes it easier to visualize 
+	//and keeps the next part neater
+	//first orthogonal rectangle
+	vec3 v1 = vec3(-1, len, 0);
+	vec3 v2 = vec3(1, len, 0);
+	vec3 v3 = vec3(-1, -len, 0);
+	vec3 v4 = vec3(1, -len, 0);
+	//second orthogonal rectangle
+	vec3 v5 = vec3(0, -1, len);
+	vec3 v6 = vec3(0, 1, len);
+	vec3 v7 = vec3(0, -1, -len);
+	vec3 v8 = vec3(0, 1, -len);
+	//third orthogonal rectangle
+	vec3 v9 = vec3(len, 0, -1);
+	vec3 v10 = vec3(len, 0, 1);
+	vec3 v11 = vec3(-len, 0, -1);
+	vec3 v12 = vec3(-len, 0, 1);
+
+	//add all 20 faces, trying to maintain counter clockwise orientation
+	//repetition of vertices is intentional, we could make it a bit quicker (and avoid some normalizing) by indexing but
+	//they will be culled out when the mesh is constructed either way
+	//face 1
+	vertices.push_back(v1);
+	vertices.push_back(v6);
+	vertices.push_back(v12);
+	//face 2
+	vertices.push_back(v1);
+	vertices.push_back(v2);
+	vertices.push_back(v6);
+	//face 3
+	vertices.push_back(v1);
+	vertices.push_back(v8);
+	vertices.push_back(v2);
+	//face 4
+	vertices.push_back(v1);
+	vertices.push_back(v11);
+	vertices.push_back(v8);
+	//face 5
+	vertices.push_back(v1);
+	vertices.push_back(v12);
+	vertices.push_back(v11);
+	//face 6
+	vertices.push_back(v2);
+	vertices.push_back(v10);
+	vertices.push_back(v6);
+	//face 7
+	vertices.push_back(v6);
+	vertices.push_back(v5);
+	vertices.push_back(v12);
+	//face 8
+	vertices.push_back(v12);
+	vertices.push_back(v3);
+	vertices.push_back(v11);
+	//face 9
+	vertices.push_back(v11);
+	vertices.push_back(v7);
+	vertices.push_back(v8);
+	//face 10
+	vertices.push_back(v8);
+	vertices.push_back(v9);
+	vertices.push_back(v2);
+	//face 11
+	vertices.push_back(v4);
+	vertices.push_back(v5);
+	vertices.push_back(v10);
+	//face 12
+	vertices.push_back(v4);
+	vertices.push_back(v3);
+	vertices.push_back(v5);
+	//face 13
+	vertices.push_back(v4);
+	vertices.push_back(v7);
+	vertices.push_back(v3);
+	//face 14
+	vertices.push_back(v4);
+	vertices.push_back(v9);
+	vertices.push_back(v7);
+	//face 15
+	vertices.push_back(v4);
+	vertices.push_back(v10);
+	vertices.push_back(v9);
+	//face 16
+	vertices.push_back(v5);
+	vertices.push_back(v6);
+	vertices.push_back(v10);
+	//face 17
+	vertices.push_back(v3);
+	vertices.push_back(v12);
+	vertices.push_back(v5);
+	//face 18
+	vertices.push_back(v7);
+	vertices.push_back(v11);
+	vertices.push_back(v3);
+	//face 19
+	vertices.push_back(v9);
+	vertices.push_back(v8);
+	vertices.push_back(v7);
+	//face 20
+	vertices.push_back(v10);
+	vertices.push_back(v2);
+	vertices.push_back(v9);
+	//turn it into a sphere
+	icosphere->RecurseIcosphere(p_subdivisions, vertices);
+
+	//actually make our icosphere now, at least as far as a mesh is concerned
+	for (int i = 0; i < vertices.size(); i += 3)
+	{
+		icosphere->AddTri(vertices[i] * p_radius, vertices[i + 1] * p_radius, vertices[i + 2] * p_radius);
+	}
 	icosphere->m_bufferType = VERTEX | COLOR;
 	icosphere->CompileMesh();
 	return icosphere;
 }
+void Mesh::RecurseIcosphere(uint p_subdivisions, std::vector<vec3>& p_vertices)
+{
+	if (p_subdivisions == 0) //base case
+		return;
 
+	std::vector<vec3> tempVerts = p_vertices;
+	p_vertices.clear(); //make way for a reconstruction
+	vec3 m1, m2, m3; //midpoints
+	vec3 v1, v2, v3; //endpoints
+	for (int i = 0; i < tempVerts.size(); i += 3)
+	{
+		m1 = DivideEdge(tempVerts[i], tempVerts[i + 1]);
+		m2 = DivideEdge(tempVerts[i + 1], tempVerts[i + 2]);
+		m3 = DivideEdge(tempVerts[i + 2], tempVerts[i + 3]);
+
+		v1 = tempVerts[i]; //happens after divide edge normalizes them
+		v2 = tempVerts[i + 1];
+		v3 = tempVerts[i + 2];
+		//new face 1
+		p_vertices.push_back(v1);
+		p_vertices.push_back(m1);
+		p_vertices.push_back(m3);
+		//new face 2
+		p_vertices.push_back(m1);
+		p_vertices.push_back(m2);
+		p_vertices.push_back(m3);
+		//new face 3
+		p_vertices.push_back(m1);
+		p_vertices.push_back(v2);
+		p_vertices.push_back(m2);
+		//new face 4
+		p_vertices.push_back(m3);
+		p_vertices.push_back(m2);
+		p_vertices.push_back(v3);
+	}
+	RecurseIcosphere(p_subdivisions - 1, p_vertices);
+}
+vec3 DivideEdge(vec3& p1, vec3& p2)
+{
+	if (p1.length != 1)
+		p1 = glm::normalize(p1);
+	if (p2.length != 1)
+		p2 = glm::normalize(p2);
+
+	vec3 p3;
+	p3 = (p1 - p2)*.5f;
+	p3 = p3 + p2;
+	if (p3.length != 1)
+		p3 = glm::normalize(p3);
+	return p3;
+}
 Mesh* Mesh::LoadObj(const char* path)
 {
 	Mesh* mesh = new Mesh();
