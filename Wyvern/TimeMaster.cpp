@@ -19,7 +19,7 @@ void TimeMaster::ReleaseInstance(void)
 }
 uint TimeMaster::GetFPS(void)
 {
-
+	return 0;
 }
 void TimeMaster::UpdateTime(void)
 {
@@ -31,11 +31,11 @@ void TimeMaster::StartClock(uint p_clockIndex)
 }
 float TimeMaster::TimeDiff(uint p_clockIndex)
 {
-
+	return 0.0f;
 }
 bool TimeMaster::Countdown(uint p_clockIndex, float p_time)
 {
-
+	return false;
 }
 TimeMaster::TimeMaster(void)
 {

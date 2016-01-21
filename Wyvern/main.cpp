@@ -107,6 +107,19 @@ void init()
 		
 	}
 
+	Mesh* plane = Mesh::Plane(2, 4);
+	if (plane != nullptr)
+	{
+		String meshName = "plane";
+		uint materialIndex = materialMaster->CreateMaterial();
+		materialMaster->SetMaterialColor(materialIndex, BLACK);
+		materialMaster->SetProgramIndex(materialIndex, programindex);
+		plane->SetMaterialIndex(materialIndex);
+		meshMaster->AddMesh(plane, meshName);
+		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
+
+	}
+
 }
 
 //run once a frame

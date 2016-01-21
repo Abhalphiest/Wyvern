@@ -146,7 +146,7 @@ public:
 	///<summary> Property for the Mesh class' wireframe display boolean </summary>
 	///<param name="p_wireframe"> A boolean representing whether or not to display the mesh in wireframe when rendered. </param>
 	void SetWireframe(bool p_wireframe){ m_renderWireframe = p_wireframe; }
-	void SetMaterialIndex(uint p_materialIndex){ m_materialIndex = p_materialIndex; }
+	void SetMaterialIndex(uint p_materialIndex){ m_materialIndex = p_materialIndex; CompileMesh(); }
 private:
 	enum BufferType
 	{

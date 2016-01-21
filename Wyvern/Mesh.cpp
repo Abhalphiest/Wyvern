@@ -94,6 +94,10 @@ void Mesh::Render(mat4 &p_modelMatrix)
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
 	m_materialMaster->BindMaterial(m_materialIndex);
+	GLuint programID = m_shaderMaster->GetProgramID();
+	glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, &persp[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
+	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram());
 	
 	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &p_modelMatrix[0], GL_STATIC_DRAW);
@@ -386,7 +390,23 @@ Mesh* Mesh::Pipe(float p_outerRadius, float p_innerRadius, float p_height, uint 
 	pipe->CompileMesh();
 	return pipe;
 }
+Mesh* Mesh::Plane(float p_width, float p_height)
+{
+	Mesh* plane = new Mesh();
+	plane->AddQuad(vec3(-.5*p_width, .5*p_height, 0), vec3(.5*p_width, .5*p_height, 0), vec3(.5*p_width, -.5*p_height, 0), vec3(-.5*p_width, -.5*p_height, 0));
+	plane->m_bufferType = VERTEX | COLOR;
+	plane->CompileMesh();
+	return plane;
+}
 
+Mesh* Mesh::Icosphere(float p_radius, uint p_subdivisions)
+{
+	Mesh* icosphere = new Mesh();
+
+	icosphere->m_bufferType = VERTEX | COLOR;
+	icosphere->CompileMesh();
+	return icosphere;
+}
 
 Mesh* Mesh::LoadObj(const char* path)
 {
