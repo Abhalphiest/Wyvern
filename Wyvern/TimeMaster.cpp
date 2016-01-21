@@ -19,41 +19,84 @@ void TimeMaster::ReleaseInstance(void)
 }
 uint TimeMaster::GetFPS(void)
 {
-	return m_fps;
+	return (uint)(MILLISECONDS_IN_SECOND*m_msPerFrame); //two multiplicative inverses cancel to just give multiplication
 }
-float TimeMaster::getMsPerFrame(void)
+uint TimeMaster::getMsPerFrame(void)
 {
 	return m_msPerFrame;
 }
 void TimeMaster::UpdateTime(void)
 {
-	for (int i = 0; i < m_clocks.size(); i++)
+	m_frames++;
+	m_msPerFrame = (uint)TimeDiff(m_programTime.GetMilliseconds());
+	uint adjustedTime; //if we're using more than a uint per frame, we have bigger problems
+	for (uint i = 0; i < m_clocks.size(); i++)
 	{
-		m_programTime = TimeDiff(m_programTime.getMilliseconds());
+		if (m_clocks[i].m_running)
+		{
+			m_programTime.AddMilliseconds(TimeDiff(m_programTime.GetMilliseconds()));
+			adjustedTime = (uint)(m_programTime.GetMilliseconds() - m_clocks[i].m_startTime.GetMilliseconds() - m_clocks[i].m_currentTime.GetMilliseconds());
+			m_clocks[i].m_currentTime.AddMilliseconds(adjustedTime);
+			if (m_clocks[i].m_countdown)
+			{
+				m_clocks[i].UpdateCountdown(adjustedTime);
+			}
+		}
 	}
 }
 void TimeMaster::StartClock(uint p_clockIndex)
 {
+	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
+		return;
+	m_clocks[p_clockIndex].m_running = true;
+}
+void TimeMaster::SuspendClock(uint p_clockIndex)
+{
+	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
+		return;
+	m_clocks[p_clockIndex].m_running = false;
+}
+unsigned long long TimeMaster::ClockLap(uint p_clockIndex)
+{
+	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
+		return 0;
 
+	unsigned long long elapsed = m_clocks[p_clockIndex].m_currentTime.GetMilliseconds() - m_clocks[p_clockIndex].m_lastChecked.GetMilliseconds();
+	m_clocks[p_clockIndex].m_lastChecked = m_clocks[p_clockIndex].m_currentTime;
+	return elapsed;
 }
-void SuspendClock(uint p_clockIndex)
+bool TimeMaster::CountdownCheck(uint p_clockIndex)
 {
+	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
+		return false;
 
+	if (m_clocks[p_clockIndex].m_countdown)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
-float TimeMaster::ClockLap(uint p_clockIndex)
+void TimeMaster::StartCountdown(uint p_clockIndex, unsigned long long p_milliseconds)
 {
-	return 0.0f;
+	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
+		return;
+	m_clocks[p_clockIndex].m_countdownRemaining.SetMilliseconds(p_milliseconds);
+	m_clocks[p_clockIndex].m_countdown = true;
 }
-bool TimeMaster::Countdown(uint p_clockIndex, long long p_milliseconds)
+void TimeMaster::SetClock(uint p_clockIndex, unsigned long long p_milliseconds)
 {
-	return false;
-}
-void TimeMaster::SetClock(uint p_clockIndex, long long p_milliseconds)
-{
-
+	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
+		return;
+	//can't think of a clean way to handle the last checked without possibly going in to negative time values
+	//so it will just be innaccurate the next time they call for a lap
+	m_clocks[p_clockIndex].m_currentTime.SetMilliseconds(p_milliseconds);
 }
 TimeMaster::TimeMaster(void)
 {
+	m_programTime.SetMilliseconds((unsigned long long)(glfwGetTime()*SECONDS_TO_MILLISECONDS));
 	m_clocks = std::vector<Clock>();
 }
 TimeMaster::TimeMaster(TimeMaster const& other)
@@ -67,5 +110,95 @@ TimeMaster& TimeMaster::operator=(TimeMaster const& other)
 }
 TimeMaster::~TimeMaster(void)
 {
+	//only exists to be private, we didn't do anything on the heap
+}
 
+unsigned long long TimeMaster::TimeDiff(unsigned long long p_startTime)
+{
+	return (unsigned long long)(glfwGetTime()*SECONDS_TO_MILLISECONDS) - p_startTime;
+}
+void TimeMaster::Time::SetMilliseconds(unsigned long long p_milliseconds)
+{
+	m_days = 0;
+	m_hours = 0;
+	m_minutes = 0;
+	m_seconds = 0;
+	m_milliseconds = 0;
+	AddMilliseconds(p_milliseconds);
+}
+void TimeMaster::Time::SetSeconds(unsigned long long p_seconds)
+{
+	m_days = 0;
+	m_hours = 0;
+	m_minutes = 0;
+	m_seconds = 0;
+	m_milliseconds = 0;
+	AddSeconds(p_seconds);
+}
+void TimeMaster::Time::SetMinutes(unsigned long long p_minutes)
+{
+	m_days = 0;
+	m_hours = 0;
+	m_minutes = 0;
+	m_seconds = 0;
+	m_milliseconds = 0;
+	AddMinutes(p_minutes);
+}
+void TimeMaster::Time::SetHours(unsigned long long p_hours)
+{
+	m_days = 0;
+	m_hours = 0;
+	m_minutes = 0;
+	m_seconds = 0;
+	m_milliseconds = 0;
+	AddHours(p_hours);
+}
+void TimeMaster::Time::SetDays(unsigned long long p_days)
+{
+	m_days = 0;
+	m_hours = 0;
+	m_minutes = 0;
+	m_seconds = 0;
+	m_milliseconds = 0;
+	AddDays(p_days);
+}
+void TimeMaster::Time::AddMilliseconds(unsigned long long p_milliseconds)
+{
+	while (p_milliseconds >= DAYS_TO_MILLISECONDS)
+	{
+		m_days++;
+		p_milliseconds -= DAYS_TO_MILLISECONDS;
+	}
+	while (p_milliseconds >= HOURS_TO_MILLISECONDS)
+	{
+		m_hours++;
+		p_milliseconds -= HOURS_TO_MILLISECONDS;
+	}
+	while (p_milliseconds >= MINUTES_TO_MILLISECONDS)
+	{
+		m_minutes++;
+		p_milliseconds -= MINUTES_TO_MILLISECONDS;
+	}
+	while (p_milliseconds >= SECONDS_TO_MILLISECONDS)
+	{
+		m_seconds++;
+		p_milliseconds -= SECONDS_TO_MILLISECONDS;
+	}
+	m_milliseconds = (uint)p_milliseconds;
+}
+void TimeMaster::Time::AddSeconds(unsigned long long p_seconds)
+{
+	AddMilliseconds(SECONDS_TO_MILLISECONDS*p_seconds);
+}
+void TimeMaster::Time::AddMinutes(unsigned long long p_minutes)
+{
+	AddMilliseconds(MINUTES_TO_MILLISECONDS*p_minutes);
+}
+void TimeMaster::Time::AddHours(unsigned long long p_hours)
+{
+	AddMilliseconds(HOURS_TO_MILLISECONDS*p_hours);
+}
+void TimeMaster::Time::AddDays(unsigned long long p_days)
+{
+	AddMilliseconds(DAYS_TO_MILLISECONDS*p_days);
 }
