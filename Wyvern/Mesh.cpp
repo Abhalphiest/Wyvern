@@ -409,7 +409,7 @@ Mesh* Mesh::Icosphere(float p_radius, uint p_subdivisions)
 	Mesh* icosphere = new Mesh();
 	//make an icosohedron to start out
 	std::vector<vec3> vertices = std::vector<vec3>();
-	float len = (1.0f + glm::sqrt(5.0) / 2.0);
+	float len = (float)(1.0f + glm::sqrt(5.0))*.5f;
 
 	//it's not really necessary to list out these vertices and faces here but it makes it easier to visualize 
 	//and keeps the next part neater
@@ -516,7 +516,7 @@ Mesh* Mesh::Icosphere(float p_radius, uint p_subdivisions)
 	icosphere->RecurseIcosphere(p_subdivisions, vertices);
 
 	//actually make our icosphere now, at least as far as a mesh is concerned
-	for (int i = 0; i < vertices.size(); i += 3)
+	for (uint i = 0; i < vertices.size(); i += 3)
 	{
 		icosphere->AddTri(vertices[i] * p_radius, vertices[i + 1] * p_radius, vertices[i + 2] * p_radius);
 	}
@@ -533,15 +533,15 @@ void Mesh::RecurseIcosphere(uint p_subdivisions, std::vector<vec3>& p_vertices)
 	p_vertices.clear(); //make way for a reconstruction
 	vec3 m1, m2, m3; //midpoints
 	vec3 v1, v2, v3; //endpoints
-	for (int i = 0; i < tempVerts.size(); i += 3)
+	for (uint i = 0; i < tempVerts.size(); i += 3)
 	{
-		m1 = DivideEdge(tempVerts[i], tempVerts[i + 1]);
-		m2 = DivideEdge(tempVerts[i + 1], tempVerts[i + 2]);
-		m3 = DivideEdge(tempVerts[i + 2], tempVerts[i + 3]);
-
-		v1 = tempVerts[i]; //happens after divide edge normalizes them
+		v1 = tempVerts[i]; //easier to pass by reference this way
 		v2 = tempVerts[i + 1];
 		v3 = tempVerts[i + 2];
+		m1 = DivideEdge(v1, v2);
+		m2 = DivideEdge(v2, v3);
+		m3 = DivideEdge(v3, v1);
+
 		//new face 1
 		p_vertices.push_back(v1);
 		p_vertices.push_back(m1);
@@ -561,17 +561,17 @@ void Mesh::RecurseIcosphere(uint p_subdivisions, std::vector<vec3>& p_vertices)
 	}
 	RecurseIcosphere(p_subdivisions - 1, p_vertices);
 }
-vec3 DivideEdge(vec3& p1, vec3& p2)
+vec3 Mesh::DivideEdge(vec3& p1, vec3& p2)
 {
-	if (p1.length != 1)
+	if (p1.length() != 1)
 		p1 = glm::normalize(p1);
-	if (p2.length != 1)
+	if (p2.length() != 1)
 		p2 = glm::normalize(p2);
 
 	vec3 p3;
 	p3 = (p1 - p2)*.5f;
 	p3 = p3 + p2;
-	if (p3.length != 1)
+	if (p3.length() != 1)
 		p3 = glm::normalize(p3);
 	return p3;
 }

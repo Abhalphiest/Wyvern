@@ -91,7 +91,7 @@ void init()
 	uint cubeinst1 = meshMaster->AddInstance(cubeName,glm::translate(vec3(-5.0f,0.0f,0.0f)));
 	uint sphereinst1 = meshMaster->AddInstance(sphereName, mat4(1.0f));*/
 	
-	mesh = Mesh::Sphere(1.0f,20);
+	/*mesh = Mesh::Sphere(1.0f,20);
 	if (mesh != nullptr)
 	{
 		String meshName = "sphere";
@@ -105,17 +105,18 @@ void init()
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
 		uint meshinst2 = meshMaster->AddInstance(meshName, glm::translate(vec3(1.0, 0, 0)));
 		
-	}
+	}*/
 
-	Mesh* plane = Mesh::Plane(2, 4);
-	if (plane != nullptr)
+	Mesh* icosphere = Mesh::Icosphere(2, 4);
+	if (icosphere != nullptr)
 	{
-		String meshName = "plane";
+		icosphere->SetWireframe(true);
+		String meshName = "icosphere";
 		uint materialIndex = materialMaster->CreateMaterial();
 		materialMaster->SetMaterialColor(materialIndex, BLACK);
 		materialMaster->SetProgramIndex(materialIndex, programindex);
-		plane->SetMaterialIndex(materialIndex);
-		meshMaster->AddMesh(plane, meshName);
+		icosphere->SetMaterialIndex(materialIndex);
+		meshMaster->AddMesh(icosphere, meshName);
 		uint meshinst1 = meshMaster->AddInstance(meshName, mat4(1.0f));
 
 	}
