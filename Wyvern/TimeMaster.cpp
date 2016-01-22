@@ -30,11 +30,13 @@ void TimeMaster::UpdateTime(void)
 	m_frames++;
 	m_msPerFrame = (uint)TimeDiff(m_programTime.GetMilliseconds());
 	uint adjustedTime; //if we're using more than a uint per frame, we have bigger problems
+	m_programTime.AddMilliseconds(TimeDiff(m_programTime.GetMilliseconds()));
+	fprintf(stdout,"%d \n",m_msPerFrame);
 	for (uint i = 0; i < m_clocks.size(); i++)
 	{
 		if (m_clocks[i].m_running)
 		{
-			m_programTime.AddMilliseconds(TimeDiff(m_programTime.GetMilliseconds()));
+			
 			adjustedTime = (uint)(m_programTime.GetMilliseconds() - m_clocks[i].m_startTime.GetMilliseconds() - m_clocks[i].m_currentTime.GetMilliseconds());
 			m_clocks[i].m_currentTime.AddMilliseconds(adjustedTime);
 			if (m_clocks[i].m_countdown)
@@ -44,11 +46,17 @@ void TimeMaster::UpdateTime(void)
 		}
 	}
 }
+uint TimeMaster::CreateClock(void)
+{
+	m_clocks.push_back(Clock());
+	return m_clocks.size() - 1;
+}
 void TimeMaster::StartClock(uint p_clockIndex)
 {
 	if (p_clockIndex < 0 || p_clockIndex >= m_clocks.size())
 		return;
 	m_clocks[p_clockIndex].m_running = true;
+	m_clocks[p_clockIndex].m_startTime = m_programTime;
 }
 void TimeMaster::SuspendClock(uint p_clockIndex)
 {

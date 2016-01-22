@@ -13,6 +13,7 @@
 #include"InputMaster.h"
 #include"CameraMaster.h"
 #include"MeshMaster.h"
+#include"TimeMaster.h"
 #include"Mesh.h"
 
 //---------------------
@@ -26,6 +27,7 @@ InputMaster* inputMaster;
 CameraMaster* cameraMaster;
 MeshMaster* meshMaster;
 MaterialMaster* materialMaster;
+TimeMaster* timeMaster;
 Mesh* mesh;
 
 mat4 mvp;
@@ -46,6 +48,7 @@ int main(int argc, char** argv)
   cameraMaster = CameraMaster::GetInstance();
   meshMaster = MeshMaster::GetInstance();
   materialMaster = MaterialMaster::GetInstance();
+  timeMaster = TimeMaster::GetInstance();
   //initialize everything else
   init();
   //main loop
@@ -58,6 +61,7 @@ int main(int argc, char** argv)
   cameraMaster->ReleaseInstance();
   meshMaster->ReleaseInstance();
   materialMaster->ReleaseInstance();
+  timeMaster->ReleaseInstance();
   _CrtDumpMemoryLeaks();
 }
 
@@ -132,6 +136,8 @@ void update()
 	//meshMaster->Render();
 	//swap buffers and catch keyboard input
 	meshMaster->Render();
+	timeMaster->UpdateTime();
+	//fprintf(stdout, "FPS: %d \n", timeMaster->GetFPS());
 	glfwSwapBuffers(windowMaster->GetWindow());
 	glfwPollEvents();
 }
