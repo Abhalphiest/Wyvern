@@ -119,13 +119,42 @@ public:
 	///<remark> Calls the Mesh constructor and allocates heap memory, which is the responsibility of the caller, who should either delete it
 	/// manually or add it to the Mesh Master, which will handle deletions upon being released. </remark>
 	static Mesh* Pipe(float p_innerRadius, float p_outerRadius, float p_height, uint p_subdivisions);
-
+	///<summary>
+	///Procedurally generates a plane with the given dimensions, centered about the origin.
+	///</summary> 
+	///<param name ="p_width">
+	///The width of the desired plane.
+	///</param>
+	///<param name ="p_height">
+	///The distance from the base to the top of the pipe, in world space.
+	///</param>
+	///<returns> A pointer to the newly constructed Mesh object </returns>
+	///<remark> Calls the Mesh constructor and allocates heap memory, which is the responsibility of the caller, who should either delete it
+	/// manually or add it to the Mesh Master, which will handle deletions upon being released. </remark>
 	static Mesh* Plane(float p_width, float p_height);
-
+	///<summary>
+	///Recursively generates a sphere from an icosohedron with the given number of recursions centered about the origin.
+	///</summary>
+	///<param name ="p_radius">
+	///The radius of the sphere to be generated, in world space
+	///</param>
+	///<param name ="p_subdivisions">
+	/// The number of recursions desired. Will be clamped to [0,60]. 0 subdivisions will give an icosohedron. 
+	///</param>
+	///<returns> A pointer to the newly constructed Mesh object </returns>
+	///<remark> Calls the Mesh constructor and allocates heap memory, which is the responsibility of the caller, who should either delete it
+	/// manually or add it to the Mesh Master, which will handle deletions upon being released. </remark>
 	static Mesh* Icosphere(float p_radius, uint p_subdivisions);
-	
-
-	static Mesh* LoadObj(const char* path);
+	///<summary>
+	///Generates a complete Mesh object based on the data from an obj file
+	///</summary>
+	///<param name ="p_path">
+	///The file path of the obj file, starting in the application directory
+	///</param>
+	///<returns> A pointer to the newly constructed Mesh object </returns>
+	///<remark> Calls the Mesh constructor and allocates heap memory, which is the responsibility of the caller, who should either delete it
+	/// manually or add it to the Mesh Master, which will handle deletions upon being released. </remark>
+	static Mesh* LoadObj(const char* p_path);
 	///<summary> Property for the Mesh name. </summary>
 	///<returns> The name of the mesh </returns>
 	String GetName(void){ return m_name; }
@@ -135,7 +164,8 @@ public:
 	///<summary>Renders the model after transforming it with the given matrix, using the view and perspective matrices from the Camera Master</summary>
 	///<param name="p_modelMatrix"> A reference to a 4x4 matrix of floats representing the position, orientation, and scale to use when rendering the mesh. </param>
 	void Render(mat4 &p_modelMatrix);
-
+	///<summary>Renders the model multiple times after transforming it with the given matrices, using the view and perspective matrices from the Camera Master</summary>
+	///<param name="p_modelMatrix"> A list of  4x4 matrices of floats representing the position, orientation, and scale to use when rendering the mesh in each instance. </param>
 	void RenderInstanced(std::vector<mat4> p_modelMatrices);
 	///<summary> The Mesh class's destructor </summary>
 	~Mesh(void); 
@@ -180,8 +210,29 @@ private:
 	void CheckVertex(vec3 &p);
 	///<summary> Passes the finished vertex and index data to the Mesh's OpenGL buffers, so that it can be rendered at will. </summary>
 	void CompileMesh(void);
+	///<summary>The recursive function for subdividing the icosphere. Changes the list of vertices given to it to a list of vertices of the icosphere.</summary>
+	///<param name="p1"> The number of recursions remaining</param>
+	///<param name="p2"> A reference to the list of vertices</param>
+	///<remark>Although the function does not explicitly return anything, it passes data back through the reference parameter.</remark>
 	void RecurseIcosphere(uint p_subdivisions, std::vector<vec3>& p_vertices);
+	///<summary>Gives the vertex of the midpoint of the edge formed by the given vertices.</summary>
+	///<param name="p1"> The first vertex of the edge</param>
+	///<param name="p2"> The second vertex of the edge</param>
+	///<returns> The the midpoint of the two vertices</returns>
+	///<remark>DivideEdge also normalizes the vectors given as parameters, which is why it is important that they are by reference.
+	///however, the length is checked before normalization just to avoid costly square roots as the vertex list becomes normalized.</remark>
 	vec3 DivideEdge(vec3& p1, vec3& p2);
+	///<summary>Creates a list of indices for indexed rendering from the data read by an obj - this is neccessary because
+	///an obj indexes by data type (vertex, uv, etc), while OpenGL indexes by the entire set of vertex data.</summary>
+	///<param name="p_vertices">The list of vertices read from the obj file</param>
+	///<param name="p_uvs"> The list of uv coordinates read from the obj file</param>
+	///<param name="p_normals">The list of normal vectors read from the obj file</param>
+	///<param name="p_vertIndices"> The list of vertex indices read from the obj file</param>
+	///<param name="p_uvIndices"> The list of uv indices read from the obj file</param>
+	///<param name="p_normIndices"> The list of normal indices read from the obj file</param>
+	///<returns>A boolean indicating success or failure.</returns>
+	///<remark>"Correct" orientation is clockwise when facing the tri. Counter-clockwise faces are culled at render time. The AddTri function
+	///does not check for orientation.</remark>
 	bool IndexObj(std::vector<vec3> &p_vertices, std::vector<vec2> &p_uvs, std::vector<vec3> &p_normals, std::vector<uint> &p_vertIndices, std::vector<uint> &p_uvIndices, std::vector<uint> &p_normIndices);
 	///<summary> Truncates each component of a vector to the 5th decimal place. </summary>
 	///<param name="v"> The vector to be truncated </param>
@@ -189,24 +240,28 @@ private:
 	uint m_numVertices = 0;
 	uint m_materialIndex;
 	GLuint m_vao = 0; //vertex array object index
-	GLuint m_indexBuffer = 0;
+	GLuint m_indexBuffer = 0; //indexed rendering buffer index
 	GLuint m_vertexBuffer = 0; //vertex buffer index
 	GLuint m_colorBuffer = 0; //color  buffer index
 	GLuint m_uvBuffer = 0; //UV buffer index
-	GLuint m_normalBuffer = 0;
-	GLuint m_tangentBuffer = 0;
-	GLuint m_bitangentBuffer = 0;
-	GLuint m_matrixBuffer;
-	int m_bufferType;
-	std::vector<float> m_vertices;
+	GLuint m_normalBuffer = 0; //normal buffer index
+	GLuint m_tangentBuffer = 0; //tangent buffer index
+	GLuint m_bitangentBuffer = 0; //bitangent buffer index
+	GLuint m_matrixBuffer; //transformation matrix buffer index
+	int m_bufferType; //using the buffertype enum, determines the kind of data the mesh has associated with - ex: only vertices and color
+	//lists of the actual mesh data, in the formats most easily passed to opengl
+	std::vector<float> m_vertices; 
 	std::vector<float> m_normals;
 	std::vector<float> m_uvs;
 	std::vector<uint> m_indices;
+	//to check for duplicate vertices while constructing an index list
 	std::map<vec3, int, vec3Comparison> m_indexMap;
 
 
+	//render just the edges? 
 	bool m_renderWireframe = false;
 
+	//Master Singletons
 	CameraMaster* m_cameraMaster = nullptr;
 	MaterialMaster* m_materialMaster = nullptr;
 	LightMaster* m_lightMaster = nullptr;

@@ -20,7 +20,22 @@ void InputMaster::ReleaseInstance(void)
 
 InputMaster::InputMaster(void)
 {
-	Init();
+	m_windowMaster = WindowMaster::GetInstance();
+	GLFWwindow* window = m_windowMaster->GetWindow();
+	m_cameraMaster = CameraMaster::GetInstance();
+
+	//set up modes
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+	glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, GL_TRUE); //might want to kill stickies once we're actually running a game
+	//but they're dependable and predictable for debugging
+
+
+	//set up callbacks
+	glfwSetKeyCallback(window, KeyPressCallback);
+	glfwSetCharCallback(window, CharCallback);
+	glfwSetCursorPosCallback(window, CursorPosCallback);
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetScrollCallback(window, ScrollCallback);
 }
 InputMaster::InputMaster(const InputMaster &other)
 {
@@ -32,28 +47,6 @@ InputMaster& InputMaster:: operator=(const InputMaster &other)
 }
 InputMaster::~InputMaster(void)
 {
-
-}
-void InputMaster::Init(void)
-{
-	m_windowMaster = WindowMaster::GetInstance();
-	GLFWwindow* window = m_windowMaster->GetWindow();
-	m_cameraMaster = CameraMaster::GetInstance();
-
-	//set up modes
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, GL_TRUE); //might want to kill stickies once we're actually running a game
-																	//but they're dependable and predictable for debugging
-
-
-	//set up callbacks
-	glfwSetKeyCallback(window, KeyPressCallback);
-	glfwSetCharCallback(window, CharCallback);
-	glfwSetCursorPosCallback(window, CursorPosCallback);
-	glfwSetMouseButtonCallback(window, MouseButtonCallback);
-	glfwSetScrollCallback(window, ScrollCallback);
-
-
 
 }
 

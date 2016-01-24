@@ -575,14 +575,14 @@ vec3 Mesh::DivideEdge(vec3& p1, vec3& p2)
 		p3 = glm::normalize(p3);
 	return p3;
 }
-Mesh* Mesh::LoadObj(const char* path)
+Mesh* Mesh::LoadObj(const char* p_path)
 {
 	Mesh* mesh = new Mesh();
 	std::vector<vec3> tempvertices;
 	std::vector<vec2> tempuvs;
 	std::vector<vec3> tempnormals;
 	std::vector<uint> vertexIndices, uvIndices, normalIndices;
-	FILE* file = fopen(path, "r");
+	FILE* file = fopen(p_path, "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Could not open the obj file.");

@@ -124,6 +124,5 @@ private:
 	///<summary> Updates the view and perspective matrices based on new changes. </summary>
 	///<remark> Update is called every time a relevant change is made elsewhere in the camera master, but that is not necessarily every frame or timestep. </remark>
 	void Update(void); 
-	typedef struct Camera Camera;
 };
 #endif
