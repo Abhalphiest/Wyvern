@@ -59,7 +59,6 @@ class MaterialMaster{
 			m_shaderProgram = other.m_shaderProgram;
 			m_color = other.m_color;
 		}
-		///<summary>Destructor</summary>
 		~Material(void){
 			RemoveTexture();
 		}
@@ -81,53 +80,57 @@ class MaterialMaster{
 	
 
 public:
-	///<summary> </summary>
+	///<summary> Returns the instance of the MaterialMaster singleton. If no instance exists yet, creates the instance.</summary>
 	///<returns> A pointer to the Material Master instance.</returns>
 	static MaterialMaster* GetInstance(void);
-	///<summary> </summary>
+	///<summary>Destroys the Material Master singleton instance. </summary>
 	static void ReleaseInstance(void);
-	///<summary> </summary>
-	///<param name="p_filepath"> </param>
-	///<param name="p_materialID"> </param>
-	///<returns> </returns>
+	///<summary> Loads a texture from a .bmp file to the given material. A material is necessary because textures cannot
+	///exist without at least one referencing material by design.</summary>
+	///<param name="p_filepath">The file path to the .bmp file starting in the application directory.</param>
+	///<param name="p_materialID">The index of the material that the texture should be loaded into.</param>
+	///<returns>A boolean indicating success or failure. </returns>
 	bool LoadBMP(char* p_filepath, uint p_materialID);
-	///<summary> </summary>
-	///<param name="p_filepath"> </param>
-	///<param name="p_materialID"> </param>
-	///<returns> </returns>
+	///<summary>Loads a texture from a .tga file to the given material. A material is necessary because textures cannot
+	///exist without at least one referencing material by design. </summary>
+	///<param name="p_filepath">The file path to the .tga file starting in the application directory. </param>
+	///<param name="p_materialID">The index of the material that the texture should be loaded into. </param>
+	///<returns>A boolean indicating success or failure. </returns>
 	bool LoadTGA(char* p_filepath, uint p_materialID);
-	///<summary> </summary>
-	///<returns> </returns>
+	///<summary>Creates an empty material and provides the index with which to access it to the caller.</summary>
+	///<returns>The 0-based index of the created material within the material master's list. </returns>
 	uint CreateMaterial(void);
-	///<summary> </summary>
-	///<param name="p_materialID"> </param>
-	///<returns> </returns>
+	///<summary>Creates a material identical to the supplied material. However, changes to one will not persist across to the other.
+	///This is an easy way to, for example, have many similar values but different textures.</summary>
+	///<param name="p_materialID"> The index of the material to be copied.</param>
+	///<returns>The 0-based index of the created material within the material master's list.   </returns>
 	uint CreateMaterial(uint p_materialID);
-	//<summary> </summary>
-	///<param name="p_materialIndex"> </param>
-	void BindMaterial(uint p_materialIndex);
-	//<summary> </summary>
-	///<param name="p_materialIndex"> </param>
-	///<param name="p_color"></param>
+	//<summary>Sets the color of the material (under the texture). </summary>
+	///<param name="p_materialIndex">The index of the material to change. </param>
+	///<param name="p_color">A vector of RGB values ranging [0,1]</param>
 	void SetMaterialColor(uint p_materialIndex, vec3 p_color);
-	//<summary> </summary>
-	///<param name="p_materialIndex"> </param>
-	///<returns> </returns>
+	//<summary>Gets the color of the material. </summary>
+	///<param name="p_materialIndex">The index of the material to change. </param>
+	///<returns>A vector of RGB values ranging [0,1], indicating the material's base color. </returns>
 	vec3 GetMaterialColor(uint p_materialIndex);
-	//<summary> </summary>
-	///<param name="p_materialIndex"> </param>
+	///<summary>Removes the texture associated with the material. If this material is the last one with a reference to that texture, the texture
+	///will be deleted.</summary>
+	///<param name="p_materialIndex"> The index of the material whose texture will be removed.</param>
 	void RemoveTexture(uint p_materialIndex);
-	//<summary> </summary>
-	///<param name="p_materialID"> </param>
-	///<param name="p_specular"> </param>
+	//<summary>Specular property</summary>
+	///<param name="p_materialID">The index of the material to change. </param>
+	///<param name="p_specular">A float value on [0,1] indicating the specularity of the object.</param>
 	void SetSpecular(uint p_materialIndex, float p_specular);
-	//<summary> </summary>
-	///<param name="p_materialID"> </param>
-	///<param name="p_programIndex"> </param>
+	//<summary>Shader program property </summary>
+	///<param name="p_materialID">The index of the material to change. </param>
+	///<param name="p_programIndex">The new shader program index </param>
 	void SetProgramIndex(uint p_materialIndex, GLuint p_programIndex);
-	//<summary> </summary>
-	///<returns> </returns>
-	uint GetShaderProgram(void){ return m_materials[m_currentMaterial].m_shaderProgram; }
+	//<summary>Shader program property </summary>
+	///<param name="p_materialIndex">The index of the material to change. </param>
+	///<returns>The index of the material's shader program. </returns>
+	uint GetShaderProgram(uint p_materialIndex){ return m_materials[p_materialIndex].m_shaderProgram; }
+	//<summary>Destroys all materials and textures. Recommended for a level switch or similar.</summary>
+	void ClearMaterials(void){ m_materials.clear();}
 
 private:
 	///<summary> Private Constructor </summary>

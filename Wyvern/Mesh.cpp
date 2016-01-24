@@ -93,11 +93,10 @@ void Mesh::Render(mat4 &p_modelMatrix)
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
-	m_materialMaster->BindMaterial(m_materialIndex);
 	GLuint programID = m_shaderMaster->GetProgramID();
 	glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, &persp[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
-	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram());
+	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram(m_materialIndex));
 	
 	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4), &p_modelMatrix[0], GL_STATIC_DRAW);
@@ -121,11 +120,10 @@ void Mesh::RenderInstanced(std::vector<mat4> p_modelMatrices)
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_LINE);
 	}
-	m_materialMaster->BindMaterial(m_materialIndex);
 	GLuint programID = m_shaderMaster->GetProgramID();
 	glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, &persp[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, &view[0][0]);
-	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram());
+	m_shaderMaster->BindShaderProgram(m_materialMaster->GetShaderProgram(m_materialIndex));
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_matrixBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4)*count, &p_modelMatrices[0], GL_STATIC_DRAW);

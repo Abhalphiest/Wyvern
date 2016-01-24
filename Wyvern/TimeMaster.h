@@ -4,6 +4,7 @@
 
 class TimeMaster{
 
+	///<summary> </summary>
 	struct Time
 	{
 		unsigned long long m_days = 0;
@@ -12,23 +13,54 @@ class TimeMaster{
 		uint m_seconds = 0;
 		uint m_milliseconds = 0;
 
+		///<summary> </summary>
+		///<returns> </returns>
 		unsigned long long GetMilliseconds(void){ return (long long)(8.64 * glm::pow(10, 7) * m_days + 3.6 * glm::pow(10, 6) * m_hours + 60000 * m_minutes + 1000 * m_seconds + m_milliseconds); }
+		///<summary> </summary>
+		///<returns> </returns>
 		unsigned long long GetSeconds(void){ return 86400 * m_days + 3600 * m_hours + 60 * m_minutes + m_seconds; }
+		///<summary> </summary>
+		///<returns> </returns>
 		unsigned long long GetMinutes(void){ return 1440 * m_days + 60 * m_hours + m_minutes; }
+		///<summary> </summary>
+		///<returns> </returns>
 		unsigned long long GetHours(void){ return 24 * m_days + m_hours; }
+		///<summary> </summary>
+		///<returns> </returns>
 		unsigned long long GetDays(void){ return m_days; }
+		///<summary> </summary>
+		///<param name="p_milliseconds"> </param>
 		void SetMilliseconds(unsigned long long p_milliseconds);
+		///<summary> </summary>
+		///<param name="p_seconds"> </param>
 		void SetSeconds(unsigned long long p_seconds);
+		///<summary> </summary>
+		///<param name="p_minutes"> </param>
 		void SetMinutes(unsigned long long p_minutes);
+		///<summary> </summary>
+		///<param name="p_hours"> </param>
 		void SetHours(unsigned long long p_hours);
+		///<summary> </summary>
+		///<param name="p_days"> </param>
 		void SetDays(unsigned long long p_days);
+		///<summary> </summary>
+		///<param name="p_milliseconds"> </param>
 		void AddMilliseconds(unsigned long long p_milliseconds);
+		///<summary> </summary>
+		///<param name="p_seconds"> </param>
 		void AddSeconds(unsigned long long p_seconds);
+		///<summary> </summary>
+		///<param name="p_minutes"> </param>
 		void AddMinutes(unsigned long long p_minutes);
+		///<summary> </summary>
+		///<param name="p_hours"> </param>
 		void AddHours(unsigned long long p_hours);
+		///<summary> </summary>
+		///<param name="p_days"> </param>
 		void AddDays(unsigned long long p_days);
 		
 	};
+	///<summary> </summary>
 	struct Clock
 	{
 		bool m_running = false;
@@ -37,6 +69,8 @@ class TimeMaster{
 		Time m_lastChecked;
 		Time m_countdownRemaining;
 		Time m_startTime;
+		///<summary> </summary>
+		///<param name="p_milliseconds"> </param>
 		void UpdateCountdown(uint p_milliseconds) //if we're using more than a uint of milliseconds per frame, we have bigger problems
 		{
 			m_countdownRemaining.SetMilliseconds(m_countdownRemaining.GetMilliseconds() - p_milliseconds);

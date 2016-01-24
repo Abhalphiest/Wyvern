@@ -114,13 +114,6 @@ uint MaterialMaster::CreateMaterial(uint p_materialID)
 	return m_materials.size() - 1;
 
 }
-void MaterialMaster::BindMaterial(uint p_materialIndex)
-{
-	if (p_materialIndex < 0 || p_materialIndex >= m_materials.size())
-		return;
-	m_currentMaterial = p_materialIndex;
-
-}
 void MaterialMaster::SetMaterialColor(uint p_materialIndex, vec3 p_color)
 {
 	if (p_materialIndex < 0 || p_materialIndex >= m_materials.size())

@@ -6,11 +6,11 @@
 #include"CameraMaster.h"
 #include"MaterialMaster.h"
 #include"LightMaster.h"
+
+///<summary>
 ///The object class is meant to be the end user of the engine's primary pathway into the control of an onscreen object
 ///It is much more "intuitive" and hides the functionality of many of the master interactions and index maintenance inherent in such
 ///an object.
-///<summary>
-///
 ///</summary>
 class Object{
 public:
@@ -51,6 +51,7 @@ public:
 
 
 private:
+	///<summary>Private Constructor</summary>
 	Object(void);
 	vec3 m_position;
 	vec3 m_forward;
