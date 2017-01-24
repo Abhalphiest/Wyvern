@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="audio">
+      <UniqueIdentifier>{23c71fba-55a1-4e1c-a6da-3888fd0eae92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{6abf0f3c-0228-44cb-af2a-72988050330f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{7cbb94d9-8d6f-41e9-984b-3eaf521ba086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{c0ff71f4-0dcc-459a-bd09-e7a282f1ef73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{8f14bdd5-64a6-4d62-8cda-6835fbf70914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{c56414d2-f092-44f7-82bb-dd07a0109964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wyvern">
+      <UniqueIdentifier>{86972b0f-9ce4-41a9-92f1-e4dcb7b3a1c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="time.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="wyvern.h">
+      <Filter>wyvern</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="time_win.cpp">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>wyvern</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
