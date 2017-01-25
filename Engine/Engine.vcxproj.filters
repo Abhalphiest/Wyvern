@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="audio">
+      <UniqueIdentifier>{36d2a7f4-1a94-4435-94df-37e479773224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{4c45333a-e1e5-4ad6-bb32-24430b9a4539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="log">
+      <UniqueIdentifier>{641e6f58-5ceb-47d4-ac07-6a3ff08a95f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="memory">
+      <UniqueIdentifier>{8a6ea423-6957-41d7-a269-e449b9de6d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{4243a714-c1fc-467b-884e-991196df8a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{bdccf36b-f9ab-4ff1-a8ee-afa71627fd92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{c28c5d25-c586-4ddc-9aae-34735acdcb1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{8ca5de62-fee0-4d20-92b0-95dbc7e7a62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks">
+      <UniqueIdentifier>{ab9e9e5b-b1f8-4bbd-8f89-398f629c90da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{e59724c9-1c88-468d-a285-525eb5ba8996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{593352f6-dd58-47ef-864a-391134eb2c69}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="time\time.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="wyvern.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="time\time_win.cpp">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+</Project>
