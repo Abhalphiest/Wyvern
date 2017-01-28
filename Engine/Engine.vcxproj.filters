@@ -40,11 +40,17 @@
       <Filter>time</Filter>
     </ClInclude>
     <ClInclude Include="wyvern.h" />
+    <ClInclude Include="platform\window.h">
+      <Filter>platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">
       <Filter>time</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="platform\window_pc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

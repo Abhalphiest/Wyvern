@@ -1,19 +1,15 @@
 #include"wyvern.h"
-#ifdef PLATFORM_WINDOWS_64
-#include <Windows.h>
-#endif
+#include"platform/window.h"
+
+
 
 #ifdef PLATFORM_WINDOWS_64
-
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	MessageBox(NULL, 
-				LPCSTR("Hello World!"), 
-				LPCSTR("Testing Dialog Box"), 
-				MB_ICONEXCLAMATION | MB_OK);
+	make_dialog("Dialog Test", "Hello, World!", filler_option);
 }
 
 #else

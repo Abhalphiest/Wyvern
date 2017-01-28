@@ -3,7 +3,10 @@
 
 //preprocessor defines
 
-#define _WINDOWS_64
+#define PLATFORM_WINDOWS_64
+
+//typedefs
+typedef unsigned int uint;
 
 //includes
 #include<iostream>
