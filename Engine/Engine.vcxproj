@@ -116,12 +116,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="platform\platform.h" />
     <ClInclude Include="platform\window.h" />
     <ClInclude Include="time\time.h" />
     <ClInclude Include="wyvern.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="platform\platform_pc.cpp" />
     <ClCompile Include="platform\window_pc.cpp" />
     <ClCompile Include="time\time_win.cpp" />
   </ItemGroup>

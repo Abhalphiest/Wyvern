@@ -43,6 +43,9 @@
     <ClInclude Include="platform\window.h">
       <Filter>platform</Filter>
     </ClInclude>
+    <ClInclude Include="platform\platform.h">
+      <Filter>platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="platform\window_pc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\platform_pc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>

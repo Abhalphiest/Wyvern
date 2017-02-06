@@ -31,8 +31,16 @@ struct s_window_keys
 	uint m_num_windows;
 };
 
+struct s_window_params
+{
+	const char* m_title;
+	uint m_xpos, m_ypos, m_width, m_height;
+	window_id m_parent;
+};
+
 //function declarations
-uint make_window(const char* title, e_window_option options);
+void window_system_init();
+uint make_window(s_window_params parameters, e_window_option options);
 uint make_dialog(const char* title, const char* text, e_dialog_option options);
 window_id get_platform_window_id(uint engine_window_id);
 
