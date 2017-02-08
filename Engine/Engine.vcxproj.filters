@@ -46,6 +46,9 @@
     <ClInclude Include="platform\platform.h">
       <Filter>platform</Filter>
     </ClInclude>
+    <ClInclude Include="input\input.h">
+      <Filter>input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">
@@ -57,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="platform\platform_pc.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="input\input_pc.cpp">
+      <Filter>input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
