@@ -99,13 +99,20 @@ enum e_input_type
 	key_right_ctrl,
 	key_volume_down,
 	key_volume_up,
-	key_volume_mute
+	key_volume_mute,
+	k_keybind_count
 
 };
 
+enum e_callback_type
+{
+	call_on_key_down = 1,
+	call_on_key_up = 2,
+	call_on_state_change = 3
+};
 void input_init();
 void input_update();
-void register_input_callback(e_input_type key, void (*callback)());
+void register_input_callback(e_input_type key, void (*callback)(), e_callback_type callback_type);
 
 
 #endif
