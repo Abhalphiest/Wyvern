@@ -19,7 +19,7 @@ bool platform_update()
 	bool returnval = true;
 
 	// wait for the next message in the queue, store the result in 'msg'
-	if(GetMessage(&msg, NULL, 0, 0))
+	if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		// translate keystroke messages into the right format
 		TranslateMessage(&msg);
@@ -27,7 +27,8 @@ bool platform_update()
 		// send the message to the WindowProc function
 		DispatchMessage(&msg);
 	}
-	else
+
+	if(msg.message == WM_QUIT)
 	{
 		returnval = false;
 	}
