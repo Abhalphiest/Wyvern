@@ -7,7 +7,6 @@
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
 
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -25,23 +24,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	win_params.m_xpos = 100;
 	win_params.m_ypos = 100;
 
-	uint window_id = make_window(&win_params,e_window_option::window_filler_option);
+	uint window_id = make_window(&win_params, e_window_option::window_filler_option);
 
-	// this struct holds Windows event messages
-	MSG msg;
+	while(platform_update());
 
-	// wait for the next message in the queue, store the result in 'msg'
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
-		// translate keystroke messages into the right format
-		TranslateMessage(&msg);
+	platform_exit();
 
-		// send the message to the WindowProc function
-		DispatchMessage(&msg);
-	}
-
-	// return this part of the WM_QUIT message to Windows
-	return msg.wParam;
 }
 
 

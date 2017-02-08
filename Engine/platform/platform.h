@@ -23,5 +23,7 @@ struct s_platform_globals
 #endif
 
 void platform_init();
+bool platform_update();
+void platform_exit();
 
 #endif

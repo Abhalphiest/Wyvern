@@ -11,5 +11,34 @@ void platform_init()
 	// keep an eye on this!
 	g_platform_globals.hInstance = GetModuleHandle(NULL); 
 }
+
+bool platform_update()
+{
+	// this struct holds Windows event messages
+	MSG msg;
+	bool returnval = true;
+
+	// wait for the next message in the queue, store the result in 'msg'
+	if(GetMessage(&msg, NULL, 0, 0))
+	{
+		// translate keystroke messages into the right format
+		TranslateMessage(&msg);
+
+		// send the message to the WindowProc function
+		DispatchMessage(&msg);
+	}
+	else
+	{
+		returnval = false;
+	}
+
+	return returnval;
+
+}
+
+void platform_exit()
+{
+	exit(0);
+}
 #endif
 
