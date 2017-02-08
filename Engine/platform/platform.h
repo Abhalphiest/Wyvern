@@ -8,20 +8,19 @@
 #include<Windows.h>
 #endif
 
-
+#ifdef PLATFORM_WINDOWS_64
+const HINSTANCE k_hinstance_not_set = 0;
+#endif
 struct s_platform_globals
 #ifdef PLATFORM_WINDOWS_64
 {
-	HINSTANCE hInstance;
+	HINSTANCE hInstance = k_hinstance_not_set;
 };
 #else
 {
 
 };
 #endif
-
-//globals
-static s_platform_globals g_platform_globals;
 
 void platform_init();
 

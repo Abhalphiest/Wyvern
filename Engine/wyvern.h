@@ -10,6 +10,7 @@ typedef unsigned int uint;
 
 //includes
 #include<iostream>
+#include<assert.h>
 
 //global constants
 

@@ -1,5 +1,6 @@
 #include"wyvern.h"
 #include"platform/window.h"
+#include"platform/platform.h"
 
 
 
@@ -13,44 +14,18 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	// the handle for the window, filled by a function
-	HWND hWnd;
-	// this struct holds information for the window class
-	WNDCLASSEX wc;
+	platform_init();
+	window_system_init();
 
-	// clear out the window class for use
-	ZeroMemory(&wc, sizeof(WNDCLASSEX));
+	s_window_params win_params;
+	win_params.m_height = 400;
+	win_params.m_width = 400;
+	win_params.m_title = "Test Window";
+	win_params.m_parent = NULL;
+	win_params.m_xpos = 100;
+	win_params.m_ypos = 100;
 
-	// fill in the struct with the needed information
-	wc.cbSize = sizeof(WNDCLASSEX);
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = WindowProc;
-	wc.hInstance = hInstance;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpszClassName =  LPCSTR("WindowClass1");
-
-	// register the window class
-	RegisterClassEx(&wc);
-
-	// create the window and use the result as the handle
-	hWnd = CreateWindowEx(NULL,
-		LPCSTR("WindowClass1"),    // name of the window class
-		LPCSTR("Our First Windowed Program"),   // title of the window
-		WS_OVERLAPPEDWINDOW,    // window style
-		300,    // x-position of the window
-		300,    // y-position of the window
-		500,    // width of the window
-		400,    // height of the window
-		NULL,    // we have no parent window, NULL
-		NULL,    // we aren't using menus, NULL
-		hInstance,    // application handle
-		NULL);    // used with multiple windows, NULL
-
-				  // display the window on the screen
-	ShowWindow(hWnd, nCmdShow);
-
-	// enter the main loop:
+	uint window_id = make_window(&win_params,e_window_option::window_filler_option);
 
 	// this struct holds Windows event messages
 	MSG msg;
@@ -69,27 +44,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	return msg.wParam;
 }
 
-// this is the main message handler for the program
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	// sort through and find what code to run for the message given
-	switch (message)
-	{
-		// this message is read when the window is closed
-	case WM_DESTROY:
-	{
-		// close the application entirely
-		PostQuitMessage(0);
-		return 0;
-			} break;
-	}
-
-	// Handle any messages the switch statement didn't
-	return DefWindowProc(hWnd, message, wParam, lParam);
-}
 
 #else
-/*
+
 void main()
 {
 	std::cout << "Hello, world!" << std::endl;
@@ -98,5 +55,4 @@ void main()
 
 
 }
-*/
-#endif //WINDOWS_64
+#endif //PLATFORM_WINDOWS_64

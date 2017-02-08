@@ -3,7 +3,7 @@
 #pragma once
 //includes
 #include"wyvern.h"
-
+#include"platform.h"
 //defines
 #ifdef PLATFORM_WINDOWS_64
 #include<Windows.h>
@@ -15,21 +15,15 @@
 //enums
 enum e_window_option
 {
-
+	window_filler_option,
 };
 
 enum e_dialog_option
 {
-	filler_option,
+	dialog_filler_option,
 };
 
 //structs
-struct s_window_keys
-{
-	window_id* m_windows;
-	bool* m_is_open;
-	uint m_num_windows;
-};
 
 struct s_window_params
 {
@@ -40,7 +34,7 @@ struct s_window_params
 
 //function declarations
 void window_system_init();
-uint make_window(s_window_params parameters, e_window_option options);
+uint make_window(s_window_params* parameters, e_window_option options);
 uint make_dialog(const char* title, const char* text, e_dialog_option options);
 window_id get_platform_window_id(uint engine_window_id);
 
