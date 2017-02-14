@@ -104,15 +104,22 @@ enum e_input_type
 
 };
 
+struct s_key_data
+{
+	bool is_down;
+	unsigned long long frames_down;
+};
+
 enum e_callback_type
 {
 	call_on_key_down = 1,
 	call_on_key_up = 2,
 	call_on_state_change = 3
 };
-void input_init();
-void input_update();
+
+void input_system_init();
 void register_input_callback(e_input_type key, void (*callback)(), e_callback_type callback_type);
+s_key_data get_key_data(e_input_type key);
 
 
 #endif

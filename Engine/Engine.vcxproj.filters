@@ -49,6 +49,9 @@
     <ClInclude Include="input\input.h">
       <Filter>input</Filter>
     </ClInclude>
+    <ClInclude Include="input\inputhash.h">
+      <Filter>input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">

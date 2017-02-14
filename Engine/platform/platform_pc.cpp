@@ -1,3 +1,5 @@
+#include "wyvern.h"
+
 #ifdef PLATFORM_WINDOWS_64
 #include"platform.h"
 #include<Windows.h>
