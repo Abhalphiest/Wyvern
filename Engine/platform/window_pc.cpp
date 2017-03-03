@@ -4,6 +4,7 @@
 #ifdef PLATFORM_WINDOWS_64
 #include<Windows.h>
 #include<windowsx.h>
+#include "input/input.h"
 
 //private declarations
 LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -111,6 +112,12 @@ LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 	// sort through and find what code to run for the message given
 	switch (message)
 	{
+	case WM_KEYUP:
+	case WM_KEYDOWN:
+	{
+		process_input(hWnd, message, wParam, lParam);
+		break;
+	}
 		// this message is read when the window is closed
 	case WM_DESTROY:
 	{

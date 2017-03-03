@@ -4,6 +4,10 @@
 
 #include"wyvern.h"
 
+#ifdef PLATFORM_WINDOWS_64
+#include <Windows.h>
+#endif
+
 enum e_input_type
 {
 	mouse_left,
@@ -120,6 +124,10 @@ enum e_callback_type
 void input_system_init();
 void register_input_callback(e_input_type key, void (*callback)(), e_callback_type callback_type);
 s_key_data get_key_data(e_input_type key);
+
+#ifdef PLATFORM_WINDOWS_64
+void process_input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+#endif
 
 
 #endif

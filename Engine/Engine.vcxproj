@@ -69,7 +69,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Configuration)_Output\</OutDir>
+    <IntDir>$(Configuration)_Intermediate\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -116,6 +119,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="debug\console.h" />
+    <ClInclude Include="debug\print.h" />
+    <ClInclude Include="debug\log\log_settings.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\inputhash.h" />
     <ClInclude Include="platform\platform.h" />
@@ -124,6 +130,7 @@
     <ClInclude Include="wyvern.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="debug\console_pc.cpp" />
     <ClCompile Include="input\input_pc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="platform\platform_pc.cpp" />

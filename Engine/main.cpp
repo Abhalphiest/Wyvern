@@ -1,12 +1,17 @@
 #include"wyvern.h"
 #include"platform/window.h"
 #include"platform/platform.h"
-
+#include"input/input.h"
 
 
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
 
+void a_callback()
+{
+	int i = 0;
+	i++;
+}
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -26,6 +31,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	uint window_id = make_window(&win_params, e_window_option::window_filler_option);
 
+	input_system_init();
+	register_input_callback(key_a, a_callback, call_on_key_down);
 	while(platform_update());
 
 	platform_exit();

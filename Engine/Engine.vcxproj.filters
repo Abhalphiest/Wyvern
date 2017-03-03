@@ -7,9 +7,6 @@
     <Filter Include="input">
       <UniqueIdentifier>{4c45333a-e1e5-4ad6-bb32-24430b9a4539}</UniqueIdentifier>
     </Filter>
-    <Filter Include="log">
-      <UniqueIdentifier>{641e6f58-5ceb-47d4-ac07-6a3ff08a95f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="memory">
       <UniqueIdentifier>{8a6ea423-6957-41d7-a269-e449b9de6d1f}</UniqueIdentifier>
     </Filter>
@@ -34,6 +31,12 @@
     <Filter Include="utility">
       <UniqueIdentifier>{593352f6-dd58-47ef-864a-391134eb2c69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{0e9d57cf-1f16-4a5b-a5b4-95e5685129d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\log">
+      <UniqueIdentifier>{641e6f58-5ceb-47d4-ac07-6a3ff08a95f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="time\time.h">
@@ -52,6 +55,15 @@
     <ClInclude Include="input\inputhash.h">
       <Filter>input</Filter>
     </ClInclude>
+    <ClInclude Include="debug\console.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\log\log_settings.h">
+      <Filter>debug\log</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\print.h">
+      <Filter>debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">
@@ -66,6 +78,9 @@
     </ClCompile>
     <ClCompile Include="input\input_pc.cpp">
       <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\console_pc.cpp">
+      <Filter>debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

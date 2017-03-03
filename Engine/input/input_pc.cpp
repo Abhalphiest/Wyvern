@@ -14,31 +14,37 @@ static void(*g_key_down_callback_array[WINDOWS_KEYCODE_MAX])() = { 0 };
 
 extern s_platform_globals g_platform_globals;
 
-LRESULT CALLBACK input_proc(
-	_In_ int    code,
-	_In_ WPARAM wParam,
-	_In_ LPARAM lParam
-)
+void process_input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
-	return CallNextHookEx(NULL, code, wParam, lParam);
+	switch (message)
+	{
+	case WM_KEYUP:
+	{
+		g_key_data_table[wParam].frames_down = 0;
+		g_key_data_table[wParam].is_down = false;
+		if (g_key_up_callback_array[wParam])
+		{
+			g_key_up_callback_array[wParam]();
+		}
+		break;
+	}
+	case WM_KEYDOWN:
+	{
+		g_key_data_table[wParam].frames_down = (0xFFFF & lParam);
+		g_key_data_table[wParam].is_down = true;
+		//only call back if we were up the previous frame
+		if (g_key_down_callback_array[wParam] && ((lParam & 0x40000000) == 0))
+		{
+			g_key_down_callback_array[wParam]();
+		}
+		break;
+	}
+	}
 }
 
 void input_system_init()
 {
-	HHOOK handle = SetWindowsHookEx(
-		WH_KEYBOARD,
-		input_proc,
-		g_platform_globals.hInstance,
-		0 //bind to all threads
-	);
-	
-	handle = SetWindowsHookEx(
-		WH_MOUSE,
-		input_proc,
-		g_platform_globals.hInstance,
-		0
-	);
+
 }
 
 void register_input_callback(e_input_type key, void(*callback)(), e_callback_type callback_type)
