@@ -15,10 +15,10 @@ void no_op(int null_data){}
 //globals
 static s_key_data g_key_data_table[WINDOWS_KEYCODE_MAX] = { 0 };
 static s_mouse_data g_mouse_data = { 0 };
-static void(*g_key_up_callback_array[WINDOWS_KEYCODE_MAX])() = { no_op };
-static void(*g_key_down_callback_array[WINDOWS_KEYCODE_MAX])() = { no_op };
-static void(*g_mouse_callback_array[k_mouse_count])() = { no_op };
-static void(*g_mouse_wheel_callback)(int wheel_delta) = no_op;
+static void(*g_key_up_callback_array[WINDOWS_KEYCODE_MAX])() = { 0 };
+static void(*g_key_down_callback_array[WINDOWS_KEYCODE_MAX])() = { 0 };
+static void(*g_mouse_callback_array[k_mouse_count])() = { 0 };
+static void(*g_mouse_wheel_callback)(int wheel_delta) = 0;
 
 extern s_platform_globals g_platform_globals;
 
@@ -74,7 +74,17 @@ void process_input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void input_system_init()
 {
-
+	//these loops will be unrolled by the compiler
+	for (int i = 0; i < WINDOWS_KEYCODE_MAX; i++)
+	{
+		g_key_down_callback_array[i] = no_op;
+		g_key_up_callback_array[i] = no_op;
+	}
+	for (int i = 0; i < k_mouse_count; i++)
+	{
+		g_mouse_callback_array[i] = no_op;
+	}
+	g_mouse_wheel_callback = no_op;
 }
 
 void register_input_callback(e_input_type key, void(*callback)(), e_callback_type callback_type)

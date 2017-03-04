@@ -29,14 +29,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	win_params.m_xpos = 100;
 	win_params.m_ypos = 100;
 
+	create_console();
 	uint window_id = make_window(&win_params, e_window_option::window_filler_option);
 
 	input_system_init();
-	create_console();
 	printf("test print");
 	register_input_callback(key_a, a_callback, call_on_key_down);
 	while(platform_update());
-
+	destroy_console();
 	platform_exit();
 
 }
