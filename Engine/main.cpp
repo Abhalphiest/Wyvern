@@ -2,7 +2,7 @@
 #include"platform/window.h"
 #include"platform/platform.h"
 #include"input/input.h"
-
+#include "debug/console.h"
 
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
@@ -10,7 +10,7 @@
 int i = 0;
 void a_callback()
 {
-	i++;
+	clear_console();
 }
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -32,6 +32,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	uint window_id = make_window(&win_params, e_window_option::window_filler_option);
 
 	input_system_init();
+	create_console();
+	printf("test print");
 	register_input_callback(key_a, a_callback, call_on_key_down);
 	while(platform_update());
 
