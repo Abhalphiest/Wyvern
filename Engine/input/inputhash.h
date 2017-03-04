@@ -103,6 +103,7 @@ const int k_input_hash[k_keybind_count] =
 	0xAD	//key_volume_mute
 };
 
+
 #define WINDOWS_KEYCODE_MAX 0xAF
 
 #endif

@@ -108,10 +108,26 @@ enum e_input_type
 
 };
 
+enum e_mouse_event
+{
+	left_doubleclick = 0,
+	right_doubleclick,
+	middle_doubleclick,
+	mouse_hover,
+	mouse_cursor_move,
+	k_mouse_count
+};
+
 struct s_key_data
 {
 	bool is_down;
 	unsigned long long frames_down;
+};
+
+struct s_mouse_data
+{
+	int xpos;
+	int ypos;
 };
 
 enum e_callback_type
@@ -123,7 +139,10 @@ enum e_callback_type
 
 void input_system_init();
 void register_input_callback(e_input_type key, void (*callback)(), e_callback_type callback_type);
+void register_mouse_callback(e_mouse_event mouse_event, void(*callback)());
+void register_mouse_wheel_callback(void(*callback)(int wheel_delta));
 s_key_data get_key_data(e_input_type key);
+s_mouse_data get_mouse_data();
 
 #ifdef PLATFORM_WINDOWS_64
 void process_input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

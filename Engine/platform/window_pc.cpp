@@ -114,6 +114,12 @@ LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 	{
 	case WM_KEYUP:
 	case WM_KEYDOWN:
+	case WM_MOUSEMOVE:
+	case WM_MOUSEHOVER:
+	case WM_LBUTTONDBLCLK:
+	case WM_RBUTTONDBLCLK:
+	case WM_MBUTTONDBLCLK:
+	case WM_MOUSEWHEEL:
 	{
 		process_input(hWnd, message, wParam, lParam);
 		break;

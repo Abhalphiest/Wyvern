@@ -7,9 +7,9 @@
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
 
+int i = 0;
 void a_callback()
 {
-	int i = 0;
 	i++;
 }
 
