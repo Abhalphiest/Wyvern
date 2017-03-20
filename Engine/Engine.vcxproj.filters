@@ -64,6 +64,12 @@
     <ClInclude Include="debug\print.h">
       <Filter>debug</Filter>
     </ClInclude>
+    <ClInclude Include="audio\audio.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\audio_internal.h">
+      <Filter>audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">
@@ -81,6 +87,12 @@
     </ClCompile>
     <ClCompile Include="debug\console_pc.cpp">
       <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="audio\audio_internal_pc.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="audio\audio.cpp">
+      <Filter>audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
