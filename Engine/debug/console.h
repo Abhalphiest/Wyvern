@@ -6,4 +6,5 @@
 void create_console();
 void destroy_console();
 void clear_console();
+bool is_console_active();
 #endif

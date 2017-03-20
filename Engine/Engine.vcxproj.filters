@@ -58,17 +58,17 @@
     <ClInclude Include="debug\console.h">
       <Filter>debug</Filter>
     </ClInclude>
-    <ClInclude Include="debug\log\log_settings.h">
-      <Filter>debug\log</Filter>
-    </ClInclude>
-    <ClInclude Include="debug\print.h">
-      <Filter>debug</Filter>
-    </ClInclude>
     <ClInclude Include="audio\audio.h">
       <Filter>audio</Filter>
     </ClInclude>
     <ClInclude Include="audio\audio_internal.h">
       <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\log\log.h">
+      <Filter>debug\log</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\print.h">
+      <Filter>debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +93,12 @@
     </ClCompile>
     <ClCompile Include="audio\audio.cpp">
       <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\print.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\log\log.cpp">
+      <Filter>debug\log</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

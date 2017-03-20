@@ -5,11 +5,11 @@
 #include <windows.h>
 #include <mmsystem.h>
 
+HWAVEOUT hWaveOut; /* device handle */
+WAVEFORMATEX wfx; /* look this up in your documentation */
 
-void audio()
+void audio_internal_init()
 {
-	HWAVEOUT hWaveOut; /* device handle */
-	WAVEFORMATEX wfx; /* look this up in your documentation */
 	MMRESULT result;/* for waveOut return values */
 					/*
 					* first we need to set up the WAVEFORMATEX structure.
@@ -40,10 +40,13 @@ void audio()
 		0,
 		0,
 		CALLBACK_NULL
-	) != MMSYSERR_NOERROR) {
+		) != MMSYSERR_NOERROR) {
 		fprintf(stderr, "unable to open WAVE_MAPPER device\n");
 		ExitProcess(1);
 	}
+}
+void audio_internal_shutdown()
+{
 	/*
 	* device is now open so print the success message
 	* and then close the device again.
@@ -52,4 +55,5 @@ void audio()
 	waveOutClose(hWaveOut);
 	return;
 }
+
 #endif

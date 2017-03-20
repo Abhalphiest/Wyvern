@@ -123,8 +123,8 @@
     <ClInclude Include="audio\audio.h" />
     <ClInclude Include="audio\audio_internal.h" />
     <ClInclude Include="debug\console.h" />
+    <ClInclude Include="debug\log\log.h" />
     <ClInclude Include="debug\print.h" />
-    <ClInclude Include="debug\log\log_settings.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\inputhash.h" />
     <ClInclude Include="platform\platform.h" />
@@ -136,6 +136,8 @@
     <ClCompile Include="audio\audio_internal_pc.cpp" />
     <ClCompile Include="audio\audio.cpp" />
     <ClCompile Include="debug\console_pc.cpp" />
+    <ClCompile Include="debug\log\log.cpp" />
+    <ClCompile Include="debug\print.cpp" />
     <ClCompile Include="input\input_pc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="platform\platform_pc.cpp" />
