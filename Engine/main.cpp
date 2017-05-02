@@ -3,6 +3,7 @@
 #include"platform/platform.h"
 #include"input/input.h"
 #include "debug/console.h"
+#include "audio/audio_internal.h"
 
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
@@ -33,9 +34,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	uint window_id = make_window(&win_params, e_window_option::window_filler_option);
 
 	input_system_init();
-	printf("test print");
+	//printf("test print");
+	audio_internal_init();
 	register_input_callback(key_a, a_callback, call_on_key_down);
 	while(platform_update());
+	audio_internal_shutdown();
 	destroy_console();
 	platform_exit();
 
