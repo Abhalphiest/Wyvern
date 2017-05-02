@@ -6,5 +6,6 @@
 
 void audio_internal_init();
 void audio_internal_shutdown();
+void audio_internal_test();
 
 #endif

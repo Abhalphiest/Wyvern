@@ -37,6 +37,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	//printf("test print");
 	audio_internal_init();
 	register_input_callback(key_a, a_callback, call_on_key_down);
+	audio_internal_test();
 	while(platform_update());
 	audio_internal_shutdown();
 	destroy_console();

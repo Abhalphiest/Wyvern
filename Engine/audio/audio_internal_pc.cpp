@@ -15,9 +15,9 @@ void audio_internal_init()
 					* first we need to set up the WAVEFORMATEX structure.
 					* the structure describes the format of the audio.
 					*/
-	wfx.nSamplesPerSec = 44100; /* sample rate */
+	wfx.nSamplesPerSec = 22050; /* sample rate */
 	wfx.wBitsPerSample = 16; /* sample size */
-	wfx.nChannels = 2; /* channels*/
+	wfx.nChannels = 1; /* channels*/
 					   /*
 					   * WAVEFORMATEX also has other fields which need filling.
 					   * as long as the three fields above are filled this should
@@ -59,7 +59,6 @@ void audio_internal_shutdown()
 	waveOutClose(hWaveOut);
 	return;
 }
-
 
 void writeAudioBlock(HWAVEOUT hWaveOut, LPSTR block, DWORD size)
 {
@@ -130,5 +129,18 @@ LPSTR loadAudioBlock(const char* filename, DWORD* blockSize)
 	return (LPSTR)block;
 }
 
+void audio_internal_test()
+{
+	LPSTR block;/* pointer to the block */
+	DWORD blockSize;/* holds the size of the block */
+
+	if ((block = loadAudioBlock("../media/audio/raw/pb-death.raw", &blockSize)) == NULL)
+	{
+		fprintf(stderr, "Unable to load file\n");
+		exit(1);
+	}
+	
+	writeAudioBlock(hWaveOut, block, blockSize);
+}
 
 #endif
