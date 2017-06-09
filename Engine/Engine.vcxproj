@@ -123,13 +123,18 @@
     <ClInclude Include="audio\audio.h" />
     <ClInclude Include="audio\audio_internal.h" />
     <ClInclude Include="debug\console.h" />
+    <ClInclude Include="debug\debug.h" />
+    <ClInclude Include="debug\debug_definitions.h" />
     <ClInclude Include="debug\log\log.h" />
     <ClInclude Include="debug\print.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\inputhash.h" />
     <ClInclude Include="platform\platform.h" />
     <ClInclude Include="platform\window.h" />
+    <ClInclude Include="renderer\renderer.h" />
+    <ClInclude Include="renderer\text_renderer.h" />
     <ClInclude Include="time\time.h" />
+    <ClInclude Include="utility\data_structures.h" />
     <ClInclude Include="wyvern.h" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +147,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="platform\platform_pc.cpp" />
     <ClCompile Include="platform\window_pc.cpp" />
+    <ClCompile Include="renderer\text_renderer_pc.cpp" />
     <ClCompile Include="time\time_win.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

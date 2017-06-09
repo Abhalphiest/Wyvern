@@ -12,6 +12,15 @@ typedef unsigned int uint;
 #include<iostream>
 #include<assert.h>
 
-//global constants
+//globals
+
+// engine
+//#include "platform\platform.h"
+//#include "audio\audio.h"
+//#include "renderer\renderer.h"
+//#include "debug\debug.h"
+//#include "input\input.h"
+//#include "time\time.h"
+
 
 #endif

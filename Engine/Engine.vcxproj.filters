@@ -70,6 +70,21 @@
     <ClInclude Include="debug\print.h">
       <Filter>debug</Filter>
     </ClInclude>
+    <ClInclude Include="debug\debug.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\text_renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\debug_definitions.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\data_structures.h">
+      <Filter>utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="time\time_win.cpp">
@@ -99,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="debug\log\log.cpp">
       <Filter>debug\log</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\text_renderer_pc.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
