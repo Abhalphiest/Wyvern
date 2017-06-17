@@ -1,7 +1,7 @@
 #ifndef _AUDIO_INTERNAL_H
 #define _AUDIO_INTERNAL_H
 #pragma once
-#include "wyvern.h"
+//#include "wyvern.h"
 
 
 void audio_internal_init();

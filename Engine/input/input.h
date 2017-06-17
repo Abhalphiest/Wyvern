@@ -2,7 +2,7 @@
 #define _INPUT_H_
 #pragma once
 
-#include"wyvern.h"
+//#include"wyvern.h"
 
 #ifdef PLATFORM_WINDOWS_64
 #include <Windows.h>

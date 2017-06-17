@@ -1,26 +1,36 @@
 #ifndef _WYVERN_H
 #define _WYVERN_H
 
-//preprocessor defines
+#include "definitions.h"
 
-#define PLATFORM_WINDOWS_64
+//forward declarations
+class Debug;
 
-//typedefs
-typedef unsigned int uint;
+// all the things
+#include"debug/debug.h"
+// #include"audio/audio.h"
+// #include"input/input.h"
+// #include"renderer/renderer.h"
+// #include"platform/platform.h"
 
-//includes
-#include<iostream>
-#include<assert.h>
+// globals
+Debug* g_Debug;
 
-//globals
+// engine functions
+namespace Wyvern
+{
+	void Launch() 
+	{
+		Debug::InitializeDebug();
+	}
+	void Exit() 
+	{
+		Debug::Release();
+	}
 
-// engine
-//#include "platform\platform.h"
-//#include "audio\audio.h"
-//#include "renderer\renderer.h"
-//#include "debug\debug.h"
-//#include "input\input.h"
-//#include "time\time.h"
+	Debug* DebugUtilities() { return g_Debug; }
+}
+
 
 
 #endif

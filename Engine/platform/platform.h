@@ -2,7 +2,8 @@
 #define __PLATFORM_H__
 #pragma once
 //includes
-#include"wyvern.h"
+//#include"wyvern.h"
+#include "definitions.h"
 
 #ifdef PLATFORM_WINDOWS_64
 #include<Windows.h>

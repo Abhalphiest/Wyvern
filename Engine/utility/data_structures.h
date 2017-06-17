@@ -1,5 +1,5 @@
 #pragma once
-#include "wyvern.h"
+//#include "wyvern.h"
 
 template<typename T, uint size>
 struct dynamic_array
@@ -8,11 +8,11 @@ struct dynamic_array
 	uint capacity = size;
 	uint count = 0;
 
-	void push(T element) {}
+	void add(T element) {}
 	uint count() { return 0; }
 	void resize(uint size) {}
 	void clear() {}
-	bool is_empty() {}
+	void delete_at_index(uint index);
 	
 	//overload [] operator
 };

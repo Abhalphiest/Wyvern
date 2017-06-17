@@ -2,7 +2,7 @@
 #pragma once
 #define _LOG_H
 
-#include "wyvern.h"
+#include "definitions.h"
 #include "debug/log/log_settings.h"
 #include "debug/debug_definitions.h"
 

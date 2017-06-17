@@ -127,6 +127,7 @@
     <ClInclude Include="debug\debug_definitions.h" />
     <ClInclude Include="debug\log\log.h" />
     <ClInclude Include="debug\print.h" />
+    <ClInclude Include="definitions.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\inputhash.h" />
     <ClInclude Include="platform\platform.h" />
@@ -141,6 +142,7 @@
     <ClCompile Include="audio\audio_internal_pc.cpp" />
     <ClCompile Include="audio\audio.cpp" />
     <ClCompile Include="debug\console_pc.cpp" />
+    <ClCompile Include="debug\debug.cpp" />
     <ClCompile Include="debug\log\log.cpp" />
     <ClCompile Include="debug\print.cpp" />
     <ClCompile Include="input\input_pc.cpp" />
