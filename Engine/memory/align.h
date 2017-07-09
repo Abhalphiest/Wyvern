@@ -3,12 +3,12 @@
 
 inline void* alignForward(void* address, unsigned int alignment)
 {
-	return (void*)((reinterpret_cast(address)+static_cast(alignment - 1)) & static_cast(~(alignment - 1)));
+	return (void*)((reinterpret_cast<unsigned int>(address)+static_cast<unsigned int>(alignment - 1)) & static_cast<unsigned int>(~(alignment - 1)));
 }
 
 inline unsigned int alignForwardAdjustment(const void* address, unsigned int alignment)
 {
-	unsigned int adjustment = alignment - (reinterpret_cast(address) & static_cast(alignment - 1));
+	unsigned int adjustment = alignment - (reinterpret_cast<unsigned int>(address) & static_cast<unsigned int>(alignment - 1));
 
 	if (adjustment == alignment)
 		return 0; //already aligned
