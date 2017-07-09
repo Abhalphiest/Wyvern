@@ -13,6 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 {
 	Wyvern::Launch();
 	Wyvern::DebugUtilities()->SetActiveStreams(console_stream);
+	Wyvern::DebugUtilities()->Print("Hello, world!\n");
 	Sleep(10000);
 	Wyvern::Exit();
 }

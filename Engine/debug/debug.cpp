@@ -29,7 +29,22 @@ void Debug::SetActiveStreams(stream_field streams)
 // Print just does the string, printarg uses variable arguments... think of printf if you must
 void Debug::Print(const char* str)
 {
-	
+	if (m_streamfield & debug_stream)
+	{
+
+	}
+	if (m_streamfield & event_stream)
+	{
+
+	}
+	if (m_streamfield & error_stream)
+	{
+		
+	}
+	if (m_streamfield & console_stream)
+	{
+		fprintf(stdout, str);
+	}
 }
 void Debug::PrintArg(const char* str, int argc, ...)
 {

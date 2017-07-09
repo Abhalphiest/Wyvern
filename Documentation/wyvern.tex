@@ -1,0 +1,78 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  WYVERN ENGINE DOCUMENTATION
+%  Margaret Dorsey
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% using the memoir class, as it is by far the most customizable
+% see  http://texdoc.net/texmf-dist/doc/latex/memoir/memman.pdf
+% for more details on memoir.
+
+\documentclass[9pt]{memoir} % use smaller type; default would be 10pt (SUFFER)
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{letterpaper} % or letterpaper (US) or a5paper or....
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+
+%% make our abstract.. not an abstract
+\renewcommand{\abstractname}{}
+\renewcommand{\absnamepos}{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DOCUMENT BEGIN
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Wyvern Engine}
+\author{Margaret Dorsey}
+\date{} % disable a date in the header
+
+%% &TODO: Put a last updated date in the footer somewhere...
+%% &TODO: Make the header a little prettier
+
+\begin{document}
+
+% making title / summary page
+
+\begin{titlingpage}
+\aliaspagestyle{titlingpage}{plain}
+\setlength{\droptitle}{30pt} % lower the title
+\maketitle
+
+\begin{abstract}
+
+\par The Wyvern game engine is intended to be a multiplatform, lightweight 2d engine, upon which a variety of games can
+be built without writing or architecting low level systems. This document serves as both an API reference and an architectural 
+overview for the engine.
+\end{abstract}
+\end{titlingpage}
+
+%% &TODO: Make a table of contents here..
+
+\section{Overview}
+
+\section{Architecture}
+
+\section{API}
+
+\end{document}

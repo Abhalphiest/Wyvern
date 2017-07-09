@@ -1,20 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="audio">
-      <UniqueIdentifier>{36d2a7f4-1a94-4435-94df-37e479773224}</UniqueIdentifier>
-    </Filter>
     <Filter Include="input">
       <UniqueIdentifier>{4c45333a-e1e5-4ad6-bb32-24430b9a4539}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="platform">
-      <UniqueIdentifier>{c28c5d25-c586-4ddc-9aae-34735acdcb1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="renderer">
-      <UniqueIdentifier>{8ca5de62-fee0-4d20-92b0-95dbc7e7a62a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="time">
-      <UniqueIdentifier>{e59724c9-1c88-468d-a285-525eb5ba8996}</UniqueIdentifier>
     </Filter>
     <Filter Include="utility">
       <UniqueIdentifier>{593352f6-dd58-47ef-864a-391134eb2c69}</UniqueIdentifier>
@@ -25,18 +13,12 @@
     <Filter Include="debug\log">
       <UniqueIdentifier>{641e6f58-5ceb-47d4-ac07-6a3ff08a95f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="memory">
+      <UniqueIdentifier>{60e468af-ac03-47a2-84c1-2e242938ed48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="time\time.h">
-      <Filter>time</Filter>
-    </ClInclude>
     <ClInclude Include="wyvern.h" />
-    <ClInclude Include="platform\window.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\platform.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="input\input.h">
       <Filter>input</Filter>
     </ClInclude>
@@ -45,12 +27,6 @@
     </ClInclude>
     <ClInclude Include="debug\console.h">
       <Filter>debug</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\audio.h">
-      <Filter>audio</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\audio_internal.h">
-      <Filter>audio</Filter>
     </ClInclude>
     <ClInclude Include="debug\log\log.h">
       <Filter>debug\log</Filter>
@@ -61,12 +37,6 @@
     <ClInclude Include="debug\debug.h">
       <Filter>debug</Filter>
     </ClInclude>
-    <ClInclude Include="renderer\renderer.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\text_renderer.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
     <ClInclude Include="debug\debug_definitions.h">
       <Filter>debug</Filter>
     </ClInclude>
@@ -74,29 +44,26 @@
       <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="definitions.h" />
+    <ClInclude Include="utility\file.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\linearallocator.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\allocator.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\align.h">
+      <Filter>memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="time\time_win.cpp">
-      <Filter>time</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="platform\window_pc.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\platform_pc.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="input\input_pc.cpp">
       <Filter>input</Filter>
     </ClCompile>
     <ClCompile Include="debug\console_pc.cpp">
       <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="audio\audio_internal_pc.cpp">
-      <Filter>audio</Filter>
-    </ClCompile>
-    <ClCompile Include="audio\audio.cpp">
-      <Filter>audio</Filter>
     </ClCompile>
     <ClCompile Include="debug\print.cpp">
       <Filter>debug</Filter>
@@ -104,11 +71,17 @@
     <ClCompile Include="debug\log\log.cpp">
       <Filter>debug\log</Filter>
     </ClCompile>
-    <ClCompile Include="renderer\text_renderer_pc.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="debug\debug.cpp">
       <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="utility\file.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="memory\linearallocator.cpp">
+      <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="memory\allocator.cpp">
+      <Filter>memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

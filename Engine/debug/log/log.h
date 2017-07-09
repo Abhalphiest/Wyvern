@@ -5,11 +5,9 @@
 #include "definitions.h"
 #include "debug/log/log_settings.h"
 #include "debug/debug_definitions.h"
+#include "utility/file.h"
 
-// forward declaration
-struct s_log_data;
 
-#ifdef PLATFORM_WINDOWS_64
 struct s_log_data
 {
 	bool m_create_log = true; //by default, create a log if it doesn't exist
@@ -20,14 +18,9 @@ struct s_log_data
 		console_stream; //log everything by default
 
 	bool m_append_log = false; //overwrite the log by default
-
+	file* m_log;
 };
-#else
-struct s_log_data 
-{
 
-};
-#endif
 
 class c_debug_log
 {
