@@ -7,7 +7,7 @@ file* open_file(const char* path, bool append)
 	FILE* basefile = fopen(path, "r+");
 	if (basefile != NULL)
 	{
-		//change once we have a memory allocator
+		//change once we have a memory MemoryAllocator
 		returnfile = (file*)malloc(sizeof(file));
 		returnfile->m_file = basefile;
 		returnfile->m_references = 1;

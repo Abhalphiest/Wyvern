@@ -129,8 +129,9 @@
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\inputhash.h" />
     <ClInclude Include="memory\align.h" />
-    <ClInclude Include="memory\allocator.h" />
-    <ClInclude Include="memory\linearallocator.h" />
+    <ClInclude Include="memory\linearmemoryallocator.h" />
+    <ClInclude Include="memory\memoryallocator.h" />
+    <ClInclude Include="testing\testing.h" />
     <ClInclude Include="utility\data_structures.h" />
     <ClInclude Include="utility\file.h" />
     <ClInclude Include="wyvern.h" />
@@ -142,8 +143,8 @@
     <ClCompile Include="debug\print.cpp" />
     <ClCompile Include="input\input_pc.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="memory\allocator.cpp" />
-    <ClCompile Include="memory\linearallocator.cpp" />
+    <ClCompile Include="memory\linearmemoryallocator.cpp" />
+    <ClCompile Include="testing\testing.cpp" />
     <ClCompile Include="utility\file.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

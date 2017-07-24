@@ -16,6 +16,9 @@
     <Filter Include="memory">
       <UniqueIdentifier>{60e468af-ac03-47a2-84c1-2e242938ed48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="testing">
+      <UniqueIdentifier>{f4e3d5d6-3330-4980-ab6e-baccbfc49ff2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wyvern.h" />
@@ -47,13 +50,16 @@
     <ClInclude Include="utility\file.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="memory\linearallocator.h">
-      <Filter>memory</Filter>
-    </ClInclude>
-    <ClInclude Include="memory\allocator.h">
-      <Filter>memory</Filter>
-    </ClInclude>
     <ClInclude Include="memory\align.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="testing\testing.h">
+      <Filter>testing</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\linearmemoryallocator.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\memoryallocator.h">
       <Filter>memory</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,10 +83,10 @@
     <ClCompile Include="utility\file.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="memory\linearallocator.cpp">
-      <Filter>memory</Filter>
+    <ClCompile Include="testing\testing.cpp">
+      <Filter>testing</Filter>
     </ClCompile>
-    <ClCompile Include="memory\allocator.cpp">
+    <ClCompile Include="memory\linearmemoryallocator.cpp">
       <Filter>memory</Filter>
     </ClCompile>
   </ItemGroup>

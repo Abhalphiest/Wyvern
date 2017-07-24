@@ -4,7 +4,8 @@
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
 #include<Windows.h>
-
+#include"testing/testing.h"
+#include"memory/linearmemoryallocator.h"
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -14,6 +15,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	Wyvern::Launch();
 	Wyvern::DebugUtilities()->SetActiveStreams(console_stream);
 	Wyvern::DebugUtilities()->Print("Hello, world!\n");
+
+	
+	void* memory = malloc(1000);
+	LinearMemoryAllocator allocator(1000, memory);
+	testMemoryAllocator(allocator);
 	Sleep(10000);
 	Wyvern::Exit();
 }
