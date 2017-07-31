@@ -1,14 +1,14 @@
 #pragma once
+#include"definitions.h"
 
-
-inline void* alignForward(void* address, unsigned int alignment)
+inline void* alignForward(void* address, byte alignment)
 {
-	return (void*)((reinterpret_cast<unsigned int>(address)+static_cast<unsigned int>(alignment - 1)) & static_cast<unsigned int>(~(alignment - 1)));
+	return (void*)(((intptr_t)(address)+(alignment - 1)) & (~(alignment - 1)));
 }
 
-inline unsigned int alignForwardAdjustment(const void* address, unsigned int alignment)
+inline byte alignForwardAdjustment(const void* address, byte alignment)
 {
-	unsigned int adjustment = alignment - (reinterpret_cast<unsigned int>(address) & static_cast<unsigned int>(alignment - 1));
+	byte adjustment = alignment - ((intptr_t)(address) & (alignment - 1));
 
 	if (adjustment == alignment)
 		return 0; //already aligned
@@ -16,11 +16,11 @@ inline unsigned int alignForwardAdjustment(const void* address, unsigned int ali
 	return adjustment;
 }
 
-inline unsigned int alignForwardAdjustmentWithHeader(const void* address, unsigned int alignment, unsigned int headerSize)
+inline byte alignForwardAdjustmentWithHeader(const void* address, byte alignment, byte headerSize)
 {
-	unsigned int adjustment = alignForwardAdjustment(address, alignment);
+	byte adjustment = alignForwardAdjustment(address, alignment);
 
-	unsigned int neededSpace = headerSize;
+	byte neededSpace = headerSize;
 
 	if (adjustment < neededSpace)
 	{

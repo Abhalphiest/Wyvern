@@ -24,7 +24,7 @@ void* LinearMemoryAllocator::allocate(size_t size, uint alignment)
 	if (m_usedMemory + adjustment + size > m_size)
 		return nullptr;
 
-	unsigned int aligned_address = (uint)m_current_pos + adjustment;
+	intptr_t aligned_address = (intptr_t)m_current_pos + adjustment;
 
 	m_current_pos = (void*)(aligned_address + size);
 

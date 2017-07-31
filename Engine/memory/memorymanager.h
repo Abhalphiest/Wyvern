@@ -4,7 +4,11 @@
 #define _MEMORY_MANAGER_H
 
 #ifndef DEFAULT_MEMORY_ALLOC
-#define DEFAULT_MEMORY_ALLOC 4294967295 //fairly arbitrary choice.. max_size of vector on my laptop
+#define DEFAULT_MEMORY_ALLOC 4294967 //fairly arbitrary choice.. max_size of vector on my laptop, with one digit taken off
+#endif
+
+#ifndef UTILITY_MEMORY_ALLOC
+#define UTILITY_MEMORY_ALLOC 1000 // completely random.. there's probably a decent way to guess at this
 #endif
 
 #include"memoryallocator.h"
@@ -18,7 +22,7 @@ public:
 	static void Release();
 
 private:
-	uptr m_memory_pool;
+	byte* m_memory_pool;
 	LinearMemoryAllocator* m_memory_allocator;
 	ListMemoryAllocator* m_utility_allocator;
 

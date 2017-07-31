@@ -34,12 +34,12 @@ public:
 		return m_rootAddress;
 	}
 
-	uint get_size() const
+	size_t get_size() const
 	{
 		return m_size;
 	}
 
-	uint get_used_memory() const
+	size_t get_used_memory() const
 	{
 		return m_usedMemory;
 	}
