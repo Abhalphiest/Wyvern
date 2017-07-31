@@ -70,8 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(Configuration)_Output\</OutDir>
-    <IntDir>$(Configuration)_Intermediate\</IntDir>
+    <OutDir>.\Debug_Output\</OutDir>
+    <IntDir>.\Debug_Intermediate\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>.\Debug_Output\</OutDir>
+    <IntDir>.\Debug_Intermediate\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -79,7 +83,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir);$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -91,6 +95,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,6 +137,9 @@
     <ClInclude Include="memory\align.h" />
     <ClInclude Include="memory\linearmemoryallocator.h" />
     <ClInclude Include="memory\memoryallocator.h" />
+    <ClInclude Include="platform\platform_definitions_pc.h" />
+    <ClInclude Include="platform\platform.h" />
+    <ClInclude Include="platform\window.h" />
     <ClInclude Include="testing\testing.h" />
     <ClInclude Include="utility\data_structures.h" />
     <ClInclude Include="utility\file.h" />
@@ -144,6 +153,8 @@
     <ClCompile Include="input\input_pc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="memory\linearmemoryallocator.cpp" />
+    <ClCompile Include="platform\platform_pc.cpp" />
+    <ClCompile Include="platform\window_pc.cpp" />
     <ClCompile Include="testing\testing.cpp" />
     <ClCompile Include="utility\file.cpp" />
   </ItemGroup>

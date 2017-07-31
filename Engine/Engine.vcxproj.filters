@@ -19,6 +19,9 @@
     <Filter Include="testing">
       <UniqueIdentifier>{f4e3d5d6-3330-4980-ab6e-baccbfc49ff2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{49d29844-d768-473d-b0b8-d87d6fea67eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wyvern.h" />
@@ -62,6 +65,15 @@
     <ClInclude Include="memory\memoryallocator.h">
       <Filter>memory</Filter>
     </ClInclude>
+    <ClInclude Include="platform\platform.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\window.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\platform_definitions_pc.h">
+      <Filter>platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -88,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="memory\linearmemoryallocator.cpp">
       <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\window_pc.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\platform_pc.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

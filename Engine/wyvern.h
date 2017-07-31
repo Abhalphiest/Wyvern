@@ -11,7 +11,8 @@ class Debug;
 // #include"audio/audio.h"
 // #include"input/input.h"
 // #include"renderer/renderer.h"
-// #include"platform/platform.h"
+#include"platform/platform.h"
+#include"platform/window.h"
 
 // globals
 Debug* g_Debug;
@@ -22,10 +23,12 @@ namespace Wyvern
 	void Launch() 
 	{
 		Debug::InitializeDebug();
+		platform_init();
 	}
 	void Exit() 
 	{
 		Debug::Release();
+		platform_exit();
 	}
 
 	Debug* DebugUtilities() { return g_Debug; }

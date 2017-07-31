@@ -1,6 +1,7 @@
 #pragma once
 
 #include "definitions.h"
+#include "align.h"
 #include <assert.h>
 #include <stdlib.h>
 
@@ -24,7 +25,7 @@ public:
 		m_size = 0;
 	}
 
-	virtual void* allocate(size_t size, unsigned int alignment = 4) = 0;
+	virtual void* allocate(unsigned int size, unsigned int alignment = 4) = 0;
 
 	virtual void deallocate(void* p) = 0;
 
@@ -80,7 +81,7 @@ namespace Memory
 	template<typename T>
 	T* allocate_array(MemoryAllocator& MemoryAllocator, uint length)
 	{
-		ASSERT(length != 0);
+		assert(length != 0);
 
 		uint headerSize = sizeof(uint) / sizeof(T);
 
@@ -101,7 +102,7 @@ namespace Memory
 	template<typename T>
 	void deallocate_array(MemoryAllocator& MemoryAllocator, T* array)
 	{
-		ASSERT(array != nullptr);
+		assert(array != nullptr);
 
 		size_t length = *(((size_t*)array) - 1);
 

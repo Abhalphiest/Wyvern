@@ -17,9 +17,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	Wyvern::DebugUtilities()->Print("Hello, world!\n");
 
 	
-	void* memory = malloc(1000);
-	LinearMemoryAllocator allocator(1000, memory);
-	testMemoryAllocator(allocator);
+	//void* memory = malloc(1000);
+	//LinearMemoryAllocator allocator(1000, memory);
+	//testMemoryAllocator(allocator);
 	Sleep(10000);
 	Wyvern::Exit();
 }

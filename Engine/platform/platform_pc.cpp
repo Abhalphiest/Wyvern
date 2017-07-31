@@ -1,8 +1,9 @@
-//#include "wyvern.h"
+
+#include "platform.h"
 
 #ifdef PLATFORM_WINDOWS_64
-#include"platform.h"
-#include<Windows.h>
+#include"platform_definitions_pc.h"
+#include"window.h"
 
 //globals
 s_platform_globals g_platform_globals;
@@ -12,6 +13,10 @@ void platform_init()
 	//NOTE: May cause unexpected behavior if/when the engine is compiled into a DLL
 	// keep an eye on this!
 	g_platform_globals.hInstance = GetModuleHandle(NULL); 
+	window_system_init();
+	s_window_params params = { "Test Window", 80, 80, 800, 400, NULL };
+	make_window(&params, window_filler_option);
+	
 }
 
 bool platform_update()

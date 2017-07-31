@@ -1,6 +1,6 @@
 #pragma once
 
-#include"MemoryAllocator.h"
+#include"memoryallocator.h"
 
 class LinearMemoryAllocator : public MemoryAllocator
 {
@@ -8,7 +8,7 @@ public:
 	LinearMemoryAllocator(uint size, void* rootAddress);
 	~LinearMemoryAllocator();
 
-	void* allocate(uint size, uint alignment) override;
+	void* allocate(uint size, unsigned int alignment) override;
 
 	void deallocate(void* p) override;
 
