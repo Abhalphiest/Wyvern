@@ -9,31 +9,36 @@
 #define window_id uint
 #endif
 
-//enums
-enum e_window_option
+namespace Window
 {
-	window_filler_option,
-};
+	//constants
+	const uint k_max_windows_registered = 10;
 
-enum e_dialog_option
-{
-	dialog_filler_option,
-};
+	struct s_window_params
+	{
+		const char* m_title;
+		uint m_xpos, m_ypos, m_width, m_height;
+		window_id m_parent;
+	};
 
-//structs
+	enum e_window_option
+	{
+		window_filler_option,
+	};
 
-struct s_window_params
-{
-	const char* m_title;
-	uint m_xpos, m_ypos, m_width, m_height;
-	window_id m_parent;
-};
+	enum e_dialog_option
+	{
+		dialog_filler_option,
+	};
 
-//function declarations
-void window_system_init();
-uint make_window(s_window_params* parameters, e_window_option options);
-uint make_dialog(const char* title, const char* text, e_dialog_option options);
-window_id get_platform_window_id(uint engine_window_id);
+	//function declarations
+	void InitializeWindowSystem();
+	uint MakeWindow(s_window_params* parameters, e_window_option options);
+	uint MakeDialogWindow(const char* title, const char* text, e_dialog_option options);
+
+
+
+}
 
 
 #endif

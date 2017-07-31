@@ -6,11 +6,16 @@
 // engine defines
 #define PLATFORM_WINDOWS_64
 
-//typedefs
-typedef unsigned int uint;
-
 //includes
 #include<iostream>
 #include<assert.h>
+#include<cstddef>
+
+//typedefs
+typedef unsigned int uint;
+typedef unsigned __int8* __uptr uptr;
+typedef unsigned __int8 byte; //wow, really C++?
+
+
 
 #endif

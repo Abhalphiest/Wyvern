@@ -27,5 +27,5 @@ private:
 	ListMemoryAllocator(const ListMemoryAllocator&); //Prevent copies because it might cause errors
 	ListMemoryAllocator& operator=(const ListMemoryAllocator&);
 
-	FreeBlock* _free_blocks;
+	FreeBlock* m_free_blocks;
 };

@@ -4,10 +4,14 @@
 //includes
 #include "definitions.h"
 
-struct s_platform_globals;
+struct s_platform_data;
 
-void platform_init();
-bool platform_update();
-void platform_exit();
+
+namespace Platform
+{
+	void InitializePlatform();
+	bool PlatformUpdate();
+	void PlatformExit();
+};
 
 #endif

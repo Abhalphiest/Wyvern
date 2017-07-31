@@ -5,21 +5,20 @@
 #include"platform_definitions_pc.h"
 #include"window.h"
 
-//globals
-s_platform_globals g_platform_globals;
+s_platform_data g_platform_data;
 
-void platform_init()
+void Platform::InitializePlatform()
 {
 	//NOTE: May cause unexpected behavior if/when the engine is compiled into a DLL
 	// keep an eye on this!
-	g_platform_globals.hInstance = GetModuleHandle(NULL); 
-	window_system_init();
-	s_window_params params = { "Test Window", 80, 80, 800, 400, NULL };
-	make_window(&params, window_filler_option);
+	g_platform_data.hInstance = GetModuleHandle(NULL); 
+	Window::InitializeWindowSystem();
+	Window::s_window_params params = { "Test Window", 80, 80, 800, 400, NULL };
+	Window::MakeWindow(&params, Window::window_filler_option);
 	
 }
 
-bool platform_update()
+bool Platform::PlatformUpdate()
 {
 	// this struct holds Windows event messages
 	MSG msg;
@@ -44,7 +43,7 @@ bool platform_update()
 
 }
 
-void platform_exit()
+void Platform::PlatformExit()
 {
 	exit(0);
 }

@@ -10,7 +10,7 @@
 
 const HINSTANCE k_hinstance_not_set = 0;
 
-struct s_platform_globals
+struct s_platform_data
 {
 	HINSTANCE hInstance = k_hinstance_not_set;
 };

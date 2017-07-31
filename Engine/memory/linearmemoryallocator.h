@@ -5,10 +5,10 @@
 class LinearMemoryAllocator : public MemoryAllocator
 {
 public:
-	LinearMemoryAllocator(uint size, void* rootAddress);
+	LinearMemoryAllocator(size_t size, void* rootAddress);
 	~LinearMemoryAllocator();
 
-	void* allocate(uint size, unsigned int alignment) override;
+	void* allocate(size_t size, unsigned int alignment) override;
 
 	void deallocate(void* p) override;
 

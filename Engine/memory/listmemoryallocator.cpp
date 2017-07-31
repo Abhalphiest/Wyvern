@@ -47,7 +47,7 @@ void* ListMemoryAllocator::allocate(size_t size, uint alignment)
 			if(prev_free_block != nullptr)
 				prev_free_block->next = free_block->next;
 			else
-				_free_blocks = free_block->next;
+				m_free_blocks = free_block->next;
 		}
 		else
 		{
@@ -59,7 +59,7 @@ void* ListMemoryAllocator::allocate(size_t size, uint alignment)
 			if(prev_free_block != nullptr)
 				prev_free_block->next = next_block;
 			else
-				_free_blocks = next_block;
+				m_free_blocks = next_block;
 		}
 
 		uptr aligned_address = (uptr)free_block + adjustment;
@@ -68,10 +68,10 @@ void* ListMemoryAllocator::allocate(size_t size, uint alignment)
 		header->size             = total_size;
 		header->adjustment       = adjustment;
 
-		_used_memory += total_size;
-		_num_allocations++;
+		m_usedMemory += total_size;
+		m_numAllocations++;
 
-		assert(pointer_math::alignForwardAdjustment((void*)aligned_address, alignment) == 0);
+		assert(alignForwardAdjustment((void*)aligned_address, alignment) == 0);
 
 		return (void*)aligned_address;
 	}
@@ -85,14 +85,14 @@ void ListMemoryAllocator::deallocate(void* p)
 {
 	assert(p != nullptr);
 
-	AllocationHeader* header = (AllocationHeader*)pointer_math::subtract(p, sizeof(AllocationHeader));
+	AllocationHeader* header = (AllocationHeader*)subtract(p, sizeof(AllocationHeader));
 
-	uptr   block_start = reinterpret_cast(p) - header->adjustment;
+	uptr   block_start = reinterpret_cast<uptr>(p) - header->adjustment;
 	size_t block_size  = header->size;
 	uptr   block_end   = block_start + block_size;
 
 	FreeBlock* prev_free_block = nullptr;
-	FreeBlock* free_block = _free_blocks;
+	FreeBlock* free_block = m_free_blocks;
 
 	while(free_block != nullptr)
 	{
@@ -107,9 +107,9 @@ void ListMemoryAllocator::deallocate(void* p)
 	{
 		prev_free_block = (FreeBlock*) block_start;
 		prev_free_block->size = block_size;
-		prev_free_block->next = _free_blocks;
+		prev_free_block->next = m_free_blocks;
 
-		_free_blocks = prev_free_block;
+		m_free_blocks = prev_free_block;
 	} else if((uptr) prev_free_block + prev_free_block->size == block_start)
 	{
 		prev_free_block->size += block_size;
@@ -129,6 +129,6 @@ void ListMemoryAllocator::deallocate(void* p)
 		prev_free_block->next = free_block->next;
 	}
 
-	_num_allocations--;
-	_used_memory -= block_size;
+	m_numAllocations--;
+	m_usedMemory -= block_size;
 }

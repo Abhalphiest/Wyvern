@@ -35,3 +35,15 @@ inline unsigned int alignForwardAdjustmentWithHeader(const void* address, unsign
 
 	return adjustment;
 }
+
+inline uptr add(void* ptr, size_t offset)
+{
+	uptr castptr = (uptr)ptr;
+	return castptr + offset;
+}
+
+inline uptr subtract(void* ptr, size_t offset)
+{
+	uptr castptr = (uptr)ptr;
+	return castptr - offset;
+}

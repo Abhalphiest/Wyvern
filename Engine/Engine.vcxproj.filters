@@ -74,6 +74,12 @@
     <ClInclude Include="platform\platform_definitions_pc.h">
       <Filter>platform</Filter>
     </ClInclude>
+    <ClInclude Include="memory\memorymanager.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="memory\listmemoryallocator.h">
+      <Filter>memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -106,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="platform\platform_pc.cpp">
       <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="memory\listmemoryallocator.cpp">
+      <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="memory\memorymanager.cpp">
+      <Filter>memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

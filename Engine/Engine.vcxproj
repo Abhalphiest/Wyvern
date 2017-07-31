@@ -136,7 +136,9 @@
     <ClInclude Include="input\inputhash.h" />
     <ClInclude Include="memory\align.h" />
     <ClInclude Include="memory\linearmemoryallocator.h" />
+    <ClInclude Include="memory\listmemoryallocator.h" />
     <ClInclude Include="memory\memoryallocator.h" />
+    <ClInclude Include="memory\memorymanager.h" />
     <ClInclude Include="platform\platform_definitions_pc.h" />
     <ClInclude Include="platform\platform.h" />
     <ClInclude Include="platform\window.h" />
@@ -153,6 +155,8 @@
     <ClCompile Include="input\input_pc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="memory\linearmemoryallocator.cpp" />
+    <ClCompile Include="memory\listmemoryallocator.cpp" />
+    <ClCompile Include="memory\memorymanager.cpp" />
     <ClCompile Include="platform\platform_pc.cpp" />
     <ClCompile Include="platform\window_pc.cpp" />
     <ClCompile Include="testing\testing.cpp" />

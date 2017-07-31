@@ -13,22 +13,29 @@ class Debug;
 // #include"renderer/renderer.h"
 #include"platform/platform.h"
 #include"platform/window.h"
+#include"memory/memorymanager.h"
 
 // globals
 Debug* g_Debug;
+MemoryManager* g_MemoryManager;
 
 // engine functions
 namespace Wyvern
 {
 	void Launch() 
 	{
+		MemoryManager::InitializeMemoryManager();
 		Debug::InitializeDebug();
-		platform_init();
+		Platform::InitializePlatform();
 	}
 	void Exit() 
 	{
 		Debug::Release();
-		platform_exit();
+		Platform::PlatformExit();
+
+		// should probably be last, just for safety..
+		// can re-evaluate release order once more architecture is in place
+		MemoryManager::Release();
 	}
 
 	Debug* DebugUtilities() { return g_Debug; }

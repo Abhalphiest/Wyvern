@@ -1,5 +1,5 @@
 #include"wyvern.h"
-
+#include <vector>
 
 #ifdef PLATFORM_WINDOWS_64
 #include<windowsx.h>
@@ -12,9 +12,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
+	std::vector<int> myvector;
 	Wyvern::Launch();
 	Wyvern::DebugUtilities()->SetActiveStreams(console_stream);
 	Wyvern::DebugUtilities()->Print("Hello, world!\n");
+	Wyvern::DebugUtilities()->Print("This is a test of the console debug text system.\n");
+	Wyvern::DebugUtilities()->PrintArg("max vector size: %lu \n", myvector.max_size());
 
 	
 	//void* memory = malloc(1000);

@@ -3,7 +3,7 @@
 #include"linearMemoryAllocator.h"
 #include"align.h"
 
-LinearMemoryAllocator::LinearMemoryAllocator(uint size, void* rootAddress)
+LinearMemoryAllocator::LinearMemoryAllocator(size_t size, void* rootAddress)
 	: MemoryAllocator(size, rootAddress), m_current_pos(rootAddress)
 {
 	assert(size > 0);
@@ -15,7 +15,7 @@ LinearMemoryAllocator::~LinearMemoryAllocator()
 	m_current_pos = nullptr;
 }
 
-void* LinearMemoryAllocator::allocate(uint size, uint alignment)
+void* LinearMemoryAllocator::allocate(size_t size, uint alignment)
 {
 	assert(size != 0);
 

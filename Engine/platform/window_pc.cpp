@@ -14,17 +14,15 @@
 
 //private declarations
 LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+window_id get_platform_window_id(uint engine_window_id);
 
-//constants
-const uint k_max_windows_registered = 10;
+extern s_platform_data g_platform_data;
 
-extern s_platform_globals g_platform_globals;
-
-static LPCSTR g_window_array[k_max_windows_registered];
+static LPCSTR g_window_array[Window::k_max_windows_registered];
 static LPCSTR g_current_window_class;
 
 //function definitions
-void window_system_init()
+void Window::InitializeWindowSystem()
 {
 	WNDCLASSEX window_class =
 	{
@@ -33,7 +31,7 @@ void window_system_init()
 		CS_HREDRAW | CS_VREDRAW, //redraws window if resized in either direction
 		window_proc, //our window procedure
 		0, 0, //no extra bytes (partially because I have no idea how to use them)
-		g_platform_globals.hInstance,
+		g_platform_data.hInstance,
 		NULL, //default icon for now
 		LoadCursor(NULL, IDC_ARROW), //normal arrow
 		(HBRUSH)COLOR_WINDOW,
@@ -53,7 +51,7 @@ void window_system_init()
 	}
 }
 
-uint make_window(s_window_params* parameters, e_window_option options)
+uint Window::MakeWindow(s_window_params* parameters, e_window_option options)
 {
 	int i;
 	for (i = 0; i < k_max_windows_registered; i++)
@@ -68,7 +66,7 @@ uint make_window(s_window_params* parameters, e_window_option options)
 	assert(parameters);
 	assert(parameters->m_title);
 	
-	if (g_platform_globals.hInstance == k_hinstance_not_set)
+	if (g_platform_data.hInstance == k_hinstance_not_set)
 	{
 		//TODO: Debug message here!
 		return -1;
@@ -83,7 +81,7 @@ uint make_window(s_window_params* parameters, e_window_option options)
 		parameters->m_height,			// height 
 		parameters->m_parent,			// parent
 		NULL,							// we aren't using menus, NULL
-		g_platform_globals.hInstance,   // application handle
+		g_platform_data.hInstance,   // application handle
 		NULL);							// used with multiple windows, NULL
 	
 	// display the window on the screen
@@ -93,7 +91,7 @@ uint make_window(s_window_params* parameters, e_window_option options)
 	g_window_array[i] = parameters->m_title;
 	return i;
 }
-uint make_dialog(const char* title, const char* text, e_dialog_option options)
+uint Window::MakeDialogWindow(const char* title, const char* text, e_dialog_option options)
 {
 	uint win_options = 0;
 

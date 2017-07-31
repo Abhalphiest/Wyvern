@@ -8,7 +8,7 @@
 class MemoryAllocator
 {
 public:
-	MemoryAllocator(uint size, void* rootAddress)
+	MemoryAllocator(size_t size, void* rootAddress)
 	{
 		m_rootAddress = rootAddress;
 		m_size = size;
@@ -25,7 +25,7 @@ public:
 		m_size = 0;
 	}
 
-	virtual void* allocate(unsigned int size, unsigned int alignment = 4) = 0;
+	virtual void* allocate(size_t size, uint alignment = 4) = 0;
 
 	virtual void deallocate(void* p) = 0;
 

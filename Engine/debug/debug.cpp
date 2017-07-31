@@ -1,4 +1,5 @@
 #include "debug.h"
+#include <stdarg.h>
 
 void Debug::InitializeDebug()
 {
@@ -48,7 +49,13 @@ void Debug::Print(const char* str)
 }
 void Debug::PrintArg(const char* str, int argc, ...)
 {
-
+	if (m_streamfield & console_stream)
+	{
+		va_list args;
+		va_start(args, str);
+		vfprintf(stdout,str,args);
+		va_end(args);
+	}
 }
 
 // Log file functions
