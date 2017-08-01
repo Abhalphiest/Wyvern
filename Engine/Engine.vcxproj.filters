@@ -22,6 +22,12 @@
     <Filter Include="platform">
       <UniqueIdentifier>{49d29844-d768-473d-b0b8-d87d6fea67eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{ca766e86-7985-4f52-abae-effff56ca148}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\dx11">
+      <UniqueIdentifier>{17a8b3a5-c87f-42d7-8340-9f474376ac64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wyvern.h" />
@@ -80,6 +86,15 @@
     <ClInclude Include="memory\listmemoryallocator.h">
       <Filter>memory</Filter>
     </ClInclude>
+    <ClInclude Include="renderer\renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\text_renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\dx11\dx11.h">
+      <Filter>renderer\dx11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -118,6 +133,15 @@
     </ClCompile>
     <ClCompile Include="memory\memorymanager.cpp">
       <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\text_renderer_pc.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\renderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\dx11\dx11.cpp">
+      <Filter>renderer\dx11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
