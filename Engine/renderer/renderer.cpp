@@ -73,7 +73,7 @@ bool Renderer::Frame()
 bool Renderer::Render()
 {
 	// Clear the buffers to begin the scene.
-	m_d3d->BeginScene(0.5f, 0.5f, 0.5f, 1.0f);
+	m_d3d->BeginScene(.392f, .584f, .929f, 1.0f);
 
 
 	// Present the rendered scene to the screen.
