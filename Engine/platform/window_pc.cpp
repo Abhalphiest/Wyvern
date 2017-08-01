@@ -20,6 +20,7 @@ extern s_platform_data g_platform_data;
 
 static LPCSTR g_window_array[Window::k_max_windows_registered];
 static LPCSTR g_current_window_class;
+static HWND g_window_hwnd_array[Window::k_max_windows_registered];
 
 //function definitions
 void Window::InitializeWindowSystem()
@@ -48,6 +49,7 @@ void Window::InitializeWindowSystem()
 	for (int i = 0; i < k_max_windows_registered; i++)
 	{
 		g_window_array[i] = NULL;
+		g_window_hwnd_array[i] = 0;
 	}
 }
 
@@ -89,6 +91,7 @@ uint Window::MakeWindow(s_window_params* parameters, e_window_option options)
 	ShowWindow(hWnd, SW_SHOW);
 
 	g_window_array[i] = parameters->m_title;
+	g_window_hwnd_array[i] = hWnd;
 	return i;
 }
 uint Window::MakeDialogWindow(const char* title, const char* text, e_dialog_option options)
@@ -106,9 +109,9 @@ uint Window::MakeDialogWindow(const char* title, const char* text, e_dialog_opti
 		win_options);
 }
 
-window_id get_platform_window_id(uint engine_window_id)
+window_id Window::get_platform_window_id(uint engine_window_id)
 {
-	return 0;
+	return g_window_hwnd_array[engine_window_id];
 }
 
 LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

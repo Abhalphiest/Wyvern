@@ -29,7 +29,7 @@ bool Dx11Manager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND
 	IDXGIFactory* factory;
 	IDXGIAdapter* adapter;
 	IDXGIOutput* adapterOutput;
-	unsigned int numModes, i, numerator, denominator;
+	unsigned int numModes, i, numerator = 0, denominator = 1;
 	unsigned long long stringLength;
 	DXGI_MODE_DESC* displayModeList;
 	DXGI_ADAPTER_DESC adapterDesc;
