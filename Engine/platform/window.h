@@ -35,7 +35,9 @@ namespace Window
 	void InitializeWindowSystem();
 	uint MakeWindow(s_window_params* parameters, e_window_option options);
 	uint MakeDialogWindow(const char* title, const char* text, e_dialog_option options);
-	window_id get_platform_window_id(uint index);
+	window_id GetPlatformWindowId(uint index);
+	uint GetWindowWidth(uint index);
+	uint GetWindowHeight(uint index);
 
 
 }

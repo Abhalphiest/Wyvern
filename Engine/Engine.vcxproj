@@ -144,6 +144,8 @@
     <ClInclude Include="platform\window.h" />
     <ClInclude Include="renderer\dx11\dx11.h" />
     <ClInclude Include="renderer\renderer.h" />
+    <ClInclude Include="renderer\renderer_definitions_pc.h" />
+    <ClInclude Include="renderer\shadermanager.h" />
     <ClInclude Include="renderer\text_renderer.h" />
     <ClInclude Include="testing\testing.h" />
     <ClInclude Include="utility\data_structures.h" />
@@ -164,6 +166,7 @@
     <ClCompile Include="platform\window_pc.cpp" />
     <ClCompile Include="renderer\dx11\dx11.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
+    <ClCompile Include="renderer\shadermanager.cpp" />
     <ClCompile Include="renderer\text_renderer_pc.cpp" />
     <ClCompile Include="testing\testing.cpp" />
     <ClCompile Include="utility\file.cpp" />

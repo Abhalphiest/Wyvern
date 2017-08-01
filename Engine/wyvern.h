@@ -17,9 +17,9 @@ class Debug;
 #include"memory/memorymanager.h"
 
 // globals
-Debug* g_Debug;
-MemoryManager* g_MemoryManager;
-Renderer* g_Renderer;
+Debug* g_Debug = nullptr;
+MemoryManager* g_MemoryManager = nullptr;
+Renderer* g_Renderer = nullptr;
 
 // engine functions
 namespace Wyvern
@@ -29,16 +29,13 @@ namespace Wyvern
 		MemoryManager::InitializeMemoryManager();
 		Debug::InitializeDebug();
 		Platform::InitializePlatform();
-		g_Renderer = new Renderer();
-		g_Renderer->Initialize(800, 400, Window::get_platform_window_id(0));
+		Renderer::InitializeRenderer();
 	}
 	void Exit() 
 	{
 		Debug::Release();
 		Platform::PlatformExit();
-		g_Renderer->Shutdown();
-		if (g_Renderer)
-			delete g_Renderer;
+		Renderer::Release();
 
 		// should probably be last, just for safety..
 		// can re-evaluate release order once more architecture is in place

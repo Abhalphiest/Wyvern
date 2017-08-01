@@ -21,6 +21,7 @@ extern s_platform_data g_platform_data;
 static LPCSTR g_window_array[Window::k_max_windows_registered];
 static LPCSTR g_current_window_class;
 static HWND g_window_hwnd_array[Window::k_max_windows_registered];
+static Window::s_window_params g_window_params[Window::k_max_windows_registered];
 
 //function definitions
 void Window::InitializeWindowSystem()
@@ -92,6 +93,7 @@ uint Window::MakeWindow(s_window_params* parameters, e_window_option options)
 
 	g_window_array[i] = parameters->m_title;
 	g_window_hwnd_array[i] = hWnd;
+	g_window_params[i] = *parameters;
 	return i;
 }
 uint Window::MakeDialogWindow(const char* title, const char* text, e_dialog_option options)
@@ -109,7 +111,7 @@ uint Window::MakeDialogWindow(const char* title, const char* text, e_dialog_opti
 		win_options);
 }
 
-window_id Window::get_platform_window_id(uint engine_window_id)
+window_id Window::GetPlatformWindowId(uint engine_window_id)
 {
 	return g_window_hwnd_array[engine_window_id];
 }
@@ -142,5 +144,15 @@ LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 
 	// Handle any messages the switch statement didn't
 	return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
+uint Window::GetWindowWidth(uint index)
+{
+	return g_window_params[index].m_width;
+}
+
+uint Window::GetWindowHeight(uint index)
+{
+	return g_window_params[index].m_height;
 }
 #endif
