@@ -1,0 +1,9 @@
+
+# naming conventions
+
+-> End-user facing functions and classes should use camel case, i.e. GetThisMemberVariable() and SampleClass
+-> Internal functions and classes should be distinguished by using underscores and lowercase, i.e. dont_call_this_externally() and c_media_manager.
+
+prefixes: c == class, k == constant, s == struct, m == member, p == parameter, i == interface, etc.
+
+# to be continued

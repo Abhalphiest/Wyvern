@@ -9,24 +9,33 @@
 // TODO: replace with in engine type when ready
 #include<vector>
 
+typedef unsigned short Shader;
+
+// TODO: Also want geom/hull shaders or something?
+
 class ShaderManager
 {
 public:
 	enum ShaderType
 	{
-		VertexShader, PixelShader, ComputeShader
+		VertexShader, PixelShader, ComputeShader, UnknownType
 	};
 	static void InitializeShaderManager();
 	static void Release();
-	void CreateShaderProgram(const char* filename, ShaderType type);
+	Shader CreateShaderProgram(const char* filename, ShaderType type);
+	void ReleaseShaderProgram(Shader shader);
+	ShaderType GetShaderType(Shader shader);
+	void SetShader(Shader shader);
 private:
 	ShaderManager();
 	~ShaderManager();
 	ShaderManager(const ShaderManager& other);
 
-	std::vector<vertex_shader> m_vertex_shaders;
-	std::vector<pixel_shader> m_pixel_shaders;
-	std::vector<buffer_layout> m_layouts;
+
+	std::vector<vertex_shader*> m_vertex_shaders;
+	std::vector<pixel_shader*> m_pixel_shaders;
+	std::vector<compute_shader*> m_compute_shaders;
+	std::vector<buffer_layout*> m_layouts;
 	std::vector<buffer> m_buffers;
 };
 

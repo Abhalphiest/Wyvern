@@ -146,6 +146,7 @@
     <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="renderer\renderer_definitions_pc.h" />
     <ClInclude Include="renderer\shadermanager.h" />
+    <ClInclude Include="renderer\spritemanager.h" />
     <ClInclude Include="renderer\text_renderer.h" />
     <ClInclude Include="testing\testing.h" />
     <ClInclude Include="utility\data_structures.h" />

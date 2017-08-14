@@ -16,6 +16,8 @@ const float k_screen_near = 0.1f;
 
 class Renderer
 {
+
+	friend class ShaderManager;
 public:
 	static void InitializeRenderer();
 	static void Release();

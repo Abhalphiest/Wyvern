@@ -12,7 +12,11 @@ using namespace DirectX;
 
 typedef ID3D11VertexShader vertex_shader;
 typedef ID3D11PixelShader pixel_shader;
+typedef ID3D11ComputeShader compute_shader;
 typedef ID3D11Buffer buffer;
 typedef ID3D11InputLayout buffer_layout;
+typedef ID3D11Texture2D texture;
+
+typedef XMMATRIX Matrix;
 
 #endif
