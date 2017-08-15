@@ -4,7 +4,7 @@
 #define __SPRITE_MANAGER_H__
 
 #include"renderer_definitions_pc.h"
-
+#include"renderer.h"
 // TODO: replace
 #include<vector>
 
@@ -30,7 +30,10 @@ private:
 
 	std::vector<s_sprite> m_active_sprites;
 	std::vector<s_sprite> m_inactive_sprites;
-	buffer* m_vertex_buffer;
-};
 
+	// indexed draw is not defensible for a single quad
+	buffer* m_vertex_buffer = nullptr;
+	const int m_vertex_count = 4;
+};
+extern Renderer* g_Renderer;
 #endif

@@ -20,10 +20,13 @@
 			}
 		},
 		{
+			"contents": "\n# naming conventions\n\n-> End-user facing functions and classes should use camel case, i.e. GetThisMemberVariable() and SampleClass\n-> Internal functions and classes should be distinguished by using underscores and lowercase, i.e. dont_call_this_externally() and c_media_manager.\n\nprefixes: c == class, k == constant, s == struct, m == member, p == parameter, i == interface, etc.\n\n# ",
 			"file": "/D/Wyvern/codingstandard.txt",
+			"file_size": 407,
+			"file_write_time": 131471493408171957,
 			"settings":
 			{
-				"buffer_size": 399,
+				"buffer_size": 384,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -181,15 +184,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 399,
+						"buffer_size": 384,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								399,
-								399
+								384,
+								384
 							]
 						],
 						"settings":

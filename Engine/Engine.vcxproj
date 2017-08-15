@@ -168,6 +168,7 @@
     <ClCompile Include="renderer\dx11\dx11.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
     <ClCompile Include="renderer\shadermanager.cpp" />
+    <ClCompile Include="renderer\spritemanager.cpp" />
     <ClCompile Include="renderer\text_renderer_pc.cpp" />
     <ClCompile Include="testing\testing.cpp" />
     <ClCompile Include="utility\file.cpp" />

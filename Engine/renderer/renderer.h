@@ -18,6 +18,7 @@ class Renderer
 {
 
 	friend class ShaderManager;
+	friend class SpriteManager;
 public:
 	static void InitializeRenderer();
 	static void Release();
@@ -26,6 +27,7 @@ public:
 private:
 	bool Render();
 	Dx11Manager* m_d3d;
+	SpriteManager* m_sprite_manager;
 	Renderer();
 	Renderer(const Renderer&);
 	~Renderer();

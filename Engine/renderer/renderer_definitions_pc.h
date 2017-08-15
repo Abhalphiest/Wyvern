@@ -16,7 +16,9 @@ typedef ID3D11ComputeShader compute_shader;
 typedef ID3D11Buffer buffer;
 typedef ID3D11InputLayout buffer_layout;
 typedef ID3D11Texture2D texture;
-
+typedef XMFLOAT2 vec2;
+typedef XMFLOAT3 vec3;
+typedef XMFLOAT4 vec4;
 typedef XMMATRIX Matrix;
 
 #endif
