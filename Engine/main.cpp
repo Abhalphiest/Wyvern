@@ -1,42 +1,43 @@
 #include"wyvern.h"
 #include <vector>
 
-#ifdef PLATFORM_WINDOWS_64
+#ifdef PLATFORM_WINDOWS_32
+
 #include<windowsx.h>
 #include<Windows.h>
-#include"testing/testing.h"
-#include"memory/linearmemoryallocator.h"
+
+#include"testing/testing.h" // testing suite
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	std::vector<int> myvector;
-	Wyvern::Launch();
-	Wyvern::DebugUtilities()->SetActiveStreams(console_stream);
-	Wyvern::DebugUtilities()->Print("Hello, world!\n");
-	Wyvern::DebugUtilities()->Print("This is a test of the console debug text system.\n");
-	//Wyvern::DebugUtilities()->PrintArg("max vector size: %lu \n", myvector.max_size());
 
+	Wyvern::Launch();
+
+	Wyvern::GetPlatform()->MakeWindow("Test Window", 80, 80, 800, 400);
+
+	Wyvern::Update();
+	testInput();
 	
-	while (true)
+	while(Wyvern::Update())
 	{
-		Platform::PlatformUpdate();
-		g_Renderer->Frame();
+
 	}
+
 	Wyvern::Exit();
 }
 
-
-#else
+#else // end PLATFORM_WINDOWS_32
 
 void main()
 {
+
 	std::cout << "Hello, world!" << std::endl;
 	int x = 0;
 	std::cin >> x;
 
-
 }
-#endif //PLATFORM_WINDOWS_64
+
+#endif // end PLATFORM_*

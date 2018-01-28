@@ -1,10 +1,9 @@
-#pragma once
 #ifndef _INPUT_HASH_H_
 #define _INPUT_HASH_H_
 
 #include"input.h"
 
-#ifdef PLATFORM_WINDOWS_64
+#ifdef PLATFORM_WINDOWS_32
 const int k_input_hash[k_keybind_count] =
 {
 	0x01,	//mouse_left
@@ -104,7 +103,7 @@ const int k_input_hash[k_keybind_count] =
 };
 
 
-#define WINDOWS_KEYCODE_MAX 0xAF
+
 
 #endif
 #endif //_INPUT_HASH_H

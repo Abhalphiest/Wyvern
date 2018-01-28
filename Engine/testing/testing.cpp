@@ -1,21 +1,26 @@
 #include "testing.h"
 
-void testMemoryAllocator(MemoryAllocator &allocator)
-{
 
-	int* test_int = Memory::allocate_new<int>(allocator);
-	*test_int = 12;
-	Memory::deallocate_delete<int>(allocator,*test_int);
+void testInput() 
+{
+	Wyvern::GetInput()->RegisterKeyCallback(key_spacebar, testDialogueWindow, call_on_key_down);
+	Wyvern::GetInput()->RegisterMouseCallback(left_doubleclick, testFullscreen);
 }
 
-void testDebugLog()
+
+
+void testDialogueWindow()
 {
-
-
+	Wyvern::GetPlatform()->MakeDialogueWindow("Test Dialogue", "This is a test of the emergency window system.");
 }
 
-void testDebugConsole()
-{
+void testFullscreen() {
+	static bool full = false;
 
-	
+	if (full)
+		Wyvern::GetPlatform()->MakeWindowWindowed(0);
+	else
+		Wyvern::GetPlatform()->MakeWindowFullscreen(0);
+
+	full = !full;
 }

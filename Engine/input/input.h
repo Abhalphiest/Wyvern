@@ -2,10 +2,10 @@
 #define _INPUT_H_
 #pragma once
 
-//#include"wyvern.h"
 
-#ifdef PLATFORM_WINDOWS_64
+#ifdef PLATFORM_WINDOWS_32
 #include <Windows.h>
+#define WINDOWS_KEYCODE_MAX 0xAF
 #endif
 
 enum e_input_type
@@ -110,7 +110,7 @@ enum e_input_type
 
 enum e_mouse_event
 {
-	left_doubleclick = 0,
+	left_doubleclick = 0, 
 	right_doubleclick,
 	middle_doubleclick,
 	mouse_hover,
@@ -118,13 +118,13 @@ enum e_mouse_event
 	k_mouse_count
 };
 
-struct s_key_data
+struct s_KeyData // note: mouse buttons count as keys
 {
 	bool is_down;
 	unsigned long long frames_down;
 };
 
-struct s_mouse_data
+struct s_MouseData
 {
 	int xpos;
 	int ypos;
@@ -137,16 +137,50 @@ enum e_callback_type
 	call_on_state_change = 3
 };
 
-void input_system_init();
-void register_input_callback(e_input_type key, void (*callback)(), e_callback_type callback_type);
-void register_mouse_callback(e_mouse_event mouse_event, void(*callback)());
-void register_mouse_wheel_callback(void(*callback)(int wheel_delta));
-s_key_data get_key_data(e_input_type key);
-s_mouse_data get_mouse_data();
+class Input
+{
 
-#ifdef PLATFORM_WINDOWS_64
-void process_input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+public:
+	static void Initialize();
+	static void Release();
+
+	s_KeyData PollKey(e_input_type key);
+	s_MouseData PollMouse();
+	void RegisterKeyCallback(e_input_type key, void (*callback)(), e_callback_type callback_type);
+	void RegisterMouseCallback(e_mouse_event mouse_event, void(*callback)());
+	void RegisterMouseWheelCallback(void(*callback)(int wheel_delta));
+#ifdef PLATFORM_WINDOWS_32
+	void process_input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 #endif
+
+private:
+	// make constructor, destructor, copy constructor inaccessible
+	Input();
+	~Input();
+	Input(const Input& other) {}
+	void register_input_callback(e_input_type key, void (*callback)(), e_callback_type callback_type);
+	void register_mouse_callback(e_mouse_event mouse_event, void(*callback)());
+	void register_mouse_wheel_callback(void(*callback)(int wheel_delta));
+	s_KeyData get_key_data(e_input_type key);
+	s_MouseData get_mouse_data();
+
+#ifdef PLATFORM_WINDOWS_32
+	s_KeyData m_key_data_table[WINDOWS_KEYCODE_MAX] = { 0 };
+	void(*m_key_up_callback_array[WINDOWS_KEYCODE_MAX])() = { 0 }; // these are arrays of function pointers.. syntax massacre
+	void(*m_key_down_callback_array[WINDOWS_KEYCODE_MAX])() = { 0 };
+#else
+	s_KeyData m_key_data_table[k_keybind_count] = { 0 };
+	void(*m_key_up_callback_array[k_keybind_count])() = { 0 }; // these are arrays of function pointers.. syntax massacre
+	void(*m_key_down_callback_array[k_keybind_count])() = { 0 };
+#endif
+
+s_MouseData m_mouse_data = { 0 };
+void(*m_mouse_callback_array[k_mouse_count])() = { 0 };
+void(*m_mouse_wheel_callback)(int wheel_delta) = 0;
+
+};
+
+extern Input* g_Input;
 
 
 #endif

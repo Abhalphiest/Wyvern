@@ -202,26 +202,26 @@ void ShaderManager::SetShader(Shader shader)
 	ID3D11DeviceContext* context = g_Renderer->m_d3d->GetDeviceContext();
 	if (shader & k_vertex_shader_mask)
 	{
-		context->IASetInputLayout(m_layouts[index]);
-		context->VSSetShader(m_vertex_shaders[index], NULL, 0);
+		// context->IASetInputLayout(m_layouts[index]);
+		// context->VSSetShader(m_vertex_shaders[index], NULL, 0);
 	}
 	else if (shader & k_pixel_shader_mask)
 	{
-		context->PSSetShader(m_pixel_shaders[index], NULL, 0);
+		// context->PSSetShader(m_pixel_shaders[index], NULL, 0);
 	}
 	else if (shader & k_compute_shader_mask)
 	{
-		context->CSSetShader(m_compute_shaders[index], NULL, 0);
+		// context->CSSetShader(m_compute_shaders[index], NULL, 0);
 	}
 }
 
 ShaderManager::ShaderManager()
 {
-	m_vertex_shaders = std::vector<vertex_shader*>();
-	m_pixel_shaders = std::vector<pixel_shader*>();
-	m_compute_shaders = std::vector<compute_shader*>();
-	m_layouts = std::vector<buffer_layout*>();
-	m_buffers = std::vector<buffer>();
+	// m_vertex_shaders = std::vector<vertex_shader*>();
+	// m_pixel_shaders = std::vector<pixel_shader*>();
+	// m_compute_shaders = std::vector<compute_shader*>();
+	// m_layouts = std::vector<buffer_layout*>();
+	// m_buffers = std::vector<buffer>();
 }
 ShaderManager::~ShaderManager()
 {

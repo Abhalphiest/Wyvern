@@ -61,7 +61,23 @@ SpriteManager::~SpriteManager()
 
 void SpriteManager::RenderSprites()
 {
+	// TODO: finish, needs texture, draw call, etc
 
+	unsigned int stride;
+	unsigned int offset;
+	ID3D11DeviceContext* context = g_Renderer->m_d3d->GetDeviceContext();
+
+	// Set vertex buffer stride and offset.
+	stride = sizeof(s_vertex);
+	offset = 0;
+
+	// Set the vertex buffer to active in the input assembler so it can be rendered.
+	context->IASetVertexBuffers(0, 1, &m_vertex_buffer, &stride, &offset);
+
+	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	return;
 }
 
 Sprite SpriteManager::RegisterSprite()

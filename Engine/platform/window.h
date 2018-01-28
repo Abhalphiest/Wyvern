@@ -1,9 +1,6 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 #pragma once
-//includes
-
-#include"platform.h"
 
 #ifndef window_id
 #define window_id uint
@@ -12,12 +9,13 @@
 namespace Window
 {
 	//constants
-	const uint k_max_windows_registered = 10;
+	const uint k_max_windows_registered = 2; // the maximum number of windows that can exist
 
 	struct s_window_params
 	{
 		const char* m_title;
 		uint m_xpos, m_ypos, m_width, m_height;
+		bool fullscreen;
 		window_id m_parent;
 	};
 
@@ -32,12 +30,15 @@ namespace Window
 	};
 
 	//function declarations
-	void InitializeWindowSystem();
-	uint MakeWindow(s_window_params* parameters, e_window_option options);
-	uint MakeDialogWindow(const char* title, const char* text, e_dialog_option options);
-	window_id GetPlatformWindowId(uint index);
-	uint GetWindowWidth(uint index);
-	uint GetWindowHeight(uint index);
+	void window_system_init(s_platform_data platform_data);
+	uint make_window(s_window_params* parameters, e_window_option options, s_platform_data platform_data);
+	uint make_dialog_window(const char* title, const char* text, e_dialog_option options);
+	window_id get_platform_window_id(uint index);
+	uint get_window_width(uint index);
+	uint get_window_height(uint index);
+	void close_window(uint index);
+	bool make_window_fullscreen(uint index, int width, int height, int colourBits, int refreshRate);
+	bool make_window_windowed(uint index);
 
 
 }

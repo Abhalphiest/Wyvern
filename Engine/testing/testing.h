@@ -3,12 +3,12 @@
 #ifndef _TESTING_H
 #define _TESTING_H
 
-#include "memory/memoryallocator.h"
+#include "wyvern.h"
 
-void testMemoryAllocator(MemoryAllocator &allocator);
+void testInput();
 
-void testDebugLog();
+void testDialogueWindow();
 
-void testDebugConsole();
+void testFullscreen();
 
 #endif

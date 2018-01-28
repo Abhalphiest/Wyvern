@@ -31,9 +31,11 @@ private:
 	std::vector<s_sprite> m_active_sprites;
 	std::vector<s_sprite> m_inactive_sprites;
 
-	// indexed draw is not defensible for a single quad
+	// TODO: indexed draw is not defensible for a single quad?
 	buffer* m_vertex_buffer = nullptr;
 	const int m_vertex_count = 4;
+	buffer* m_index_buffer = nullptr;
+	const int m_index_count = 6; // two tris for a quad
 };
 extern Renderer* g_Renderer;
 #endif

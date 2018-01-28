@@ -4,29 +4,11 @@
     <Filter Include="input">
       <UniqueIdentifier>{4c45333a-e1e5-4ad6-bb32-24430b9a4539}</UniqueIdentifier>
     </Filter>
-    <Filter Include="utility">
-      <UniqueIdentifier>{593352f6-dd58-47ef-864a-391134eb2c69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="debug">
-      <UniqueIdentifier>{0e9d57cf-1f16-4a5b-a5b4-95e5685129d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="debug\log">
-      <UniqueIdentifier>{641e6f58-5ceb-47d4-ac07-6a3ff08a95f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="memory">
-      <UniqueIdentifier>{60e468af-ac03-47a2-84c1-2e242938ed48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="testing">
-      <UniqueIdentifier>{f4e3d5d6-3330-4980-ab6e-baccbfc49ff2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="platform">
       <UniqueIdentifier>{49d29844-d768-473d-b0b8-d87d6fea67eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="renderer">
-      <UniqueIdentifier>{ca766e86-7985-4f52-abae-effff56ca148}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="renderer\dx11">
-      <UniqueIdentifier>{17a8b3a5-c87f-42d7-8340-9f474376ac64}</UniqueIdentifier>
+    <Filter Include="testing">
+      <UniqueIdentifier>{c2f7130d-1f38-45a6-9fae-6b55ad4b1dbe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,40 +19,7 @@
     <ClInclude Include="input\inputhash.h">
       <Filter>input</Filter>
     </ClInclude>
-    <ClInclude Include="debug\console.h">
-      <Filter>debug</Filter>
-    </ClInclude>
-    <ClInclude Include="debug\log\log.h">
-      <Filter>debug\log</Filter>
-    </ClInclude>
-    <ClInclude Include="debug\print.h">
-      <Filter>debug</Filter>
-    </ClInclude>
-    <ClInclude Include="debug\debug.h">
-      <Filter>debug</Filter>
-    </ClInclude>
-    <ClInclude Include="debug\debug_definitions.h">
-      <Filter>debug</Filter>
-    </ClInclude>
-    <ClInclude Include="utility\data_structures.h">
-      <Filter>utility</Filter>
-    </ClInclude>
     <ClInclude Include="definitions.h" />
-    <ClInclude Include="utility\file.h">
-      <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="memory\align.h">
-      <Filter>memory</Filter>
-    </ClInclude>
-    <ClInclude Include="testing\testing.h">
-      <Filter>testing</Filter>
-    </ClInclude>
-    <ClInclude Include="memory\linearmemoryallocator.h">
-      <Filter>memory</Filter>
-    </ClInclude>
-    <ClInclude Include="memory\memoryallocator.h">
-      <Filter>memory</Filter>
-    </ClInclude>
     <ClInclude Include="platform\platform.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -80,29 +29,8 @@
     <ClInclude Include="platform\platform_definitions_pc.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="memory\memorymanager.h">
-      <Filter>memory</Filter>
-    </ClInclude>
-    <ClInclude Include="memory\listmemoryallocator.h">
-      <Filter>memory</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\renderer.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\text_renderer.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\dx11\dx11.h">
-      <Filter>renderer\dx11</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\shadermanager.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\renderer_definitions_pc.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\spritemanager.h">
-      <Filter>renderer</Filter>
+    <ClInclude Include="testing\testing.h">
+      <Filter>testing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,50 +38,15 @@
     <ClCompile Include="input\input_pc.cpp">
       <Filter>input</Filter>
     </ClCompile>
-    <ClCompile Include="debug\console_pc.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\print.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\log\log.cpp">
-      <Filter>debug\log</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\debug.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="utility\file.cpp">
-      <Filter>utility</Filter>
-    </ClCompile>
-    <ClCompile Include="testing\testing.cpp">
-      <Filter>testing</Filter>
-    </ClCompile>
-    <ClCompile Include="memory\linearmemoryallocator.cpp">
-      <Filter>memory</Filter>
-    </ClCompile>
     <ClCompile Include="platform\window_pc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="platform\platform_pc.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="memory\listmemoryallocator.cpp">
-      <Filter>memory</Filter>
-    </ClCompile>
-    <ClCompile Include="memory\memorymanager.cpp">
-      <Filter>memory</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\text_renderer_pc.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\renderer.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\dx11\dx11.cpp">
-      <Filter>renderer\dx11</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\shadermanager.cpp">
-      <Filter>renderer</Filter>
+    <ClCompile Include="wyvern.cpp" />
+    <ClCompile Include="testing\testing.cpp">
+      <Filter>testing</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

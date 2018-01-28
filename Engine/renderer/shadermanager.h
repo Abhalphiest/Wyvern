@@ -32,11 +32,11 @@ private:
 	ShaderManager(const ShaderManager& other);
 
 
-	std::vector<vertex_shader*> m_vertex_shaders;
-	std::vector<pixel_shader*> m_pixel_shaders;
-	std::vector<compute_shader*> m_compute_shaders;
-	std::vector<buffer_layout*> m_layouts;
-	std::vector<buffer> m_buffers;
+	// std::vector<vertex_shader*> m_vertex_shaders;
+	// std::vector<pixel_shader*> m_pixel_shaders;
+	// std::vector<compute_shader*> m_compute_shaders;
+	// std::vector<buffer_layout*> m_layouts;
+	// std::vector<buffer> m_buffers;
 };
 
 extern ShaderManager* g_shaderManager;

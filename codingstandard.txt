@@ -1,9 +1,33 @@
 
 # naming conventions
 
--> End-user facing functions and classes should use camel case, i.e. GetThisMemberVariable() and SampleClass
--> Internal functions and classes should be distinguished by using underscores and lowercase, i.e. dont_call_this_externally() and c_media_manager.
+-> End-user facing functions and classes should use camel case, ex. GetThisMemberVariable() and SampleClass
+-> Internal functions and classes should be distinguished by using underscores and lowercase, ex. dont_call_this_externally() and c_media_manager.
+-> Singleton constructors are named Initialize, destructors are named Release
 
 prefixes: c == class, k == constant, s == struct, m == member, p == parameter, i == interface, etc.
 
-# to be continued
+# indentation and whitespace
+
+-> There should be a space in between // and a comment.. ex. //this is not an acceptable comment, but // this is.
+-> Switch statements should have all cases indented
+-> Line of whitespace to separate major code blocks, and at the beginning and end of sections in braces {} when multiline.
+-> Preprocessor directives should not be indented
+-> Everything except public, private, etc should be indented in a class declaration
+-> a single space between preprocessor directive and argument, ex: #include "somefile.extension"
+
+# file naming
+
+-> platform specific files should end in _platformname (for example, platform_pc)
+-> file names should be lowercase, succinct, and self-documenting
+
+# file structure
+
+-> Public functions appear first in implementation files
+-> Declare all constants, globals, etc at top of the file
+-> wrap
+
+# In-line documentation
+
+-> Descriptive header at the top of every .h file (unnecessary in .cpp and .c files)
+-> Major functions have comment headers before both declaration and implementation (.h descriptions should be succinct and mostly a brief description of use)

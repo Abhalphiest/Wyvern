@@ -1,7 +1,7 @@
 #include "debug.h"
 #include <stdarg.h>
 
-void Debug::InitializeDebug()
+void Debug::Initialize()
 {
 	if (!g_Debug)
 	{

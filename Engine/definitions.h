@@ -4,7 +4,7 @@
 #define _DEFINITIONS_H
 
 // engine defines
-#define PLATFORM_WINDOWS_64
+#define PLATFORM_WINDOWS_32 // 32 bit windows OS
 
 //includes
 #include<iostream>
@@ -14,7 +14,7 @@
 //typedefs
 typedef unsigned int uint;
 typedef unsigned __int8* __uptr uptr;
-typedef unsigned __int8 byte; //wow, really C++?
+typedef unsigned __int8 byte; // wow, really C++?
 
 
 

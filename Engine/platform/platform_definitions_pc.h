@@ -2,7 +2,7 @@
 
 #include "definitions.h"
 
-#ifdef PLATFORM_WINDOWS_64
+#ifdef PLATFORM_WINDOWS_32
 #define WIN32_LEAN_AND_MEAN
 #include<Windows.h>
 
@@ -14,4 +14,5 @@ struct s_platform_data
 {
 	HINSTANCE hInstance = k_hinstance_not_set;
 };
+
 #endif

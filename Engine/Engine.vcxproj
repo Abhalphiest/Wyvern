@@ -82,7 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PLATFORM_WINDOWS_32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -96,7 +96,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PLATFORM_WINDOWS_32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,52 +126,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="debug\console.h" />
-    <ClInclude Include="debug\debug.h" />
-    <ClInclude Include="debug\debug_definitions.h" />
-    <ClInclude Include="debug\log\log.h" />
-    <ClInclude Include="debug\print.h" />
     <ClInclude Include="definitions.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\inputhash.h" />
-    <ClInclude Include="memory\align.h" />
-    <ClInclude Include="memory\linearmemoryallocator.h" />
-    <ClInclude Include="memory\listmemoryallocator.h" />
-    <ClInclude Include="memory\memoryallocator.h" />
-    <ClInclude Include="memory\memorymanager.h" />
     <ClInclude Include="platform\platform_definitions_pc.h" />
     <ClInclude Include="platform\platform.h" />
     <ClInclude Include="platform\window.h" />
-    <ClInclude Include="renderer\dx11\dx11.h" />
-    <ClInclude Include="renderer\renderer.h" />
-    <ClInclude Include="renderer\renderer_definitions_pc.h" />
-    <ClInclude Include="renderer\shadermanager.h" />
-    <ClInclude Include="renderer\spritemanager.h" />
-    <ClInclude Include="renderer\text_renderer.h" />
     <ClInclude Include="testing\testing.h" />
-    <ClInclude Include="utility\data_structures.h" />
-    <ClInclude Include="utility\file.h" />
     <ClInclude Include="wyvern.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="debug\console_pc.cpp" />
-    <ClCompile Include="debug\debug.cpp" />
-    <ClCompile Include="debug\log\log.cpp" />
-    <ClCompile Include="debug\print.cpp" />
     <ClCompile Include="input\input_pc.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="memory\linearmemoryallocator.cpp" />
-    <ClCompile Include="memory\listmemoryallocator.cpp" />
-    <ClCompile Include="memory\memorymanager.cpp" />
     <ClCompile Include="platform\platform_pc.cpp" />
     <ClCompile Include="platform\window_pc.cpp" />
-    <ClCompile Include="renderer\dx11\dx11.cpp" />
-    <ClCompile Include="renderer\renderer.cpp" />
-    <ClCompile Include="renderer\shadermanager.cpp" />
-    <ClCompile Include="renderer\spritemanager.cpp" />
-    <ClCompile Include="renderer\text_renderer_pc.cpp" />
     <ClCompile Include="testing\testing.cpp" />
-    <ClCompile Include="utility\file.cpp" />
+    <ClCompile Include="wyvern.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

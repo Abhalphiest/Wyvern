@@ -19,38 +19,38 @@
 
 class Debug
 {
-public:
 
-// Indirect constructor and destructor
-	static void InitializeDebug();
+public:
+	// Indirect constructor and destructor
+	static void Initialize();
 	static void Release();
 
-// Determining which streams we print to when we print..
+	// Determining which streams we print to when we print..
 	void SetActiveStreams(stream_field streams);
 
-// Print just does the string, printarg uses variable arguments... think of printf if you must
+	// Print just does the string, printarg uses variable arguments... think of printf if you must
 	void Print(const char* str);
 	void PrintArg(const char* str, int argc, ...);
 
-// Log file functions
+	// Log file functions
 	void CreateLogFile(const char* path, uint &id);
 	void CloseLogFile(uint id);
 	void MakeLogFileActive(uint id); // Active logs are written to by print functions if the log stream is enabled
 	void MakeLogFileInactive(uint id); // Inactive logs still have resources created for them, but are not currently written to
 
-// Console functions
+	// Console functions
 	void ClearConsole();
 	void CloseConsole();
 
-// Event functions
+	// Event functions
 	
 	// TO BE IMPLEMENTED
 	
 private:
-// make constructor, destructor, copy constructor inaccessible
+	// make constructor, destructor, copy constructor inaccessible
 	Debug();
 	~Debug();
-	Debug(const Debug& other) {}
+	Debug(const Debug& other) {};
 
 	stream_field m_streamfield;
 	std::vector<c_debug_log> m_log_files;
